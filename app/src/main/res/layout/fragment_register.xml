@@ -7,19 +7,22 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize">
+        android:layout_height="?actionBarSize"
+        android:background="@color/green">
 
         <ImageView
             android:id="@+id/backIv"
             style="@style/ImageViewBase.ToolBar"
             android:paddingLeft="@dimen/padding_sub_10dp"
-            android:src="@drawable/ic_green_arrow" />
+            android:src="@drawable/ic_white_back" />
 
         <TextView
             style="@style/TextViewBase.ToolbarTitle"
             android:layout_centerInParent="true"
-            android:text="@string/sign_up" />
+            android:text="@string/sign_up"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
     <ScrollView

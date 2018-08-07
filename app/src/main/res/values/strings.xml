@@ -1,3 +1,31 @@
 <resources>
-  <string name="app_name">TimGiaSu</string>
+    <string name="app_name">TimGiasu</string>
+    <string name="save_profile">Lưu hồ sơ</string>
+    <string name="sign_up">Đăng ký</string>
+    <string name="login">Đăng nhập</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <string name="password">Mật khẩu</string>
+    <string name="email_address_login">Email</string>
+    <string name="save">Lưu</string>
+    <string name="fullname">Họ tên</string>
+    <string name="email">Email</string>
+    <string name="mobile">SĐT</string>
+    <string name="gender">Giới tính</string>
+    <string name="date_of_birth">Ngày sinh</string>
+    <string name="city">Thành phố</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="edit_profile">Sửa thông tin</string>
+    <string name="fill_fullname">Nhập họ tên</string>
+    <string name="fill_email">Nhập email</string>
+    <string name="fill_mobile">Nhập SĐT</string>
+    <string name="fill_dob">Nhập ngày sinh</string>
+    <string name="fill_password">Nhập mật khẩu</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="fill_comfirm_psw">Nhập mật khẩu</string>
+    <string name="term_and_condition">Điều khoản</string>
+    <string name="forgot_password_title">Quên mật khẩu</string>
+    <string name="forgot_password_des">Nhập địa chỉ email và chúng tỗi sẽ gửi mật khẩu mới</string>
+    <string name="email_address">Địa chỉ email</string>
+    <string name="submit">Gửi</string>
 </resources>

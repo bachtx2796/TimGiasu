@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_gray">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/green"
+        android:padding="@dimen/padding_15dp">
+
+        <ImageView
+            android:id="@+id/handshakeBt"
+            android:layout_width="@dimen/size_200dp"
+            android:layout_height="@dimen/size_100dp"
+            android:layout_centerInParent="true" />
+
+        <ImageView
+            android:id="@+id/menuIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_menu"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/bottom_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar" />
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/shadowView"></FrameLayout>
+
+    <View
+        android:id="@+id/shadowView"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/bottomBarRl"
+        android:background="@color/bg_transparent" />
+
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        app:bb_activeTabColor="@color/active_tab_color"
+        app:bb_inActiveTabColor="@color/inactive_tab_color"
+        app:bb_showShadow="true"
+        app:bb_tabXmlResource="@xml/bottombar_tabs" />
+
+    <RelativeLayout
+        android:id="@+id/bottomBarRl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_48dp"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:id="@+id/bottom_bar_layout_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/bottom_bar_home_rl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bottom_bar_home_iv"
+                    style="@style/BottomBarImage"
+                    android:src="@drawable/ic_home" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_bar_tutors_rl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bottom_bar_tutors_iv"
+                    style="@style/BottomBarImage"
+                    android:src="@drawable/ic_favorites" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_bar_shop_rl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bottom_bar_shop_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_add_file" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_bar_messages_rl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bottom_bar_messages_iv"
+                    style="@style/BottomBarImage"
+                    android:src="@drawable/ic_unseleted_chat" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/bottom_bar_profile_rl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/bottom_bar_profile_iv"
+                    style="@style/BottomBarImage"
+                    android:src="@drawable/ic_profile" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

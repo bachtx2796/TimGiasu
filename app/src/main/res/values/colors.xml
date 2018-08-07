@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
+  <color name="colorPrimary">#099a48</color>
+  <color name="colorPrimaryDark">#099a48</color>
+  <color name="colorAccent">#099a48</color>
+  <color name="white">#ffffff</color>
+  <color name="black">#000000</color>
+  <color name="text_gray">#8e8e92</color>
+  <color name="text_black">#1d1d26</color>
+  <color name="line_gray">#e8e8e9</color>
+  <color name="background_gray">#f8f8f8</color>
+  <color name="green">#099a48</color>
+  <color name="background_black_transparent">#78000000</color>
+  <color name="remove_color">#666666</color>
+  <color name="message_container_color">#f8f8f8</color>
+  <color name="list_bg_color">#e0e0e0</color>
+  <color name="unselected_color">#7dd8d8d8</color>
+  <color name="active_tab_color">#099A48</color>
+  <color name="inactive_tab_color">#46000000</color>
+  <color name="edittext_gray">#8e8e92</color>
+  <color name="dialog_bg">#f6f6f6</color>
+  <color name="gray">#d6d0d0</color>
+  <color name="light_blue">#007aff</color>
+  <color name="bg_gray_white">#eaeef2</color>
+  <color name="red">#ff0000</color>
+  <color name="groupChatDateText">#ffffff</color>
+  <color name="groupChatAdminBackground">#e0fcff</color>
+  <color name="chatMeItem_bg">#2998ff</color>
+  <color name="silver">#e9e9ea</color>
+  <color name="groupChatReadReceiptMe">#1fcc94</color>
+  <color name="groupChatReadReceiptOther">#00BCD4</color>
+  <color name="bg_transparent">#00000000</color>
 </resources>
