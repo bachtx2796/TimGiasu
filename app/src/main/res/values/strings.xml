@@ -28,4 +28,6 @@
     <string name="forgot_password_des">Nhập địa chỉ email và chúng tỗi sẽ gửi mật khẩu mới</string>
     <string name="email_address">Địa chỉ email</string>
     <string name="submit">Gửi</string>
+    <string name="quote">\"If you\'\re good at something, never do it for free.\"\n-Joker-\t\t</string>
+    <string name="remove">xóa</string>
 </resources>

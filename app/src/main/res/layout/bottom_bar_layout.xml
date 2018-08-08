@@ -8,14 +8,14 @@
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/shadowView"></FrameLayout>
+        android:layout_above="@+id/shadowView" />
 
     <View
         android:id="@+id/shadowView"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/bottomBarRl"
-        android:background="@color/bg_transparent" />
+        android:background="@color/silver" />
 
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
@@ -33,7 +33,8 @@
         android:id="@+id/bottomBarRl"
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_48dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/bottom_bar_layout_ll"
@@ -51,7 +52,7 @@
                 <ImageView
                     android:id="@+id/bottom_bar_home_iv"
                     style="@style/BottomBarImage"
-                    android:src="@drawable/ic_home" />
+                    app:srcCompat="@drawable/ic_home" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -64,7 +65,7 @@
                 <ImageView
                     android:id="@+id/bottom_bar_tutors_iv"
                     style="@style/BottomBarImage"
-                    android:src="@drawable/ic_favorites" />
+                    app:srcCompat="@drawable/ic_tutor_unselected" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -79,7 +80,7 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_add_file" />
+                    app:srcCompat="@drawable/ic_add_file" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,7 +93,7 @@
                 <ImageView
                     android:id="@+id/bottom_bar_messages_iv"
                     style="@style/BottomBarImage"
-                    android:src="@drawable/ic_unseleted_chat" />
+                    app:srcCompat="@drawable/ic_unseleted_chat" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -105,7 +106,7 @@
                 <ImageView
                     android:id="@+id/bottom_bar_profile_iv"
                     style="@style/BottomBarImage"
-                    android:src="@drawable/ic_profile" />
+                    app:srcCompat="@drawable/ic_profile" />
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>

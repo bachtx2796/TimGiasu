@@ -4,7 +4,7 @@
         icon="@drawable/ic_home"
         id="@+id/tab_home"/>
     <tab
-        icon="@drawable/ic_favorites"
+        icon="@drawable/ic_tutor_unselected"
         id="@+id/tab_tutors"/>
     <tab
         icon="@drawable/ic_add_file"

@@ -7,7 +7,11 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:text="@string/app_name"
+        android:text="@string/quote"
+        android:textSize="@dimen/ts_14sp"
+        android:textStyle="bold|italic"
+        android:gravity="right"
+        android:layout_margin="@dimen/margin_5dp"
         android:textColor="@color/white"
         android:layout_height="wrap_content" />
 

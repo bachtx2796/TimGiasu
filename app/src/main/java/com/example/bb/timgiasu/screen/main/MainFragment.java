@@ -91,7 +91,7 @@ public class MainFragment extends ViewFragment<MainContract.Presenter> implement
     private void handleBottomBarState(boolean home, boolean favorite, boolean chat, boolean profile) {
         mHomeIv.setImageResource((home) ? R.drawable.ic_home_selected : R.drawable.ic_home);
 
-        mTutorsIv.setImageResource((favorite) ? R.drawable.ic_tab_favorites_selected : R.drawable.ic_favorites);
+        mTutorsIv.setImageResource((favorite) ? R.drawable.ic_tutor : R.drawable.ic_tutor_unselected);
 
         mMessageIv.setImageResource((chat) ? R.drawable.ic_chat : R.drawable.ic_unseleted_chat);
 

@@ -13,6 +13,7 @@ interface TutorsContract {
     }
 
     interface View extends PresentView<Presenter> {
+        void bindView(TutorAdapter mTutorAdapter);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {

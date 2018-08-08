@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/item_message_sw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        swipe:leftEdgeSwipeOffset="@dimen/size_100dp"
+        swipe:rightEdgeSwipeOffset="0dp">
+
+        <RelativeLayout
+            android:id="@+id/buyer_summary_delete_rl"
+            android:layout_width="@dimen/size_100dp"
+            android:layout_height="match_parent"
+            android:background="@color/remove_color">
+
+            <TextView
+                android:id="@+id/remove_owner_iv"
+                style="@style/TextViewBase"
+                android:layout_centerInParent="true"
+                android:text="@string/remove" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/itemContainerLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_10dp">
+
+            <ImageView
+                android:id="@+id/itemIv"
+                android:layout_width="@dimen/size_80dp"
+                android:layout_height="@dimen/size_60dp"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_7dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/itemTitleTv"
+                    style="@style/TextViewBase.Content"
+                    android:maxLines="1"
+                    tool:text="aawefawef" />
+
+                <TextView
+                    android:id="@+id/itemLastMessageTv"
+                    style="@style/TextViewBase.SecondContent"
+                    android:layout_marginTop="@dimen/margin_7dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/itemLastMessageTimeTv"
+                    style="@style/TextViewBase.SecondContent"
+                    android:maxLines="1"
+                    android:textSize="@dimen/ts_10sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/itemUserAvatarIv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/user_default" />
+
+                <RelativeLayout
+                    android:id="@+id/unreadMessageRl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/circle_bg"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/itemUnReadTv"
+                        style="@style/TextViewBase.SecondContent"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="-5dp"
+                        android:text="0"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </com.daimajia.swipe.SwipeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_2dp"
+        android:background="@color/dark_grey" />
+</LinearLayout>

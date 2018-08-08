@@ -13,6 +13,7 @@ interface ChatContract {
     }
 
     interface View extends PresentView<Presenter> {
+        void bindView(ChatAdapter mChatAdapter);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
