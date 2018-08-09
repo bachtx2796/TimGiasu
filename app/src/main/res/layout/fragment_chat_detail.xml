@@ -1,0 +1,164 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/green">
+
+        <ImageView
+            android:id="@+id/backIv"
+            style="@style/ImageViewBase.ToolBar"
+            android:paddingRight="@dimen/padding_16dp"
+            app:srcCompat="@drawable/ic_white_back" />
+
+        <TextView
+            android:id="@+id/userNameTv"
+            style="@style/TextViewBase.ToolbarTitle"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/messageHeaderLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_10dp">
+
+        <ImageView
+            android:id="@+id/itemImageIv"
+            android:layout_width="@dimen/size_80dp"
+            android:layout_height="@dimen/size_60dp"
+            android:src="@drawable/no_image_andscape" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/itemTitleTv"
+                    style="@style/TextViewBase.Content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:lines="2"
+                    android:maxLines="2"
+                    android:text="Headphone" />
+
+                <TextView
+                    android:id="@+id/itemPriceTv"
+                    style="@style/TextViewBase.Label"
+                    android:text="300,000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/itemOfferPriceLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/submitted_offer"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/acceptTv"
+                    style="@style/TextViewBase.Button.Green"
+                    android:layout_marginBottom="@dimen/margin_5dp"
+                    android:layout_marginStart="@dimen/margin_5dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/padding_5dp"
+                    android:text="Accept"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/silver"
+        android:layout_height="@dimen/size_2dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_detail_rv"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:id="@+id/chatBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/message_container_color"
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_15dp">
+
+        <ImageView
+            android:id="@+id/sendFileIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_photo_camera" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/margin_15dp"
+            android:layout_marginStart="@dimen/margin_15dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:padding="@dimen/padding_5dp">
+
+            <EditText
+                android:id="@+id/messageEt"
+                style="@style/EdittextBase"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/emotionsIv" />
+
+            <ImageView
+                android:id="@+id/emotionsIv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_smile_face"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/sendMessageIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_send_message_button" />
+    </LinearLayout>
+</LinearLayout>
