@@ -23,4 +23,9 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
     public void back(){
         mPresenter.back();
     }
+
+    @OnClick(R.id.signUpTv)
+    public void signup(){
+        mPresenter.signup();
+    }
 }

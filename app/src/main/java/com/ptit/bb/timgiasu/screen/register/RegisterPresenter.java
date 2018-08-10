@@ -2,6 +2,7 @@ package com.ptit.bb.timgiasu.screen.register;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
+import com.ptit.bb.timgiasu.screen.verifyphoneno.VerifyPhoneNoPresenter;
 
 /**
  * The Register Presenter
@@ -26,5 +27,10 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
     @Override
     public RegisterContract.Interactor onCreateInteractor() {
         return new RegisterInteractor(this);
+    }
+
+    @Override
+    public void signup() {
+        new VerifyPhoneNoPresenter(mContainerView).pushView();
     }
 }

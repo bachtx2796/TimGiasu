@@ -1,19 +1,18 @@
-package com.ptit.bb.timgiasu.screen.home;
+package com.ptit.bb.timgiasu.screen.verifyphoneno;
 
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 
 /**
- * The Home Contract
+ * The VerifyPhoneNo Contract
  */
-interface HomeContract {
+interface VerifyPhoneNoContract {
 
     interface Interactor extends IInteractor<Presenter> {
     }
 
     interface View extends PresentView<Presenter> {
-        void bindView(HomeAdapter mHomeAdapter);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {

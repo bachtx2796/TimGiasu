@@ -149,4 +149,36 @@
         <item name="android:textColor">@color/text_black</item>
     </style>
 
+    <style name="EditTextBase">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">@dimen/padding_normal</item>
+    </style>
+
+    <!--Edit text-->
+    <style name="EditText" parent="EditTextBase">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/border_button_gray</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/fc_light_gray</item>
+        <item name="android:textSize">@dimen/ts_common</item>
+    </style>
+
+    <style name="EditText.MobileNumber">
+        <item name="android:lines">1</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:inputType">number</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginEnd">@dimen/margin_2dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+
 </resources>

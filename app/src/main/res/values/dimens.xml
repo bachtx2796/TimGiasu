@@ -73,4 +73,5 @@
     <dimen name="size_78dp">78dp</dimen>
     <dimen name="size_250dp">250dp</dimen>
     <dimen name="size_5dp">5dp</dimen>
+    <dimen name="ts_common">13sp</dimen>
 </resources>

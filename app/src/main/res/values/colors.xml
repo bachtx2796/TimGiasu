@@ -30,4 +30,5 @@
   <color name="groupChatReadReceiptMe">#1fcc94</color>
   <color name="groupChatReadReceiptOther">#00BCD4</color>
   <color name="bg_transparent">#00000000</color>
+  <color name="fc_light_gray">#cccccc</color>
 </resources>

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.bb.timgiasu"
+        applicationId "com.ptit.bb.timgiasu"
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
@@ -37,4 +37,8 @@ dependencies {
     implementation 'com.malinskiy:superrecyclerview:1.1.4'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
     implementation 'com.facebook.fresco:fresco:1.3.0'
+//    implementation 'com.google.firebase:firebase-database:11.8.0'
+//    implementation 'com.google.firebase:firebase-auth:11.8.0'
 }
+
+//apply plugin: 'com.google.gms.google-services'

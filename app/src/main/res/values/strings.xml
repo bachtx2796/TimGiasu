@@ -31,4 +31,7 @@
     <string name="quote">\"If you\'\re good at something, never do it for free.\"\n-Joker-\t\t</string>
     <string name="remove">xóa</string>
     <string name="submitted_offer">Thỏa thuận</string>
+    <string name="verify_mobile_number">Xác nhận SĐT</string>
+    <string name="verify_mobile_des">Nhập mã OTP có 6 số được gửi tới SĐT của bạn</string>
+    <string name="resend_one_time_pin">Gửi lại OTP</string>
 </resources>
