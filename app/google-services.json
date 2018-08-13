@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "36962193880",
+    "firebase_url": "https://timgiasu-ca98c.firebaseio.com",
+    "project_id": "timgiasu-ca98c",
+    "storage_bucket": "timgiasu-ca98c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36962193880:android:f9962679d6eb8bb4",
+        "android_client_info": {
+          "package_name": "com.ptit.bb.timgiasu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36962193880-0hj2ds99l68bcu6p9456f51jtj0ijuec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ptit.bb.timgiasu",
+            "certificate_hash": "5950a025f578ab6aa40b95b983e8d35c236d9656"
+          }
+        },
+        {
+          "client_id": "36962193880-hpdo4n8mel80oi2l9uqt8frbeo8c19b5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIRn0GUrHct4Tb-4-SiZACcx1gZdiWC5k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36962193880-hpdo4n8mel80oi2l9uqt8frbeo8c19b5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
