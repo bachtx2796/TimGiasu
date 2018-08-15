@@ -34,4 +34,5 @@
     <string name="verify_mobile_number">Xác nhận SĐT</string>
     <string name="verify_mobile_des">Nhập mã OTP có 6 số được gửi tới SĐT của bạn</string>
     <string name="resend_one_time_pin">Gửi lại OTP</string>
+    <string name="address">Địa chỉ</string>
 </resources>

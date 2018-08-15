@@ -20,7 +20,7 @@ interface LoginFragmentContract {
 
         void displaySignupScreen();
 
-        void login();
+        void login(String username, String pass);
     }
 }
 

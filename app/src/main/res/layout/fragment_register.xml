@@ -109,7 +109,6 @@
                         android:id="@+id/phoneEt"
                         style="@style/EdittextBase.Signup"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/margin_5dp"
                         android:hint="@string/fill_mobile"
                         android:inputType="phone"
                         android:textColorHint="@color/text_gray"
@@ -133,15 +132,14 @@
                     android:text="@string/gender" />
 
                 <Spinner
+                    android:spinnerMode="dropdown"
                     android:id="@+id/genderSpn"
-                    style="@style/SpinnerBase"
-                    android:layout_marginTop="@dimen/padding_10dp" />
+                    style="@style/SpinnerBase" />
             </LinearLayout>
 
             <View
                 android:id="@+id/genreLine"
-                style="@style/GrayDivider"
-                android:layout_marginTop="@dimen/margin_10dp" />
+                style="@style/GrayDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,13 +199,12 @@
 
                 <TextView
                     style="@style/TextViewBase.Label.SignUp"
-                    android:text="@string/city" />
+                    android:text="@string/address" />
 
-                <Spinner
-                    android:id="@+id/citySpn"
-                    style="@style/SpinnerBase"
-                    android:layout_marginTop="@dimen/padding_10dp"
-                    android:text="@string/city" />
+                <TextView
+                    android:id="@+id/address_tv"
+                    style="@style/TextViewBase.Content"
+                    android:layout_marginTop="@dimen/padding_10dp" />
             </LinearLayout>
 
             <View
