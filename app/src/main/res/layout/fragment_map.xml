@@ -1,7 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <fragment
         android:id="@+id/detail_map"
@@ -9,4 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+    <AutoCompleteTextView
+        android:id="@+id/search_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_search"
+        android:gravity="center_vertical"
+        android:hint="Tìm kiếm"
+        android:padding="@dimen/padding_10dp"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/ts_16sp" />
+
+    <TextView
+        style="@style/TextViewBase.Button"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_green_bg"
+        android:text="Chọn" />
+</RelativeLayout>

@@ -2,7 +2,7 @@ package com.ptit.bb.timgiasu.screen.register;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
-import com.ptit.bb.timgiasu.screen.map.MapPresenter;
+import com.ptit.bb.timgiasu.screen.map.MyMapPresenter;
 import com.ptit.bb.timgiasu.screen.verifyphoneno.VerifyPhoneNoPresenter;
 
 /**
@@ -37,6 +37,6 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
 
     @Override
     public void showMap() {
-        new MapPresenter(mContainerView).pushView();
+        new MyMapPresenter(mContainerView).pushView();
     }
 }

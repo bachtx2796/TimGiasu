@@ -203,6 +203,7 @@
 
                 <TextView
                     android:id="@+id/address_tv"
+                    android:layout_width="match_parent"
                     style="@style/TextViewBase.Content"
                     android:layout_marginTop="@dimen/padding_10dp" />
             </LinearLayout>

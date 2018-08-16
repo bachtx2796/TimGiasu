@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
-import com.ptit.bb.timgiasu.screen.map.MapPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,6 +84,8 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
         String gender = mGenderSp.getSelectedItem().toString();
         String pass = mPassEt.getText().toString();
         String confirmpass = mConfirmPassEt.getText().toString();
+        String dob = mDoBTv.getText().toString();
+
 
         mPresenter.signup();
     }
