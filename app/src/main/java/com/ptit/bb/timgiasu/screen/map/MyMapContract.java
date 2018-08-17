@@ -28,6 +28,8 @@ interface MyMapContract {
         ArrayAdapter getAdapter();
 
         void showPlace(String selectedSearchItem);
+
+        void selectLocation(String selectedSearchItem);
     }
 }
 

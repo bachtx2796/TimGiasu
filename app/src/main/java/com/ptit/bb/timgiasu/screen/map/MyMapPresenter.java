@@ -28,6 +28,12 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
     private List<String> mPlaces;
     private ArrayAdapter mArrayAdapter;
 
+    private OnLocationSelectedListener mOnLocationSelectedListener;
+
+    public void setmOnLocationSelectedListener(OnLocationSelectedListener mOnLocationSelectedListener) {
+        this.mOnLocationSelectedListener = mOnLocationSelectedListener;
+    }
+
     public MyMapPresenter(ContainerView containerView) {
         super(containerView);
     }
@@ -41,7 +47,7 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
     public void start() {
         // Start getting data here
         mPlaces = new ArrayList<>();
-        mArrayAdapter  = new ArrayAdapter(getViewContext(), android.R.layout.simple_list_item_1, mPlaces);
+        mArrayAdapter = new ArrayAdapter(getViewContext(), android.R.layout.simple_list_item_1, mPlaces);
     }
 
     @Override
@@ -81,11 +87,11 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
     @Override
     public void showPlace(String selectedSearchItem) {
         mView.showProgress();
-        GoogleServiceBuilder.getService().getLocationSearch(selectedSearchItem,GoogleService.KEY).enqueue(new Callback<GoogleMapSearchDTO>() {
+        GoogleServiceBuilder.getService().getLocationSearch(selectedSearchItem, GoogleService.KEY).enqueue(new Callback<GoogleMapSearchDTO>() {
             @Override
             public void onResponse(Call<GoogleMapSearchDTO> call, Response<GoogleMapSearchDTO> response) {
                 mView.hideProgress();
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     LocationSearchResult tmp = response.body().getListSearchResult().get(0);
                     mView.showMarker(tmp.getGeometry().getLocation());
                 }
@@ -96,5 +102,15 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
 
             }
         });
+    }
+
+    @Override
+    public void selectLocation(String selectedSearchItem) {
+        mOnLocationSelectedListener.onItemSelected(selectedSearchItem);
+        back();
+    }
+
+    public interface OnLocationSelectedListener {
+        void onItemSelected(String location);
     }
 }

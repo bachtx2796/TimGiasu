@@ -22,6 +22,7 @@
         android:textSize="@dimen/ts_16sp" />
 
     <TextView
+        android:id="@+id/select_bt"
         style="@style/TextViewBase.Button"
         android:layout_alignParentBottom="true"
         android:background="@drawable/button_green_bg"

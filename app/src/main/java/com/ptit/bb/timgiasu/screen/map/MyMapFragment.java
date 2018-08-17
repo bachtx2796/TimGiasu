@@ -27,6 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,5 +131,10 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
     @Override
     public void showMarker(Coord location) {
         mMapManager.addMarker(new LatLng(location.getLat(),location.getLng()),"vị trí của tôi");
+    }
+
+    @OnClick(R.id.select_bt)
+    public void selectLocation(){
+        mPresenter.selectLocation(selectedSearchItem);
     }
 }

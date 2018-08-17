@@ -3,19 +3,26 @@ package com.ptit.bb.timgiasu.screen.register;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateUtils;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
+import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
+import com.ptit.bb.timgiasu.customview.Confirmdialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -67,31 +74,62 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
         mGenders = new ArrayList<>();
         mGenders.add("Nam");
         mGenders.add("Nữ");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getViewContext(),R.layout.item_simple_spinner,R.id.text,mGenders);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getViewContext(), R.layout.item_simple_spinner, R.id.text, mGenders);
         mGenderSp.setAdapter(arrayAdapter);
     }
 
     @OnClick(R.id.backIv)
-    public void back(){
+    public void back() {
         mPresenter.back();
     }
 
     @OnClick(R.id.signUpTv)
-    public void signup(){
-        String fullname = mFullNameEt.getText().toString();
-        String email = mEmailEt.getText().toString();
-        String phoneNo = mPhoneEt.getText().toString();
-        String gender = mGenderSp.getSelectedItem().toString();
-        String pass = mPassEt.getText().toString();
-        String confirmpass = mConfirmPassEt.getText().toString();
-        String dob = mDoBTv.getText().toString();
+    public void signup() {
+//        String fullname = mFullNameEt.getText().toString();
+//        String email = mEmailEt.getText().toString();
+//        String phoneNo = mPhoneEt.getText().toString();
+//        String gender = mGenderSp.getSelectedItem().toString();
+//        String pass = mPassEt.getText().toString();
+//        String confirmpass = mConfirmPassEt.getText().toString();
+//        String dob = mDoBTv.getText().toString();
+//
+//        if (StringUtils.isEmpty(fullname) ||
+//                StringUtils.isEmpty(email) ||
+//                StringUtils.isEmpty(phoneNo) ||
+//                StringUtils.isEmpty(gender) ||
+//                StringUtils.isEmpty(dob) ||
+//                StringUtils.isEmpty(pass) ||
+//                StringUtils.isEmpty(confirmpass)) {
+//            Toast.makeText(getViewContext(), "Nhập đủ thông tin các trường", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (!isEmailValid(email)) {
+//            Toast.makeText(getViewContext(), "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if (!confirmpass.equals(pass)){
+//            Toast.makeText(getViewContext(), "Xác nhận mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
+        Confirmdialog confirmdialog = new Confirmdialog(getViewContext(),"Xác nhận","Chúng tôi sẽ gửi mã đăng kí đến SĐT của bạn");
+        confirmdialog.show();
+        //mPresenter.signup(fullname,email,phoneNo,gender,pass,confirmpass,dob);
 
 
-        mPresenter.signup();
+    }
+
+    private boolean isEmailValid(String email) {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     @OnClick(R.id.dateOfBirthTv)
-    public void showDatePickerDialog(){
+    public void showDatePickerDialog() {
         int day;
         int month;
         int year;
@@ -102,9 +140,8 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
                 mDateOfBirth.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 mDateOfBirth.set(Calendar.MONTH, monthOfYear);
                 mDateOfBirth.set(Calendar.YEAR, year);
-                //appUserRegisterDTO.date_of_birth = mDateOfBirth.getServerDateTimeFormat();
                 mDoBTv.setTextColor(ContextCompat.getColor(getViewContext(), R.color.text_black));
-                mDoBTv.setText(mDateOfBirth.getTime().toString());
+                mDoBTv.setText(DateTimeUtil.dateToString(mDateOfBirth.getTime()));
             }
         };
 
@@ -120,17 +157,22 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
             day = c.get(Calendar.DAY_OF_MONTH);
         }
 
-       DatePickerDialog pic = new DatePickerDialog(
+        DatePickerDialog pic = new DatePickerDialog(
                 getViewContext(),
                 AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
                 callback, year, month, day);
-//        pic.datePicker.minDate = System.currentTimeMillis() - 1000
+        pic.getDatePicker().setMaxDate(System.currentTimeMillis() - 1000);
         pic.setTitle("Chọn ngày");
         pic.show();
     }
 
     @OnClick(R.id.address_tv)
-    public void showMap(){
+    public void showMap() {
         mPresenter.showMap();
+    }
+
+    @Override
+    public void setLocation(String location) {
+        mAddressTv.setText(location);
     }
 }

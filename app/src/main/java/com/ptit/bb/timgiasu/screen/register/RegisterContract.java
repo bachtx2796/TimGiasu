@@ -13,10 +13,11 @@ interface RegisterContract {
     }
 
     interface View extends PresentView<Presenter> {
+        void setLocation(String location);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
-        void signup();
+        void signup(String fullname, String email, String phoneNo, String gender, String pass, String confirmpass, String dob);
 
         void showMap();
     }
