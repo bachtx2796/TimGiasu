@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "36962193880-0hj2ds99l68bcu6p9456f51jtj0ijuec.apps.googleusercontent.com",
+          "client_id": "36962193880-amf80eh6qobr9iplv3vsqb6egtmrm59k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ptit.bb.timgiasu",
-            "certificate_hash": "5950a025f578ab6aa40b95b983e8d35c236d9656"
+            "certificate_hash": "0573c985b681e073ed0b0d8c34b9009f67ff4c7e"
           }
         },
         {

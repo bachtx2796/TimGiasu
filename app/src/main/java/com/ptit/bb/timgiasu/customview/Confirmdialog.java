@@ -24,6 +24,11 @@ public class Confirmdialog extends Dialog {
 
     private String mContent;
     private String mTitle;
+    private OnConfirmListener mOnConfirmListener;
+
+    public void setmOnConfirmListener(OnConfirmListener mOnConfirmListener) {
+        this.mOnConfirmListener = mOnConfirmListener;
+    }
 
     public Confirmdialog(@NonNull Context context, String title, String content) {
         super(context);
@@ -48,5 +53,14 @@ public class Confirmdialog extends Dialog {
     @OnClick(R.id.dialog_cancel_tv)
     public void cancel(){
         dismiss();
+    }
+
+    @OnClick(R.id.dialog_ok_tv)
+    public void ok(){
+        mOnConfirmListener.onClickConfirm();
+    }
+
+    public interface OnConfirmListener{
+        void onClickConfirm();
     }
 }

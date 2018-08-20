@@ -16,6 +16,9 @@ interface VerifyPhoneNoContract {
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
+        void resendPin();
+
+        void checkSMS(String code);
     }
 }
 

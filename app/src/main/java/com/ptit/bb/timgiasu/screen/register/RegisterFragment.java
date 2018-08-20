@@ -85,40 +85,44 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
 
     @OnClick(R.id.signUpTv)
     public void signup() {
-//        String fullname = mFullNameEt.getText().toString();
-//        String email = mEmailEt.getText().toString();
-//        String phoneNo = mPhoneEt.getText().toString();
-//        String gender = mGenderSp.getSelectedItem().toString();
-//        String pass = mPassEt.getText().toString();
-//        String confirmpass = mConfirmPassEt.getText().toString();
-//        String dob = mDoBTv.getText().toString();
-//
-//        if (StringUtils.isEmpty(fullname) ||
-//                StringUtils.isEmpty(email) ||
-//                StringUtils.isEmpty(phoneNo) ||
-//                StringUtils.isEmpty(gender) ||
-//                StringUtils.isEmpty(dob) ||
-//                StringUtils.isEmpty(pass) ||
-//                StringUtils.isEmpty(confirmpass)) {
-//            Toast.makeText(getViewContext(), "Nhập đủ thông tin các trường", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        if (!isEmailValid(email)) {
-//            Toast.makeText(getViewContext(), "Email không hợp lệ", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        if (!confirmpass.equals(pass)){
-//            Toast.makeText(getViewContext(), "Xác nhận mật khẩu không đúng", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        final String fullname = mFullNameEt.getText().toString();
+        final String email = mEmailEt.getText().toString();
+        final String phoneNo = mPhoneEt.getText().toString();
+        final String gender = mGenderSp.getSelectedItem().toString();
+        final String pass = mPassEt.getText().toString();
+        final String confirmpass = mConfirmPassEt.getText().toString();
+        final String dob = mDoBTv.getText().toString();
 
-        Confirmdialog confirmdialog = new Confirmdialog(getViewContext(),"Xác nhận","Chúng tôi sẽ gửi mã đăng kí đến SĐT của bạn");
+        if (StringUtils.isEmpty(fullname) ||
+                StringUtils.isEmpty(email) ||
+                StringUtils.isEmpty(phoneNo) ||
+                StringUtils.isEmpty(gender) ||
+                StringUtils.isEmpty(dob) ||
+                StringUtils.isEmpty(pass) ||
+                StringUtils.isEmpty(confirmpass)) {
+            Toast.makeText(getViewContext(), "Nhập đủ thông tin các trường", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!isEmailValid(email)) {
+            Toast.makeText(getViewContext(), "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!confirmpass.equals(pass)){
+            Toast.makeText(getViewContext(), "Xác nhận mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final Confirmdialog confirmdialog = new Confirmdialog(getViewContext(),"Xác nhận","Chúng tôi sẽ gửi mã đăng kí đến SĐT của bạn");
+        confirmdialog.setmOnConfirmListener(new Confirmdialog.OnConfirmListener() {
+            @Override
+            public void onClickConfirm() {
+                mPresenter.signup(fullname,email,phoneNo,gender,pass,confirmpass,dob);
+                confirmdialog.dismiss();
+            }
+        });
         confirmdialog.show();
-        //mPresenter.signup(fullname,email,phoneNo,gender,pass,confirmpass,dob);
-
-
     }
 
     private boolean isEmailValid(String email) {

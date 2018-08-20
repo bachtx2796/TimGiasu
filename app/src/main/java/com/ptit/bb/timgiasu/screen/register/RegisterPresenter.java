@@ -1,10 +1,15 @@
 package com.ptit.bb.timgiasu.screen.register;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -19,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class RegisterPresenter extends Presenter<RegisterContract.View, RegisterContract.Interactor>
         implements RegisterContract.Presenter {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     public RegisterPresenter(ContainerView containerView) {
         super(containerView);
@@ -41,18 +46,52 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
     }
 
     @Override
-    public void signup(String fullname, String email, String phoneNo, String gender, String pass, String confirmpass, String dob) {
-        PhoneAuthProvider.getInstance(mAuth).verifyPhoneNumber("+84" + phoneNo, 60, TimeUnit.SECONDS, getViewContext(), new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    public void signup(String fullname, final String email, final String phoneNo, String gender, final String pass, String confirmpass, String dob) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber("+84" + phoneNo, 60, TimeUnit.SECONDS, getViewContext(), new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
             public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-                new VerifyPhoneNoPresenter(mContainerView).pushView();
+
             }
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
                 Toast.makeText(getViewContext(), "Số điện thoại không tồn tại", Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+                new VerifyPhoneNoPresenter(mContainerView)
+                        .setPhoneNo("+84"+phoneNo)
+                        .setVerificationID(verificationId)
+                        .setOnVerifyPhoneNumberListener(new VerifyPhoneNoPresenter.OnVerifyPhoneNumberListener() {
+                            @Override
+                            public void onVerifyPhoneNumberSuccessful() {
+                                mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            // Sign in success, update UI with the signed-in user's information
+                                            Log.d("@@@@", "createUserWithEmail:success");
+                                            back();
+                                        } else {
+                                            // If sign in fails, display a message to the user.
+                                            Log.w("@@@@", "createUserWithEmail:failure", task.getException());
+                                            Toast.makeText(getViewContext(), "Đăng kí không thành công",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onVerifyPhoneNumberFailed() {
+
+                            }
+                        })
+                        .pushView();
+            }
         });
+
 
     }
 
