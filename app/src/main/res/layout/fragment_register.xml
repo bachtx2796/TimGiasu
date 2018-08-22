@@ -189,6 +189,28 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/countryLine"
+                style="@style/GrayDivider"
+                android:layout_marginTop="@dimen/margin_10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label.SignUp"
+                    android:text="@string/city" />
+
+                <Spinner
+                    android:id="@+id/citySpn"
+                    style="@style/SpinnerBase"
+                    android:layout_marginTop="@dimen/padding_10dp"
+                    android:text="@string/city" />
+            </LinearLayout>
+
+            <View
                 android:id="@+id/dobLine"
                 style="@style/GrayDivider"
                 android:layout_marginTop="@dimen/margin_10dp" />

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
+import com.ptit.bb.timgiasu.Utils.AppUtils;
 import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
 import com.ptit.bb.timgiasu.customview.Confirmdialog;
 
@@ -48,6 +49,8 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
     EditText mPassEt;
     @BindView(R.id.confirmPasswordEt)
     EditText mConfirmPassEt;
+    @BindView(R.id.citySpn)
+    Spinner mCitiesSp;
 
     private List<String> mGenders;
     private Calendar mDateOfBirth = Calendar.getInstance();
@@ -67,7 +70,13 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
 
         initGenders();
 
+        initCities();
 
+    }
+
+    private void initCities() {
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getViewContext(), R.layout.item_simple_spinner, R.id.text, AppUtils.citiesVN());
+        mCitiesSp.setAdapter(arrayAdapter);
     }
 
     private void initGenders() {
@@ -109,16 +118,16 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
             return;
         }
 
-        if (!confirmpass.equals(pass)){
+        if (!confirmpass.equals(pass)) {
             Toast.makeText(getViewContext(), "Xác nhận mật khẩu không đúng", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        final Confirmdialog confirmdialog = new Confirmdialog(getViewContext(),"Xác nhận","Chúng tôi sẽ gửi mã đăng kí đến SĐT của bạn");
+        final Confirmdialog confirmdialog = new Confirmdialog(getViewContext(), "Xác nhận", "Chúng tôi sẽ gửi mã đăng kí đến SĐT của bạn");
         confirmdialog.setmOnConfirmListener(new Confirmdialog.OnConfirmListener() {
             @Override
             public void onClickConfirm() {
-                mPresenter.signup(fullname,email,phoneNo,gender,pass,confirmpass,dob);
+                mPresenter.signup(fullname, email, phoneNo, gender, pass, confirmpass, dob);
                 confirmdialog.dismiss();
             }
         });
