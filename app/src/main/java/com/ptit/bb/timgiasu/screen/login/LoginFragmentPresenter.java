@@ -77,6 +77,7 @@ public class LoginFragmentPresenter extends Presenter<LoginFragmentContract.View
 //                            }
 
                         } else {
+
                             ActivityUtils.startActivity(getViewContext(), MainActivity.class);
                             getViewContext().finish();
                         }

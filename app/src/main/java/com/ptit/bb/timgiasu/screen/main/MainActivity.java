@@ -8,4 +8,6 @@ public class MainActivity extends ContainerActivity {
     public ViewFragment onCreateFirstFragment() {
         return (ViewFragment) new MainPresenter(this).getFragment();
     }
+
+    onCr
 }

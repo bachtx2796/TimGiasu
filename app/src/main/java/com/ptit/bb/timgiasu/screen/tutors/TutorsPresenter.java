@@ -1,6 +1,6 @@
 package com.ptit.bb.timgiasu.screen.tutors;
 
-import com.ptit.bb.timgiasu.data.dto.Tutor;
+import com.ptit.bb.timgiasu.data.dto.TutorDTO;
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class TutorsPresenter extends Presenter<TutorsContract.View, TutorsContract.Interactor>
         implements TutorsContract.Presenter {
 
-    private List<Tutor> mTutors;
+    private List<TutorDTO> mTutors;
     private TutorAdapter mTutorAdapter;
 
     public TutorsPresenter(ContainerView containerView) {
@@ -33,13 +33,7 @@ public class TutorsPresenter extends Presenter<TutorsContract.View, TutorsContra
 
     private void getData() {
         mTutors = new ArrayList<>();
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
-        mTutors.add(new Tutor());
+        mTutors.add(new TutorDTO());
         mTutorAdapter = new TutorAdapter(getViewContext(),mTutors);
         mView.bindView(mTutorAdapter);
     }

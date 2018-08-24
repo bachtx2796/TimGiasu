@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ptit.bb.timgiasu.R;
-import com.ptit.bb.timgiasu.data.dto.Tutor;
+import com.ptit.bb.timgiasu.data.dto.TutorDTO;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ import butterknife.ButterKnife;
 public class TutorAdapter extends RecyclerView.Adapter {
 
     private Context mContext;
-    private List<Tutor> mTutors;
+    private List<TutorDTO> mTutors;
 
-    public TutorAdapter(Context mContext, List<Tutor> mTutors) {
+    public TutorAdapter(Context mContext, List<TutorDTO> mTutors) {
         this.mContext = mContext;
         this.mTutors = mTutors;
     }

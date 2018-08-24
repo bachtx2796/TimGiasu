@@ -38,6 +38,7 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
     @Override
     public void start() {
         // Start getting data here
+        getListUserFromDB();
     }
 
     @Override
@@ -72,6 +73,9 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
                                         if (task.isSuccessful()) {
                                             // Sign in success, update UI with the signed-in user's information
                                             Log.d("@@@@", "createUserWithEmail:success");
+                                            // save user into db
+
+                                            task.getResult().getUser();
                                             back();
                                         } else {
                                             // If sign in fails, display a message to the user.
@@ -105,5 +109,9 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
             }
         });
         presenter.pushView();
+    }
+
+    public void getListUserFromDB() {
+
     }
 }
