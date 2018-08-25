@@ -17,9 +17,11 @@ interface RegisterContract {
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
-        void signup(String fullname, String email, String phoneNo, String gender, String pass, String confirmpass, String dob);
+        void signup(String fullname, String email, String phoneNo, String gender, String pass, String confirmpass, String dob, String cities, String address);
 
         void showMap();
+
+        void getSizeUserFromDB(String city);
     }
 }
 

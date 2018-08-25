@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.gemvietnam.utils.ActivityUtils;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.login.LoginActivity;
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
@@ -33,7 +34,7 @@ public class SplashPresenter extends Presenter<SplashContract.View, SplashContra
     @Override
     public void start() {
         // Start getting data here
-        if (mAuth.getCurrentUser() != null){
+        if (PrefWrapper.getUser(getViewContext()) != null){
             ActivityUtils.startActivity(getViewContext(), MainActivity.class);
         } else {
             new Handler().postDelayed(new Runnable() {

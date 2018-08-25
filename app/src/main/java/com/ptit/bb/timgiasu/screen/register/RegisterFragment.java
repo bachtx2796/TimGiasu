@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -76,6 +78,17 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
 
     private void initCities() {
         ArrayAdapter arrayAdapter = new ArrayAdapter(getViewContext(), R.layout.item_simple_spinner, R.id.text, AppUtils.citiesVN());
+        mCitiesSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                mPresenter.getSizeUserFromDB(AppUtils.citiesVN()[i]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         mCitiesSp.setAdapter(arrayAdapter);
     }
 
@@ -101,6 +114,8 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
         final String pass = mPassEt.getText().toString();
         final String confirmpass = mConfirmPassEt.getText().toString();
         final String dob = mDoBTv.getText().toString();
+        final String city = (String) mCitiesSp.getSelectedItem();
+        final String address = mAddressTv.getText().toString();
 
         if (StringUtils.isEmpty(fullname) ||
                 StringUtils.isEmpty(email) ||
@@ -108,7 +123,8 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
                 StringUtils.isEmpty(gender) ||
                 StringUtils.isEmpty(dob) ||
                 StringUtils.isEmpty(pass) ||
-                StringUtils.isEmpty(confirmpass)) {
+                StringUtils.isEmpty(confirmpass)||
+                StringUtils.isEmpty(address)) {
             Toast.makeText(getViewContext(), "Nhập đủ thông tin các trường", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -127,7 +143,7 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
         confirmdialog.setmOnConfirmListener(new Confirmdialog.OnConfirmListener() {
             @Override
             public void onClickConfirm() {
-                mPresenter.signup(fullname, email, phoneNo, gender, pass, confirmpass, dob);
+                mPresenter.signup(fullname, email, phoneNo, gender, pass, confirmpass, dob,city,address);
                 confirmdialog.dismiss();
             }
         });

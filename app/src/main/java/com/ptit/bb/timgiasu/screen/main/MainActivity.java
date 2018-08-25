@@ -9,5 +9,4 @@ public class MainActivity extends ContainerActivity {
         return (ViewFragment) new MainPresenter(this).getFragment();
     }
 
-    onCr
 }

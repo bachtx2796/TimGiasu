@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.screen.forgotpassword.ForgotPasswordPresenter;
 import com.ptit.bb.timgiasu.screen.main.MainActivity;
 import com.ptit.bb.timgiasu.screen.register.RegisterPresenter;
@@ -66,22 +67,17 @@ public class LoginFragmentPresenter extends Presenter<LoginFragmentContract.View
                         // signed in user can be handled in the listener.
                         mView.hideProgress();
                         if (!task.isSuccessful()) {
-                            // there was an error
-//                            if (password.length() < 6) {
-//                                inputPassword.setError(getString(R.string.minimum_password));
-//                            } else {
-
                             Toast.makeText(getViewContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
-
-//                            }
-
                         } else {
-
+                            UserDTO userDTO = getUser(task.getResult().getUser().getUid());
                             ActivityUtils.startActivity(getViewContext(), MainActivity.class);
                             getViewContext().finish();
                         }
                     }
                 });
+    }
+
+    private UserDTO getUser(String uid) {
+        return null;
     }
 }

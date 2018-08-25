@@ -117,7 +117,6 @@ public class VerifyPhoneNoPresenter extends Presenter<VerifyPhoneNoContract.View
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("@@@@@", "signInWithCredential:success");
-                            DialogUtils.dismissProgressDialog();
 
                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                             user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {

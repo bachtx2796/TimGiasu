@@ -5,6 +5,7 @@ public class UserDTO {
     private String id;
     protected String name;
     protected String email;
+    protected String city;
     protected String phoneNo;
     protected String gender;
     protected String dob;
@@ -13,10 +14,11 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(String id, String name, String email, String phoneNo, String gender, String dob, String address) {
+    public UserDTO(String id, String name, String email, String city, String phoneNo, String gender, String dob, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.city = city;
         this.phoneNo = phoneNo;
         this.gender = gender;
         this.dob = dob;
