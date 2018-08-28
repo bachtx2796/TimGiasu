@@ -15,15 +15,15 @@ import butterknife.OnClick;
 /**
  * The LoginFragment Fragment
  */
-public class LoginFragmentFragment extends ViewFragment<LoginFragmentContract.Presenter> implements LoginFragmentContract.View {
+public class LoginFragment extends ViewFragment<LoginContract.Presenter> implements LoginContract.View {
 
     @BindView(R.id.userNameEt)
     EditText mUsernameEt;
     @BindView(R.id.passwordEt)
     EditText mPassEt;
 
-    public static LoginFragmentFragment getInstance() {
-        return new LoginFragmentFragment();
+    public static LoginFragment getInstance() {
+        return new LoginFragment();
     }
 
     @Override

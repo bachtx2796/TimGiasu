@@ -34,8 +34,6 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
         implements RegisterContract.Presenter {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private long sizeUsers = 0;
-    private DatabaseReference mDatabase;
 
     public RegisterPresenter(ContainerView containerView) {
         super(containerView);
@@ -49,7 +47,7 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
     @Override
     public void start() {
         // Start getting data here
-        mDatabase = FirebaseDatabase.getInstance().getReference(DBConstan.CITIES);
+
     }
 
     @Override
@@ -86,8 +84,6 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
 
                                             Log.d("@@@@", "createUserWithEmail:success");
                                             // save user into db
-                                            sizeUsers++;
-                                            addSizeUsers(city, sizeUsers);
                                             saveInfoUser(task.getResult().getUser().getUid(), fullname, email, phoneNo, gender, dob, city, address);
                                             DialogUtils.dismissProgressDialog();
                                             back();
@@ -125,34 +121,10 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
         presenter.pushView();
     }
 
-    @Override
-    public void getSizeUserFromDB(String city) {
-        mDatabase.child(city).child(DBConstan.SIZE_USERS).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
-                    sizeUsers = 0;
-                } else {
-                    sizeUsers = (long) dataSnapshot.getValue();
-                }
-
-                Log.e("@@@@@", sizeUsers + "");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void addSizeUsers(String city, long size) {
-        mDatabase.child(city).child(DBConstan.SIZE_USERS).setValue(size);
-    }
 
     private void saveInfoUser(String id, String fullname, String email, String phoneNo, String gender, String dob, String city, String address) {
         UserDTO userDTO = new UserDTO(id, fullname, email, city, phoneNo, gender, dob, address);
-        mDatabase.child(city).child(DBConstan.USERS).child(String.valueOf(sizeUsers - 1)).setValue(userDTO);
-        mDatabase.child(DBConstan.USERS).child(id).setValue(userDTO);
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(id).setValue(userDTO);
+
     }
 }

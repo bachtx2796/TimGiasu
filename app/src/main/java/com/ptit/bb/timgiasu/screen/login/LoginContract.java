@@ -5,9 +5,9 @@ import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 
 /**
- * The LoginFragment Contract
+ * The Login Contract
  */
-interface LoginFragmentContract {
+interface LoginContract {
 
     interface Interactor extends IInteractor<Presenter> {
     }

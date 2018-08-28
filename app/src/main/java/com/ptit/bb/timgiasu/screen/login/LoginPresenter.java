@@ -9,7 +9,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.forgotpassword.ForgotPasswordPresenter;
 import com.ptit.bb.timgiasu.screen.main.MainActivity;
 import com.ptit.bb.timgiasu.screen.register.RegisterPresenter;
@@ -20,18 +28,18 @@ import com.gemvietnam.utils.ActivityUtils;
 /**
  * The LoginFragment Presenter
  */
-public class LoginFragmentPresenter extends Presenter<LoginFragmentContract.View, LoginFragmentContract.Interactor>
-        implements LoginFragmentContract.Presenter {
+public class LoginPresenter extends Presenter<LoginContract.View, LoginContract.Interactor>
+        implements LoginContract.Presenter {
 
     private FirebaseAuth mAuth;
 
-    public LoginFragmentPresenter(ContainerView containerView) {
+    public LoginPresenter(ContainerView containerView) {
         super(containerView);
     }
 
     @Override
-    public LoginFragmentContract.View onCreateView() {
-        return LoginFragmentFragment.getInstance();
+    public LoginContract.View onCreateView() {
+        return LoginFragment.getInstance();
     }
 
     @Override
@@ -41,8 +49,8 @@ public class LoginFragmentPresenter extends Presenter<LoginFragmentContract.View
     }
 
     @Override
-    public LoginFragmentContract.Interactor onCreateInteractor() {
-        return new LoginFragmentInteractor(this);
+    public LoginContract.Interactor onCreateInteractor() {
+        return new LoginInteractor(this);
     }
 
     @Override
@@ -65,19 +73,30 @@ public class LoginFragmentPresenter extends Presenter<LoginFragmentContract.View
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        mView.hideProgress();
                         if (!task.isSuccessful()) {
                             Toast.makeText(getViewContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         } else {
-                            UserDTO userDTO = getUser(task.getResult().getUser().getUid());
-                            ActivityUtils.startActivity(getViewContext(), MainActivity.class);
-                            getViewContext().finish();
+                            saveUser(task.getResult().getUser().getUid());
                         }
                     }
                 });
     }
 
-    private UserDTO getUser(String uid) {
-        return null;
+    private void saveUser(String id) {
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserDTO userDTO =dataSnapshot.getValue(UserDTO.class);
+                PrefWrapper.saveUser(getViewContext(), userDTO);
+                mView.hideProgress();
+                ActivityUtils.startActivity(getViewContext(), MainActivity.class);
+                getViewContext().finish();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

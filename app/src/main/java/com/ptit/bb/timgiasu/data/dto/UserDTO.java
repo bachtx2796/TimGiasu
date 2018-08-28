@@ -10,6 +10,7 @@ public class UserDTO {
     protected String gender;
     protected String dob;
     protected String address;
+    protected String avatar;
 
     public UserDTO() {
     }
@@ -79,5 +80,21 @@ public class UserDTO {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

@@ -78,17 +78,6 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
 
     private void initCities() {
         ArrayAdapter arrayAdapter = new ArrayAdapter(getViewContext(), R.layout.item_simple_spinner, R.id.text, AppUtils.citiesVN());
-        mCitiesSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                mPresenter.getSizeUserFromDB(AppUtils.citiesVN()[i]);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         mCitiesSp.setAdapter(arrayAdapter);
     }
 
