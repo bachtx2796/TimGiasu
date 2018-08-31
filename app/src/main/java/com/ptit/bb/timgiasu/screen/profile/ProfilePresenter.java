@@ -7,7 +7,9 @@ import android.widget.Toast;
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 import com.gemvietnam.utils.ActivityUtils;
+import com.gemvietnam.utils.DialogUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,7 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.changepassword.ChangePasswordPresenter;
 import com.ptit.bb.timgiasu.screen.login.LoginActivity;
+
+import java.util.List;
 
 /**
  * The Profile Presenter
@@ -56,15 +61,23 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
     public void saveUser(final UserDTO mUser) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DialogUtils.showProgressDialog(getViewContext());
         user.updateEmail(mUser.getEmail())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User email address updated.");
-                            PrefWrapper.saveUser(getViewContext(), mUser);
-                            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser);
+                            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    PrefWrapper.saveUser(getViewContext(), mUser);
+                                    Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            DialogUtils.showProgressDialog(getViewContext());
                         } else {
+                            DialogUtils.showProgressDialog(getViewContext());
                             Toast.makeText(getViewContext(), "Hết phiên đăng nhập", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -72,5 +85,36 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
 
                 });
 
+    }
+
+    @Override
+    public void changePassword() {
+        new ChangePasswordPresenter(mContainerView).pushView();
+    }
+
+    @Override
+    public void saveTutor(List<String> mClasses, List<String> mSubjects, String time, String salary, List<String> mListUri) {
+        final UserDTO user = PrefWrapper.getUser(getViewContext());
+        user.setClasses(mClasses);
+        user.setSubjects(mSubjects);
+        user.setTime(time);
+        user.setSalary(Long.parseLong(salary));
+        user.setUris(mListUri);
+        user.setTutor(true);
+        DialogUtils.showProgressDialog(getViewContext());
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(user.getId()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                PrefWrapper.saveUser(getViewContext(), user);
+                DialogUtils.dismissProgressDialog();
+                Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                DialogUtils.dismissProgressDialog();
+                Toast.makeText(getViewContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

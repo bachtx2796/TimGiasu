@@ -5,6 +5,8 @@ import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 
+import java.util.List;
+
 /**
  * The Profile Contract
  */
@@ -20,6 +22,10 @@ interface ProfileContract {
         void logout();
 
         void saveUser(UserDTO mUser);
+
+        void changePassword();
+
+        void saveTutor(List<String> mClasses, List<String> mSubjects, String time, String salary, List<String> mListUri);
     }
 }
 

@@ -1,5 +1,8 @@
 package com.ptit.bb.timgiasu.data.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDTO {
 
     private String id;
@@ -11,6 +14,12 @@ public class UserDTO {
     protected String dob;
     protected String address;
     protected String avatar;
+    private boolean isTutor = false;
+    private List<String> classes;
+    private List<String> subjects;
+    private String time;
+    private long salary;
+    private List<String> uris;
 
     public UserDTO() {
     }
@@ -24,6 +33,11 @@ public class UserDTO {
         this.gender = gender;
         this.dob = dob;
         this.address = address;
+        classes = new ArrayList<>();
+        subjects = new ArrayList<>();
+        time = "";
+        salary = 0;
+        uris = new ArrayList<>();
     }
 
     public String getId() {
@@ -96,5 +110,74 @@ public class UserDTO {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public boolean isTutor() {
+        return isTutor;
+    }
+
+    public void setTutor(boolean tutor) {
+        isTutor = tutor;
+    }
+
+    public List<String> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<String> classes) {
+        this.classes = classes;
+    }
+
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String mtime) {
+        this.time = mtime;
+    }
+
+    public long getSalary() {
+        return salary;
+    }
+
+    public void setSalary(long salary) {
+        this.salary = salary;
+    }
+
+    public List<String> getUris() {
+        return uris;
+    }
+
+    public void setUris(List<String> uris) {
+        this.uris = uris;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", city='" + city + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dob='" + dob + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", isTutor=" + isTutor +
+                ", classes=" + classes +
+                ", subjects=" + subjects +
+                ", time='" + time + '\'' +
+                ", salary=" + salary +
+                ", uris=" + uris +
+                '}';
     }
 }

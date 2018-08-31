@@ -67,4 +67,12 @@ public class AppUtils {
                 "Hà Nội",
                 "TP HCM"};
     }
+
+    public static String[] classes() {
+        return new String[]{"Mầm non", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "Đại học"};
+    }
+
+    public static String[] subjects() {
+        return new String[]{"Toán", "Lý", "Hóa", "Sinh", "Văn", "T.Anh", "T.Pháp", "T.Nhật", "T.Trung", "T.Hàn", "T.Đức", "Lập trình", "Mỹ thuật", "Tin học văn phòng"};
+    }
 }

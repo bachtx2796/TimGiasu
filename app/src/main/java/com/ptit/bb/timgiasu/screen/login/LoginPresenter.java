@@ -3,6 +3,7 @@ package com.ptit.bb.timgiasu.screen.login;
 
 import android.support.annotation.NonNull;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;

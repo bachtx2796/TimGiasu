@@ -14,17 +14,26 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.common.file.FileUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.DialogUtils;
 import com.gemvietnam.utils.PermissionUtils;
+import com.gemvietnam.utils.StringUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
 import com.ptit.bb.timgiasu.Utils.FileUtil;
+import com.ptit.bb.timgiasu.customview.PickDialog;
 import com.ptit.bb.timgiasu.data.ImgurServiceBuilder;
 import com.ptit.bb.timgiasu.data.dto.ImgurBaseData;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
@@ -32,6 +41,9 @@ import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,15 +71,42 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
     @BindView(R.id.addressTv)
     TextView mAddressTv;
     @BindView(R.id.avatarIv)
-    ImageView mAvatarIv;
+    SimpleDraweeView mAvatarIv;
     @BindView(R.id.profileEditTv)
     TextView mEditBt;
     @BindView(R.id.profileSaveTv)
     TextView mSaveBt;
+    @BindView(R.id.info_tutor_ll)
+    LinearLayout mInfoTutorLL;
+    @BindView(R.id.registerTutorBt)
+    TextView mRegisterTutorBt;
+    @BindView(R.id.image1)
+    SimpleDraweeView mImage1;
+    @BindView(R.id.image2)
+    SimpleDraweeView mImage2;
+    @BindView(R.id.image3)
+    SimpleDraweeView mImage3;
+    @BindView(R.id.classTv)
+    TextView mClassTv;
+    @BindView(R.id.subjectTv)
+    TextView mSubjectTv;
+    @BindView(R.id.timeTv)
+    EditText mTimeEt;
+    @BindView(R.id.serviceFeeTv)
+    EditText mServiceFeeEt;
 
     private static final int REQUEST_PICK_PICTURE = 100;
+    private static final int REQUEST_PICK_PICTURE1 = 101;
+    private static final int REQUEST_PICK_PICTURE2 = 102;
+    private static final int REQUEST_PICK_PICTURE3 = 103;
     private String mLinkAvatar = "";
     private UserDTO mUser;
+
+    FirebaseStorage storage;
+
+    private List<String> mListUri;
+    private List<String> mClasses;
+    private List<String> mSubjects;
 
     public static ProfileFragment getInstance() {
         return new ProfileFragment();
@@ -87,15 +126,19 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
     public void initLayout() {
         super.initLayout();
 
+        storage = FirebaseStorage.getInstance();
+
         initGenders();
 
         initCities();
 
         fillDataUser();
+
     }
 
     private void fillDataUser() {
         mUser = PrefWrapper.getUser(getViewContext());
+        mAvatarIv.setEnabled(false);
         if (mUser.getAvatar() != null) {
             mAvatarIv.setImageURI(Uri.parse(mUser.getAvatar()));
         }
@@ -112,6 +155,33 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
         }
         mDobTv.setText(mUser.getDob());
         mAddressTv.setText(mUser.getAddress());
+
+        if (mUser.isTutor()) {
+            mRegisterTutorBt.setText("Thông tin gia sư");
+            mInfoTutorLL.setVisibility(View.VISIBLE);
+        } else {
+            mRegisterTutorBt.setText("Đăng kí thông tin gia sư");
+            mInfoTutorLL.setVisibility(View.GONE);
+        }
+
+        mListUri = new ArrayList<>();
+        mListUri.add("");
+        mListUri.add("");
+        mListUri.add("");
+
+        if (mUser.isTutor()) {
+            mRegisterTutorBt.setText("Thông tin gia sư");
+            mClasses = mUser.getClasses();
+            mClassTv.setText(mClasses.toString());
+            mSubjects = mUser.getSubjects();
+            mSubjectTv.setText(mSubjects.toString());
+            mTimeEt.setText(mUser.getTime());
+            mServiceFeeEt.setText(mUser.getSalary() + "");
+            mListUri = mUser.getUris();
+            mImage1.setImageURI(mListUri.get(0));
+            mImage2.setImageURI(mListUri.get(1));
+            mImage3.setImageURI(mListUri.get(2));
+        }
     }
 
     private void initGenders() {
@@ -186,12 +256,34 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
         startActivityForResult(pickIntent, REQUEST_PICK_PICTURE);
     }
 
+    private void chooseImageFromSDCard(int pos) {
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(pickIntent, REQUEST_PICK_PICTURE + pos);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PICK_PICTURE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 chooseAvatarFromSDCard();
+        }
+
+        if (requestCode == REQUEST_PICK_PICTURE1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                chooseImageFromSDCard(1);
+        }
+
+        if (requestCode == REQUEST_PICK_PICTURE2) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                chooseImageFromSDCard(2);
+        }
+
+        if (requestCode == REQUEST_PICK_PICTURE3) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                chooseImageFromSDCard(3);
         }
     }
 
@@ -202,24 +294,36 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
         }
         switch (requestCode) {
             case REQUEST_PICK_PICTURE:
-                handlePickImage(data);
+                handlePickImage(data, mAvatarIv);
+                break;
+            case REQUEST_PICK_PICTURE1:
+                handlePickImage(data, mImage1);
+                break;
+            case REQUEST_PICK_PICTURE2:
+                handlePickImage(data, mImage2);
+                break;
+            case REQUEST_PICK_PICTURE3:
+                handlePickImage(data, mImage3);
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    private void handlePickImage(Intent data) {
+    private void handlePickImage(Intent data, SimpleDraweeView iv) {
         DialogUtils.showProgressDialog(getViewContext());
-        try {
-            Bitmap bm = MediaStore.Images.Media.getBitmap(getViewContext().getContentResolver(), data.getData());
-            uploadImageFromBitmap(bm);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Bitmap bm = MediaStore.Images.Media.getBitmap(getViewContext().getContentResolver(), data.getData());
+//            uploadImageFromBitmap(bm, iv);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        uploadImageWithFb(data, iv);
     }
 
-    private void uploadImageFromBitmap(final Bitmap photo) {
+
+    private void uploadImageFromBitmap(final Bitmap photo, final ImageView iv) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] arr = byteArrayOutputStream.toByteArray();
@@ -229,8 +333,22 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
             public void onResponse(Call<ImgurBaseData> call, Response<ImgurBaseData> response) {
                 DialogUtils.dismissProgressDialog();
                 if (response.isSuccessful()) {
-                    mLinkAvatar = response.body().getImg().getLink();
-                    mAvatarIv.setImageURI(Uri.parse(mLinkAvatar));
+                    if (iv.getId() == R.id.avatarIv) {
+                        mLinkAvatar = response.body().getImg().getLink();
+                        iv.setImageURI(Uri.parse(mLinkAvatar));
+                    }
+                    if (iv.getId() == R.id.image1) {
+                        mListUri.set(0, response.body().getImg().getLink());
+                        mImage1.setImageURI(response.body().getImg().getLink());
+                    }
+                    if (iv.getId() == R.id.image2) {
+                        mListUri.set(1, response.body().getImg().getLink());
+                        mImage2.setImageURI(response.body().getImg().getLink());
+                    }
+                    if (iv.getId() == R.id.image3) {
+                        mListUri.set(2, response.body().getImg().getLink());
+                        mImage3.setImageURI(response.body().getImg().getLink());
+                    }
                 } else {
                     Toast.makeText(getViewContext(), "upload lỗi", Toast.LENGTH_SHORT).show();
                 }
@@ -242,6 +360,109 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
                 Toast.makeText(getViewContext(), "lỗi", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void uploadImageWithFb(Intent data, final SimpleDraweeView iv) {
+
+        Uri filePath = data.getData();
+        if (filePath != null) {
+            DialogUtils.showProgressDialog(getViewContext());
+
+            StorageReference ref = storage.getReference().child("images/" + UUID.randomUUID().toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            DialogUtils.dismissProgressDialog();
+                            Uri uri = taskSnapshot.getDownloadUrl();
+                            iv.setImageURI(uri);
+                            if (iv.getId() == R.id.image1) {
+                                mListUri.set(0, uri.toString());
+                            } else if (iv.getId() == R.id.image2) {
+                                mListUri.set(1, uri.toString());
+                            } else {
+                                mListUri.set(2, uri.toString());
+                            }
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            DialogUtils.dismissProgressDialog();
+                            Toast.makeText(getViewContext(), "Upload lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+
+    @OnClick(R.id.changePasswordTv)
+    public void changePassword() {
+        mPresenter.changePassword();
+    }
+
+    @OnClick(R.id.image1)
+    public void selectImage1() {
+        if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE1)) {
+            chooseImageFromSDCard(1);
+        }
+    }
+
+    @OnClick(R.id.image2)
+    public void selectImage2() {
+        if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE2)) {
+            chooseImageFromSDCard(2);
+        }
+    }
+
+    @OnClick(R.id.image3)
+    public void selectImage3() {
+        if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE3)) {
+            chooseImageFromSDCard(3);
+        }
+    }
+
+    @OnClick(R.id.registerTutorBt)
+    public void registerInfoTutor() {
+        mInfoTutorLL.setVisibility(View.VISIBLE);
+    }
+
+    @OnClick(R.id.classTv)
+    public void pickClass() {
+        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.classes());
+        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
+            @Override
+            public void onSelected(List<String> data) {
+                mClassTv.setText(data.toString());
+                mClasses = data;
+            }
+        });
+        pickDialog.show();
+    }
+
+    @OnClick(R.id.subjectTv)
+    public void pickSubject() {
+        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.subjects());
+        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
+            @Override
+            public void onSelected(List<String> data) {
+                mSubjectTv.setText(data.toString());
+                mSubjects = data;
+            }
+        });
+        pickDialog.show();
+    }
+
+    @OnClick(R.id.saveInfoTutorBt)
+    public void saveInfoTutorBt() {
+        String time = mTimeEt.getText().toString();
+        String salary = mServiceFeeEt.getText().toString();
+        if (mClasses == null || mSubjects == null || StringUtils.isEmpty(time) || StringUtils.isEmpty(salary)) {
+            Toast.makeText(getViewContext(), "Nhập đủ thông tin các trường", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mPresenter.saveTutor(mClasses, mSubjects, time, salary, mListUri);
     }
 
 }

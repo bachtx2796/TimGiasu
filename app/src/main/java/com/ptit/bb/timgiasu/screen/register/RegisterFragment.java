@@ -19,6 +19,8 @@ import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
 import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
 import com.ptit.bb.timgiasu.customview.Confirmdialog;
+import com.ptit.bb.timgiasu.data.dto.UserDTO;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -193,4 +195,5 @@ public class RegisterFragment extends ViewFragment<RegisterContract.Presenter> i
     public void setLocation(String location) {
         mAddressTv.setText(location);
     }
+
 }

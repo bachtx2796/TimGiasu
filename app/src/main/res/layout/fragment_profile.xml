@@ -246,6 +246,134 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/registerTutorBt"
+                style="@style/TextViewBase.Content"
+                android:layout_marginTop="@dimen/margin_20dp"
+                android:text="@string/will_be_tutor"
+                android:textColor="@color/green"
+                android:textSize="@dimen/ts_12sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/info_tutor_ll"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/class_tc" />
+
+                    <TextView
+                        android:id="@+id/classTv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View
+                        style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/subject" />
+
+                    <TextView
+                        android:id="@+id/subjectTv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View
+                        style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/time_tc" />
+
+                    <EditText
+                        android:id="@+id/timeTv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View
+                        style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/service_fee" />
+
+                    <EditText
+                        android:id="@+id/serviceFeeTv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View
+                        style="@style/GrayDivider" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/tutor_des" />
+                    
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image1"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/bg_image_line"
+                        android:layout_height="@dimen/size_160dp" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image2"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/bg_image_line"
+                        android:layout_height="@dimen/size_160dp" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image3"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/bg_image_line"
+                        android:layout_height="@dimen/size_160dp" />
+
+                    <TextView
+                        android:id="@+id/saveInfoTutorBt"
+                        style="@style/TextViewBase.Content"
+                        android:layout_marginTop="@dimen/margin_20dp"
+                        android:text="@string/save_info_tutor"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/ts_12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
                 android:id="@+id/changePasswordTv"
                 style="@style/TextViewBase.Content"
                 android:layout_marginTop="@dimen/margin_20dp"
