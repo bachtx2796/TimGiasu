@@ -87,7 +87,7 @@ public class LoginPresenter extends Presenter<LoginContract.View, LoginContract.
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserDTO userDTO =dataSnapshot.getValue(UserDTO.class);
+                UserDTO userDTO = dataSnapshot.getValue(UserDTO.class);
                 PrefWrapper.saveUser(getViewContext(), userDTO);
                 mView.hideProgress();
                 ActivityUtils.startActivity(getViewContext(), MainActivity.class);

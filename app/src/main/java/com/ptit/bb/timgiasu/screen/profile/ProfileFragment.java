@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.InputType;
 import android.util.Base64;
@@ -19,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.common.file.FileUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.DialogUtils;
@@ -32,7 +30,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
-import com.ptit.bb.timgiasu.Utils.FileUtil;
 import com.ptit.bb.timgiasu.customview.PickDialog;
 import com.ptit.bb.timgiasu.data.ImgurServiceBuilder;
 import com.ptit.bb.timgiasu.data.dto.ImgurBaseData;
@@ -40,7 +37,6 @@ import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -144,7 +140,11 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
         }
         mFullnameEt.setText(mUser.getName());
         mEmailEt.setText(mUser.getEmail());
-        mMobileEt.setText("0" + mUser.getPhoneNo());
+        if (mUser.getPhoneNo().charAt(0) == '0') {
+            mMobileEt.setText(mUser.getPhoneNo());
+        } else {
+            mMobileEt.setText("0" + mUser.getPhoneNo());
+        }
         mGenderSp.setSelection(mUser.getGender().equals("Nam") ? 0 : 1);
         for (int i = 0; i < 64; i++) {
             String city = AppUtils.citiesVN()[i];
@@ -204,16 +204,25 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
 
     @OnClick(R.id.profileSaveTv)
     public void saveProfile() {
+        mUser = PrefWrapper.getUser(getViewContext());
+        boolean setCity = false;
+        boolean setEmail = false;
         isEnableEdit(false);
         mUser.setAvatar(mLinkAvatar);
         mUser.setAddress(mAddressTv.getText().toString());
-        mUser.setCity(mCitySp.getSelectedItem().toString());
+        if (!mUser.getCity().equals(mCitySp.getSelectedItem().toString())) {
+            setCity = true;
+            mUser.setCity(mCitySp.getSelectedItem().toString());
+        }
         mUser.setDob(mDobTv.getText().toString());
-        mUser.setEmail(mEmailEt.getText().toString());
+        if (!mUser.getEmail().equals(mEmailEt.getText().toString())) {
+            setEmail = true;
+            mUser.setEmail(mEmailEt.getText().toString());
+        }
         mUser.setGender(mGenderSp.getSelectedItem().toString());
         mUser.setName(mFullnameEt.getText().toString());
         mUser.setPhoneNo(mMobileEt.getText().toString());
-        mPresenter.saveUser(mUser);
+        mPresenter.saveUser(mUser, setEmail, setCity);
     }
 
     private void isEnableEdit(boolean isEnable) {

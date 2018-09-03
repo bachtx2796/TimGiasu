@@ -1,0 +1,287 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/green">
+
+            <ImageView
+                android:id="@+id/back_iv"
+                style="@style/ImageViewBase.ToolBar"
+                android:paddingRight="@dimen/padding_16dp"
+                android:src="@drawable/ic_white_back" />
+
+            <TextView
+                android:id="@+id/userNameTv"
+                style="@style/TextViewBase.ToolbarTitle"
+                android:layout_centerInParent="true"
+                android:text="@string/profile"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/rating_bt"
+                style="@style/TextViewBase.ToolbarTitle"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="@dimen/padding_16dp"
+                android:text="@string/rating"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/avatar_iv"
+            android:layout_width="@dimen/size_72dp"
+            android:layout_height="@dimen/size_72dp"
+            android:layout_margin="@dimen/margin_15dp"
+            fresco:placeholderImage="@drawable/user_default"
+            fresco:roundAsCircle="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/fullname" />
+
+                <TextView
+                    android:id="@+id/name_tv"
+                    style="@style/EdittextBase.Signup"
+                    android:maxLength="30" />
+
+                <View
+                    android:id="@+id/fullnameAlertView"
+                    style="@style/GrayDivider" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/email" />
+
+                <TextView
+                    android:id="@+id/email_tv"
+                    style="@style/EdittextBase.Signup"
+                    android:layout_width="match_parent" />
+
+                <View
+                    android:id="@+id/emailAlertView"
+                    style="@style/GrayDivider" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/mobile" />
+
+                <TextView
+                    android:id="@+id/mobile_tv"
+                    style="@style/EdittextBase.Signup"
+                    android:layout_width="match_parent" />
+
+                <View
+                    android:id="@+id/mobileAlertView"
+                    style="@style/GrayDivider" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/gender" />
+
+                <TextView
+                    android:id="@+id/gender_tv"
+                    style="@style/TextViewBase.Content"
+                    android:layout_marginTop="@dimen/margin_5dp" />
+
+                <View
+                    android:id="@+id/genderAlertView"
+                    style="@style/GrayDivider"
+                    android:layout_marginTop="@dimen/margin_10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/date_of_birth" />
+
+                <TextView
+                    android:id="@+id/dob_tv"
+                    style="@style/TextViewBase.Content"
+                    android:layout_marginTop="@dimen/margin_5dp" />
+
+                <View
+                    android:id="@+id/dobAlertView"
+                    style="@style/GrayDivider"
+                    android:layout_marginTop="@dimen/margin_10dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/TextViewBase.Label"
+                    android:text="@string/address" />
+
+                <TextView
+                    android:id="@+id/address_tv"
+                    style="@style/EdittextBase.Signup"
+                    android:layout_width="match_parent" />
+
+                <View style="@style/GrayDivider" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/info_tutor_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/class_tc" />
+
+                    <TextView
+                        android:id="@+id/class_tv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/subject" />
+
+                    <TextView
+                        android:id="@+id/subject_tv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/time_tc" />
+
+                    <TextView
+                        android:id="@+id/time_tv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View style="@style/GrayDivider" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/service_fee" />
+
+                    <TextView
+                        android:id="@+id/servicefee_tv"
+                        style="@style/EdittextBase.Signup"
+                        android:layout_width="match_parent" />
+
+                    <View style="@style/GrayDivider" />
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:layout_marginTop="@dimen/margin_5dp"
+                        android:text="@string/tutor_profile_des" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_160dp"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:background="@drawable/bg_image_line" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image2"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_160dp"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:background="@drawable/bg_image_line" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/image3"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_160dp"
+                        android:layout_margin="@dimen/margin_10dp"
+                        android:background="@drawable/bg_image_line" />
+
+                    <TextView
+                        android:id="@+id/contact_bt"
+                        style="@style/TextViewBase.Button.Green"
+                        android:text="@string/contact" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

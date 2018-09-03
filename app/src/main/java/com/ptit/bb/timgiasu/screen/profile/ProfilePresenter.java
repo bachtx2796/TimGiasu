@@ -58,32 +58,51 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
     }
 
     @Override
-    public void saveUser(final UserDTO mUser) {
+    public void saveUser(final UserDTO mUser, boolean setEmail, final boolean setCity) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DialogUtils.showProgressDialog(getViewContext());
-        user.updateEmail(mUser.getEmail())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User email address updated.");
-                            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    PrefWrapper.saveUser(getViewContext(), mUser);
-                                    Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+        if (setEmail) {
+            user.updateEmail(mUser.getEmail())
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "User email address updated.");
+                                if (mUser.isTutor() && setCity){
+                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(mUser.getId()).removeValue();
+                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).setValue(mUser);
                                 }
-                            });
-                            DialogUtils.showProgressDialog(getViewContext());
-                        } else {
-                            DialogUtils.showProgressDialog(getViewContext());
-                            Toast.makeText(getViewContext(), "Hết phiên đăng nhập", Toast.LENGTH_SHORT).show();
+                                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        PrefWrapper.saveUser(getViewContext(), mUser);
+                                        Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                DialogUtils.dismissProgressDialog();
+                            } else {
+                                DialogUtils.dismissProgressDialog();
+                                Toast.makeText(getViewContext(), "Hết phiên đăng nhập", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
 
 
-                });
+                    });
+        } else {
+            if (mUser.isTutor() && setCity){
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(mUser.getId()).removeValue();
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).setValue(mUser);
+            }
+            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    PrefWrapper.saveUser(getViewContext(), mUser);
+                    Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
+                    DialogUtils.dismissProgressDialog();
+                }
+            });
+        }
 
     }
 
@@ -107,6 +126,7 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
             public void onComplete(@NonNull Task<Void> task) {
                 PrefWrapper.saveUser(getViewContext(), user);
                 DialogUtils.dismissProgressDialog();
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(user.getCity()).child(user.getId()).setValue(user); // luu list user là tutor vao city
                 Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {

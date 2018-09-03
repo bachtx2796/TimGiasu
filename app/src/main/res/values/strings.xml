@@ -45,4 +45,8 @@
     <string name="service_fee">Mức lương mong muốn (VND / h)</string>
     <string name="save_info_tutor">Lưu thông tin gia sư</string>
     <string name="tutor_des">Vui lòng đăng tải CMND, bằng tốt nghiệp, các bằng cấp khác để xác minh tài khoản</string>
+    <string name="profile">Hồ sơ</string>
+    <string name="tutor_profile_des">Ảnh chứng thực</string>
+    <string name="contact">Liên hệ</string>
+    <string name="rating">Đánh giá</string>
 </resources>

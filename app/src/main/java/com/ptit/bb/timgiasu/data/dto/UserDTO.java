@@ -1,6 +1,7 @@
 package com.ptit.bb.timgiasu.data.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class UserDTO {
@@ -20,6 +21,7 @@ public class UserDTO {
     private String time;
     private long salary;
     private List<String> uris;
+    private HashMap<String,Integer> ratings;
 
     public UserDTO() {
     }
@@ -38,6 +40,7 @@ public class UserDTO {
         time = "";
         salary = 0;
         uris = new ArrayList<>();
+        ratings = new HashMap<>();
     }
 
     public String getId() {
@@ -158,6 +161,14 @@ public class UserDTO {
 
     public void setUris(List<String> uris) {
         this.uris = uris;
+    }
+
+    public HashMap<String, Integer> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(HashMap<String, Integer> ratings) {
+        this.ratings = ratings;
     }
 
     @Override
