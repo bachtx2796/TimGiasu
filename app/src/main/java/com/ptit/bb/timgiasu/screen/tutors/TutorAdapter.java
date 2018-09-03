@@ -90,10 +90,13 @@ public class TutorAdapter extends RecyclerView.Adapter {
     private float getRating(HashMap<String, Integer> ratings) {
         HashMap<String, Integer> tmp = ratings;
         int sum = 0;
-        for (Map.Entry<String, Integer> entry : tmp.entrySet()) {
-            sum += entry.getValue();
+        if (tmp != null && tmp.size() > 0){
+            for (Map.Entry<String, Integer> entry : tmp.entrySet()) {
+                sum += entry.getValue();
+            }
+            return sum / tmp.size();
         }
-        return sum / tmp.size();
+        return 0;
     }
 
     @Override

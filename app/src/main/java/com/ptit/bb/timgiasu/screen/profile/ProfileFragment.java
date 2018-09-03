@@ -385,7 +385,9 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
                             DialogUtils.dismissProgressDialog();
                             Uri uri = taskSnapshot.getDownloadUrl();
                             iv.setImageURI(uri);
-                            if (iv.getId() == R.id.image1) {
+                            if (iv.getId() == R.id.avatarIv) {
+                                mLinkAvatar = uri.toString();
+                            } else if (iv.getId() == R.id.image1) {
                                 mListUri.set(0, uri.toString());
                             } else if (iv.getId() == R.id.image2) {
                                 mListUri.set(1, uri.toString());

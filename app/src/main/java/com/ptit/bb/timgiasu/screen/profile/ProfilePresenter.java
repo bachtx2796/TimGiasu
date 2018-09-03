@@ -70,8 +70,8 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "User email address updated.");
                                 if (mUser.isTutor() && setCity){
-                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(mUser.getId()).removeValue();
-                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).setValue(mUser);
+                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(DBConstan.USERS).child(mUser.getId()).removeValue();
+                                    FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.USERS).child(mUser.getId()).setValue(mUser);
                                 }
                                 FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
@@ -91,8 +91,8 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
                     });
         } else {
             if (mUser.isTutor() && setCity){
-                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(mUser.getId()).removeValue();
-                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).setValue(mUser);
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(DBConstan.USERS).child(mUser.getId()).removeValue();
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).child(DBConstan.USERS).setValue(mUser);
             }
             FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).setValue(mUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -126,7 +126,7 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
             public void onComplete(@NonNull Task<Void> task) {
                 PrefWrapper.saveUser(getViewContext(), user);
                 DialogUtils.dismissProgressDialog();
-                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(user.getCity()).child(user.getId()).setValue(user); // luu list user là tutor vao city
+                FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(user.getCity()).child(DBConstan.USERS).child(user.getId()).setValue(user); // luu list user là tutor vao city
                 Toast.makeText(getViewContext(), "Lưu thông tin thành công", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(new OnFailureListener() {

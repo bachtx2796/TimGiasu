@@ -65,7 +65,7 @@ public class TutorProfilePresenter extends Presenter<TutorProfileContract.View, 
         }
         rating.put(PrefWrapper.getUser(getViewContext()).getId(), (int) rate);
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).child(DBConstan.RATINGS).setValue(rating);
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).child(DBConstan.RATINGS).setValue(rating);
+        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.USERS).child(mUser.getId()).child(DBConstan.RATINGS).setValue(rating);
     }
 
     @Override

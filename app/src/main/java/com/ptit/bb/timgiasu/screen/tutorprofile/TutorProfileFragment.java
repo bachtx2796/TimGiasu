@@ -114,7 +114,11 @@ public class TutorProfileFragment extends ViewFragment<TutorProfileContract.Pres
 
     @OnClick(R.id.rating_bt)
     public void rating() {
-        RatingDialog ratingDialog = new RatingDialog(getViewContext(), mPresenter.getmUser().getRatings().get(PrefWrapper.getUser(getViewContext()).getId()));
+        int rate = 0;
+        if (mPresenter.getmUser().getRatings() != null){
+            rate = mPresenter.getmUser().getRatings().get(PrefWrapper.getUser(getViewContext()).getId());
+        }
+        RatingDialog ratingDialog = new RatingDialog(getViewContext(), rate);
         ratingDialog.setmOnRatingListener(new RatingDialog.OnRatingListener() {
             @Override
             public void onRating(float rate) {
