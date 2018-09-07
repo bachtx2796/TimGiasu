@@ -1,13 +1,15 @@
-package com.ptit.bb.timgiasu.screen.main;
+package com.ptit.bb.timgiasu.screen.post;
 
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 
+import java.util.List;
+
 /**
- * The Main Contract
+ * The Post Contract
  */
-interface MainContract {
+interface PostContract {
 
     interface Interactor extends IInteractor<Presenter> {
     }
@@ -16,7 +18,7 @@ interface MainContract {
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
-        void newPost();
+        void newPost(String address,List<String> mClasses, List<String> mSubjects, String time, String salary, List<String> mListUri);
     }
 }
 

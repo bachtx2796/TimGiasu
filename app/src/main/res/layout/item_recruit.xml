@@ -52,7 +52,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/itemDescriptionTv"
+                android:id="@+id/itemSalaryTv"
                 style="@style/TextViewBase.Label"
                 android:layout_marginTop="@dimen/margin_5dp"
                 android:layout_weight="1"

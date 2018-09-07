@@ -6,4 +6,5 @@ public class DBConstan {
     public static final String SIZE_USERS = "sizeusers";
     public static final String USERS = "users";
     public static final String RATINGS = "ratings";
+    public static final String POSTS = "post";
 }

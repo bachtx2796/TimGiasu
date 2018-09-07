@@ -75,4 +75,6 @@ public class AppUtils {
     public static String[] subjects() {
         return new String[]{"Toán", "Lý", "Hóa", "Sinh", "Văn", "T.Anh", "T.Pháp", "T.Nhật", "T.Trung", "T.Hàn", "T.Đức", "Lập trình", "Mỹ thuật", "Tin học văn phòng"};
     }
+
+    public static final String DANG_TUYEN = "Đăng tuyển";
 }

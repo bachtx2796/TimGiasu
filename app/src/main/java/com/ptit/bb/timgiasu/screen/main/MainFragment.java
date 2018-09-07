@@ -27,6 +27,7 @@ public class MainFragment extends ViewFragment<MainContract.Presenter> implement
     ImageView mMessageIv;
     @BindView(R.id.bottom_bar_profile_iv)
     ImageView mProfileIv;
+
     @BindView(R.id.bottomBar)
     BottomBar bottomBar;
 
@@ -119,5 +120,9 @@ public class MainFragment extends ViewFragment<MainContract.Presenter> implement
         switchTabs(MainNavigator.TAB_PROFILE_ID);
     }
 
+    @OnClick(R.id.bottom_bar_post_rl)
+    public void post(){
+        mPresenter.newPost();
+    }
 
 }

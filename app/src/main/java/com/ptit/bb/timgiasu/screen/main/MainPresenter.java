@@ -10,6 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
+import com.ptit.bb.timgiasu.screen.post.PostPresenter;
 
 /**
  * The Main Presenter
@@ -34,5 +35,10 @@ public class MainPresenter extends Presenter<MainContract.View, MainContract.Int
     @Override
     public MainContract.Interactor onCreateInteractor() {
         return new MainInteractor(this);
+    }
+
+    @Override
+    public void newPost() {
+        new PostPresenter(mContainerView).pushView();
     }
 }
