@@ -24,6 +24,7 @@ import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
 import com.ptit.bb.timgiasu.customview.PickDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,6 +75,10 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
         super.initLayout();
 
         storage = FirebaseStorage.getInstance();
+
+        mListUri = new ArrayList<>();
+        mListUri.add("");
+        mListUri.add("");
     }
 
     private void chooseImageFromSDCard(int pos) {
@@ -213,5 +218,8 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
         mPresenter.newPost(address,mClasses,mSubjects,time,salary,mListUri);
     }
 
-
+    @OnClick(R.id.back_iv)
+    public void back(){
+        mPresenter.back();
+    }
 }

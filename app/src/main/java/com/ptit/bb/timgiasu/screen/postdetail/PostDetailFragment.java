@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gemvietnam.base.viper.ViewFragment;
+import com.google.gson.Gson;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
@@ -12,6 +13,7 @@ import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.viewpagerindicator.CirclePageIndicator;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * The PostDetail Fragment
@@ -34,6 +36,8 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
     CirclePageIndicator mIndicator;
     @BindView(R.id.chat_bt)
     TextView mChatBt;
+    @BindView(R.id.edit_bt)
+    TextView mEditBt;
 
     public static PostDetailFragment getInstance() {
         return new PostDetailFragment();
@@ -46,6 +50,11 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
 
     @Override
     public void bindView(PostDTO mPost) {
+        if (mPost.getIdUser().equals(PrefWrapper.getUser(getViewContext()).getId())) {
+            mEditBt.setVisibility(View.VISIBLE);
+        } else {
+            mEditBt.setVisibility(View.GONE);
+        }
         ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(getViewContext(), mPost.getUris());
         mImageViewPager.setAdapter(imagePagerAdapter);
         mIndicator.setViewPager(mImageViewPager);
@@ -59,5 +68,10 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
         } else {
             mChatBt.setVisibility(View.GONE);
         }
+    }
+
+    @OnClick(R.id.back_iv)
+    public void back() {
+        mPresenter.back();
     }
 }

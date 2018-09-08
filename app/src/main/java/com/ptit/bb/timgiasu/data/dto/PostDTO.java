@@ -16,8 +16,10 @@ public class PostDTO {
     private long timecreate;
     private String time;
 
+    public PostDTO() {
+    }
 
-    public PostDTO(String id, String idUser, List<String> uris, String address, List<String> classes, List<String> subjects, String salary, String status,long timecreate,String time) {
+    public PostDTO(String id, String idUser, List<String> uris, String address, List<String> classes, List<String> subjects, String salary, String status, long timecreate, String time) {
         this.id = id;
         this.idUser = idUser;
         this.uris = uris;

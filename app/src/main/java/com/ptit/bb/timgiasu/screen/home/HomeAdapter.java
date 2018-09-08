@@ -1,9 +1,11 @@
 package com.ptit.bb.timgiasu.screen.home;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -39,6 +41,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
         TextView mTitleTv;
         @BindView(R.id.itemSalaryTv)
         TextView mSalaryTv;
+        @BindView(R.id.status_iv)
+        TextView mStatusIv;
 
         public HomeHolder(View itemView) {
             super(itemView);
@@ -55,7 +59,16 @@ public class HomeAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         HomeHolder homeHolder = (HomeHolder) holder;
-
+        PostDTO post = mPosts.get(position);
+        homeHolder.mCoverIv.setImageURI(post.getUris().get(0));
+        homeHolder.mTitleTv.setText(post.getClasses().toString());
+        homeHolder.mSalaryTv.setText(post.getSalary());
+        homeHolder.mStatusIv.setText(post.getStatus());
+        if (post.getStatus().equals("Đăng tuyển")){
+            homeHolder.mStatusIv.setBackground(ContextCompat.getDrawable(mContext,R.drawable.purchased));
+        } else {
+            homeHolder.mStatusIv.setBackground(ContextCompat.getDrawable(mContext,R.drawable.sold));
+        }
         homeHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

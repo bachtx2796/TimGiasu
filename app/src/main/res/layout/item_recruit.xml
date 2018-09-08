@@ -26,14 +26,14 @@
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/statusIv"
+                android:id="@+id/status_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/size_20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginStart="@dimen/margin_15dp"
                 android:background="@drawable/sold" />
         </RelativeLayout>
