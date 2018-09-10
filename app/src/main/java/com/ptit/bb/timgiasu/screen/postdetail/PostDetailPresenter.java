@@ -3,6 +3,7 @@ package com.ptit.bb.timgiasu.screen.postdetail;
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
+import com.ptit.bb.timgiasu.screen.editpost.EditPostPresenter;
 
 /**
  * The PostDetail Presenter
@@ -35,5 +36,12 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
     public PostDetailPresenter setPost(PostDTO postDTO) {
         mPost = postDTO;
         return this;
+    }
+
+    @Override
+    public void editPost() {
+        new EditPostPresenter(mContainerView)
+                .setPost(mPost)
+                .pushView();
     }
 }

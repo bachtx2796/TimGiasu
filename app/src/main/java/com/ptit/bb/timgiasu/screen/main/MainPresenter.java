@@ -8,9 +8,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.post.PostPresenter;
+
+import static org.greenrobot.eventbus.EventBus.TAG;
 
 /**
  * The Main Presenter
@@ -30,6 +34,12 @@ public class MainPresenter extends Presenter<MainContract.View, MainContract.Int
     @Override
     public void start() {
         // Start getting data here
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        UserDTO userDTO = PrefWrapper.getUser(getViewContext());
+        if (userDTO != null){
+            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.DEVICE_TOKEN).setValue(refreshedToken);
+        }
     }
 
     @Override

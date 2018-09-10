@@ -18,6 +18,7 @@ interface PostDetailContract {
     }
 
     interface Presenter extends IPresenter<View, Interactor> {
+        void editPost();
     }
 }
 

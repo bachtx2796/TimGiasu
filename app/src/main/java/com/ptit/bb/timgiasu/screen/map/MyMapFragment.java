@@ -43,7 +43,6 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
     private MapManager mMapManager;
     private MapFragment mMapFragment;
 
-    private Timer time;
     private String selectedSearchItem = "";
 
 
@@ -73,22 +72,15 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (time != null) {
-                    time.cancel();
-                }
+
             }
 
             @Override
             public void afterTextChanged(final Editable editable) {
-
-                time = new Timer();
-                time.schedule(new TimerTask() {
-                    public void run() {
-                        if (!selectedSearchItem.equals(mSearchEt.getText().toString()))
-                            mPresenter.suggestPlace(editable.toString());
-                    }
-                }, 500);
+                if (!selectedSearchItem.equals(mSearchEt.getText().toString()))
+                    mPresenter.suggestPlace(editable.toString());
             }
+
         });
 
         mSearchEt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,11 +122,11 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
 
     @Override
     public void showMarker(Coord location) {
-        mMapManager.addMarker(new LatLng(location.getLat(),location.getLng()),"vị trí của tôi");
+        mMapManager.addMarker(new LatLng(location.getLat(), location.getLng()), "vị trí của tôi");
     }
 
     @OnClick(R.id.select_bt)
-    public void selectLocation(){
+    public void selectLocation() {
         mPresenter.selectLocation(selectedSearchItem);
     }
 }

@@ -1,4 +1,4 @@
-package com.ptit.bb.timgiasu.screen.post;
+package com.ptit.bb.timgiasu.screen.editpost;
 
 import android.Manifest;
 import android.app.Activity;
@@ -23,8 +23,8 @@ import com.google.firebase.storage.UploadTask;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
 import com.ptit.bb.timgiasu.customview.PickDialog;
+import com.ptit.bb.timgiasu.data.dto.PostDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,9 +32,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * The Post Fragment
+ * The EditPost Fragment
  */
-public class PostFragment extends ViewFragment<PostContract.Presenter> implements PostContract.View {
+public class EditPostFragment extends ViewFragment<EditPostContract.Presenter> implements EditPostContract.View {
 
     @BindView(R.id.address_tv)
     TextView mAddresTv;
@@ -50,6 +50,8 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
     SimpleDraweeView mImage1;
     @BindView(R.id.image2)
     SimpleDraweeView mImage2;
+    @BindView(R.id.post_bt)
+    TextView mPostBt;
 
     private List<String> mClasses;
     private List<String> mSubjects;
@@ -60,9 +62,8 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
     private static final int REQUEST_PICK_PICTURE1 = 101;
     private static final int REQUEST_PICK_PICTURE2 = 102;
 
-
-    public static PostFragment getInstance() {
-        return new PostFragment();
+    public static EditPostFragment getInstance() {
+        return new EditPostFragment();
     }
 
     @Override
@@ -75,17 +76,26 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
         super.initLayout();
 
         storage = FirebaseStorage.getInstance();
-
-        mListUri = new ArrayList<>();
-        mListUri.add("");
-        mListUri.add("");
     }
 
-    private void chooseImageFromSDCard(int pos) {
-        Intent pickIntent = new Intent();
-        pickIntent.setType("image/*");
-        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(pickIntent, REQUEST_PICK_PICTURE + pos);
+    @Override
+    public void bindPost(PostDTO mPost) {
+        mClasses = mPost.getClasses();
+        mSubjects = mPost.getSubjects();
+        mListUri = mPost.getUris();
+        mAddresTv.setText(mPost.getAddress());
+        mClassTv.setText(mPost.getClasses().toString());
+        mSubjectTv.setText(mPost.getSubjects().toString());
+        mTimeEt.setText(mPost.getTime());
+        mSalaryEt.setText(mPost.getSalary());
+        mImage1.setImageURI(mPost.getUris().get(0));
+        mImage2.setImageURI(mPost.getUris().get(1));
+        mPostBt.setText("Lưu");
+    }
+
+    @Override
+    public void setLocation(String location) {
+        mAddresTv.setText(location);
     }
 
     @Override
@@ -123,13 +133,6 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
 
     private void handlePickImage(Intent data, SimpleDraweeView iv) {
         DialogUtils.showProgressDialog(getViewContext());
-//        try {
-//            Bitmap bm = MediaStore.Images.Media.getBitmap(getViewContext().getContentResolver(), data.getData());
-//            uploadImageFromBitmap(bm, iv);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         uploadImageWithFb(data, iv);
     }
 
@@ -165,6 +168,49 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
         }
     }
 
+    private void chooseImageFromSDCard(int pos) {
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(pickIntent, REQUEST_PICK_PICTURE + pos);
+    }
+
+    @OnClick(R.id.class_tv)
+    public void pickClass() {
+        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.classes(), mClasses);
+        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
+            @Override
+            public void onSelected(List<String> data) {
+                mClassTv.setText(data.toString());
+                mClasses = data;
+            }
+        });
+        pickDialog.show();
+    }
+
+    @OnClick(R.id.subject_tv)
+    public void pickSubject() {
+        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.subjects(), mSubjects);
+        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
+            @Override
+            public void onSelected(List<String> data) {
+                mSubjectTv.setText(data.toString());
+                mSubjects = data;
+            }
+        });
+        pickDialog.show();
+    }
+
+    @OnClick(R.id.address_tv)
+    public void pickAddress() {
+        mPresenter.pickAddress();
+    }
+
+    @OnClick(R.id.back_iv)
+    public void back() {
+        mPresenter.back();
+    }
+
     @OnClick(R.id.image1)
     public void selectImage1() {
         if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE1)) {
@@ -179,35 +225,8 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
         }
     }
 
-
-    @OnClick(R.id.class_tv)
-    public void pickClass() {
-        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.classes());
-        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
-            @Override
-            public void onSelected(List<String> data) {
-                mClassTv.setText(data.toString());
-                mClasses = data;
-            }
-        });
-        pickDialog.show();
-    }
-
-    @OnClick(R.id.subject_tv)
-    public void pickSubject() {
-        PickDialog pickDialog = new PickDialog(getViewContext(), AppUtils.subjects());
-        pickDialog.setmOnSelectedListener(new PickDialog.OnSelectedListener() {
-            @Override
-            public void onSelected(List<String> data) {
-                mSubjectTv.setText(data.toString());
-                mSubjects = data;
-            }
-        });
-        pickDialog.show();
-    }
-
     @OnClick(R.id.post_bt)
-    public void post() {
+    public void savePost(){
         String address = mAddresTv.getText().toString();
         String time = mTimeEt.getText().toString();
         String salary = mSalaryEt.getText().toString();
@@ -215,21 +234,6 @@ public class PostFragment extends ViewFragment<PostContract.Presenter> implement
             Toast.makeText(getViewContext(), "Điền đủ thông tin các trường.", Toast.LENGTH_SHORT).show();
             return;
         }
-        mPresenter.newPost(address, mClasses, mSubjects, time, salary, mListUri);
-    }
-
-    @OnClick(R.id.back_iv)
-    public void back() {
-        mPresenter.back();
-    }
-
-    @OnClick(R.id.address_tv)
-    public void pickAddress() {
-        mPresenter.pickAddress();
-    }
-
-    @Override
-    public void setLocation(String location) {
-        mAddresTv.setText(location);
+        mPresenter.savePost(address, mClasses, mSubjects, time, salary, mListUri);
     }
 }

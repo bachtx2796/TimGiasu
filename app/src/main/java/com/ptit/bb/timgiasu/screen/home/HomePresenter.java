@@ -47,7 +47,7 @@ public class HomePresenter extends Presenter<HomeContract.View, HomeContract.Int
 
     private void getData() {
         DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.POSTS).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.POSTS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DialogUtils.dismissProgressDialog();
@@ -76,5 +76,10 @@ public class HomePresenter extends Presenter<HomeContract.View, HomeContract.Int
     @Override
     public HomeContract.Interactor onCreateInteractor() {
         return new HomeInteractor(this);
+    }
+
+    @Override
+    public void refreshData() {
+        getData();
     }
 }

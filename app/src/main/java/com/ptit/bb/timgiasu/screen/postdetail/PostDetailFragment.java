@@ -38,6 +38,8 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
     TextView mChatBt;
     @BindView(R.id.edit_bt)
     TextView mEditBt;
+    @BindView(R.id.mark_as_sold_bt)
+    TextView mActionBt;
 
     public static PostDetailFragment getInstance() {
         return new PostDetailFragment();
@@ -52,8 +54,10 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
     public void bindView(PostDTO mPost) {
         if (mPost.getIdUser().equals(PrefWrapper.getUser(getViewContext()).getId())) {
             mEditBt.setVisibility(View.VISIBLE);
+            mChatBt.setVisibility(View.GONE);
         } else {
             mEditBt.setVisibility(View.GONE);
+            mChatBt.setVisibility(View.VISIBLE);
         }
         ImagePagerAdapter imagePagerAdapter = new ImagePagerAdapter(getViewContext(), mPost.getUris());
         mImageViewPager.setAdapter(imagePagerAdapter);
@@ -67,11 +71,19 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
             mChatBt.setVisibility(View.VISIBLE);
         } else {
             mChatBt.setVisibility(View.GONE);
+            if (mPost.getStatus().equals("Đăng tuyển")) {
+                mActionBt.setVisibility(View.GONE);
+            }
         }
     }
 
     @OnClick(R.id.back_iv)
     public void back() {
         mPresenter.back();
+    }
+
+    @OnClick(R.id.edit_bt)
+    public void editPost() {
+        mPresenter.editPost();
     }
 }

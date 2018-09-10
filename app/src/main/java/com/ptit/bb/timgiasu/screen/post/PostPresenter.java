@@ -14,6 +14,7 @@ import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.map.MyMapPresenter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -57,5 +58,17 @@ public class PostPresenter extends Presenter<PostContract.View, PostContract.Int
                 back();
             }
         });
+    }
+
+    @Override
+    public void pickAddress() {
+        MyMapPresenter presenter = new MyMapPresenter(mContainerView);
+        presenter.setmOnLocationSelectedListener(new MyMapPresenter.OnLocationSelectedListener() {
+            @Override
+            public void onItemSelected(String location) {
+                mView.setLocation(location);
+            }
+        });
+        presenter.pushView();
     }
 }

@@ -72,11 +72,11 @@ public class PostDTO {
         this.classes = classes;
     }
 
-    public List<String> getObjects() {
+    public List<String> getSubjects() {
         return subjects;
     }
 
-    public void setObjects(List<String> objects) {
+    public void setSubjects(List<String> objects) {
         this.subjects = objects;
     }
 

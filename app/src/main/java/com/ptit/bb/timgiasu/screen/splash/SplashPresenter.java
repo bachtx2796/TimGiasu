@@ -36,6 +36,7 @@ public class SplashPresenter extends Presenter<SplashContract.View, SplashContra
         // Start getting data here
         if (PrefWrapper.getUser(getViewContext()) != null){
             ActivityUtils.startActivity(getViewContext(), MainActivity.class);
+            getViewContext().finish();
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override

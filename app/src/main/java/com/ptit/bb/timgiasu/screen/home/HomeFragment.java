@@ -1,5 +1,7 @@
 package com.ptit.bb.timgiasu.screen.home;
 
+import android.support.v4.widget.SwipeRefreshLayout;
+
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.RecyclerUtils;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
@@ -29,7 +31,19 @@ public class HomeFragment extends ViewFragment<HomeContract.Presenter> implement
     public void bindView(HomeAdapter mHomeAdapter) {
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_5dp);
         mHomeRv.getRecyclerView().addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        RecyclerUtils.setupGridRecyclerView(getViewContext(),mHomeRv.getRecyclerView(),2);
+        RecyclerUtils.setupGridRecyclerView(getViewContext(), mHomeRv.getRecyclerView(), 2);
         mHomeRv.setAdapter(mHomeAdapter);
+    }
+
+    @Override
+    public void initLayout() {
+        super.initLayout();
+
+        mHomeRv.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.refreshData();
+            }
+        });
     }
 }

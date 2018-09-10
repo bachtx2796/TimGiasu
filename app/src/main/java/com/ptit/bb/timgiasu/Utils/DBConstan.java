@@ -7,4 +7,5 @@ public class DBConstan {
     public static final String USERS = "users";
     public static final String RATINGS = "ratings";
     public static final String POSTS = "post";
+    public static final String DEVICE_TOKEN = "devicetoken";
 }

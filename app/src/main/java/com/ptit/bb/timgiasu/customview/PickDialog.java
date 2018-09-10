@@ -15,7 +15,10 @@ import android.widget.ListView;
 
 import com.ptit.bb.timgiasu.R;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +31,7 @@ public class PickDialog extends Dialog {
     ListView mDataLv;
 
     private String[] mData;
+    private List<String> selecteds;
 
     private OnSelectedListener mOnSelectedListener;
 
@@ -38,6 +42,12 @@ public class PickDialog extends Dialog {
     public PickDialog(@NonNull Context context, String[] data) {
         super(context);
         mData = data;
+    }
+
+    public PickDialog(@NonNull Context context, String[] data, List<String> selecteds) {
+        super(context);
+        mData = data;
+        this.selecteds = selecteds;
     }
 
     @Override
@@ -54,18 +64,14 @@ public class PickDialog extends Dialog {
     private void initData() {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_multiple_choice, mData);
         mDataLv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        mDataLv.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        List<String> tmp;
+        tmp = Arrays.asList(mData);
         mDataLv.setAdapter(arrayAdapter);
+        for (String selected : selecteds) {
+            int index = tmp.indexOf(selected);
+            mDataLv.setItemChecked(index, true);
+        }
+        arrayAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.select_bt)

@@ -50,6 +50,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttpLoggingInterceptorVersion}"
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1@aar'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    implementation 'com.google.firebase:firebase-messaging:11.8.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
