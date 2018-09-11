@@ -1,176 +1,181 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/green">
 
-        <RelativeLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/green">
+        <ImageView
+            android:id="@+id/back_iv"
+            style="@style/ImageViewBase.ToolBar"
+            android:paddingLeft="@dimen/padding_sub_10dp"
+            app:srcCompat="@drawable/ic_white_back" />
 
-            <ImageView
-                android:id="@+id/back_iv"
-                style="@style/ImageViewBase.ToolBar"
-                android:paddingLeft="@dimen/padding_sub_10dp"
-                app:srcCompat="@drawable/ic_white_back" />
+        <TextView
+            style="@style/TextViewBase.ToolbarTitle"
+            android:layout_centerInParent="true"
+            android:text="@string/post"
+            android:textColor="@color/white" />
 
-            <TextView
-                style="@style/TextViewBase.ToolbarTitle"
-                android:layout_centerInParent="true"
-                android:text="@string/post"
-                android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/edit_bt"
+            style="@style/TextViewBase.ToolbarTitle"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/padding_16dp"
+            android:text="@string/edit"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/edit_bt"
-                style="@style/TextViewBase.ToolbarTitle"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="@dimen/padding_16dp"
-                android:text="@string/edit"
-                android:textColor="@color/white" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_160dp">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <com.viewpagerindicator.CirclePageIndicator
-                android:id="@+id/circle_page_indicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:padding="@dimen/padding_10dp"
-                app:centered="true"
-                app:fillColor="@color/white"
-                app:pageColor="@color/unselected_color"
-                app:snap="false" />
-        </RelativeLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/padding_20dp"
-            android:paddingEnd="@dimen/padding_15dp"
-            android:paddingStart="@dimen/padding_15dp"
-            android:paddingTop="@dimen/padding_20dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/title_tv"
-                style="@style/TextViewBase.Content"
-                android:textStyle="bold"
-                tools:text="Apple MacBook Pro 15 inch" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_160dp">
 
-            <TextView
-                android:id="@+id/time_create_tv"
-                style="@style/TextViewBase.Label"
-                android:layout_marginTop="@dimen/margin_5dp"
-                android:textAllCaps="false"
-                tools:text="Dealed at 29 Sep 2017" />
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/circle_page_indicator"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/padding_10dp"
+                    app:centered="true"
+                    app:fillColor="@color/white"
+                    app:pageColor="@color/unselected_color"
+                    app:snap="false" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/padding_20dp"
+                android:paddingEnd="@dimen/padding_15dp"
+                android:paddingStart="@dimen/padding_15dp"
+                android:paddingTop="@dimen/padding_20dp">
 
                 <TextView
-                    style="@style/TextViewBase.Label"
-                    android:text="@string/time_tc" />
-
-                <TextView
-                    android:id="@+id/time_tv"
+                    android:id="@+id/title_tv"
                     style="@style/TextViewBase.Content"
-                    android:layout_marginTop="@dimen/padding_10dp"
-                    tools:text="It is a good iograms, pictures. Thoffdecorations." />
-
-                <View
-                    style="@style/GrayDivider"
-                    android:layout_marginTop="@dimen/margin_10dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_25dp"
-                android:orientation="vertical">
+                    android:textStyle="bold"
+                    tools:text="Apple MacBook Pro 15 inch" />
 
                 <TextView
+                    android:id="@+id/time_create_tv"
                     style="@style/TextViewBase.Label"
-                    android:text="@string/salary" />
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:textAllCaps="false"
+                    tools:text="Dealed at 29 Sep 2017" />
 
-                <TextView
-                    android:id="@+id/salary_tv"
-                    style="@style/TextViewBase.Content"
-                    android:layout_marginTop="@dimen/padding_10dp"
-                    tools:text="It is a good iograms, pictures. Thoffdecorations." />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20dp"
+                    android:orientation="vertical">
 
-                <View
-                    style="@style/GrayDivider"
-                    android:layout_marginTop="@dimen/margin_10dp" />
-            </LinearLayout>
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/time_tc" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_25dp"
-                android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/time_tv"
+                        style="@style/TextViewBase.Content"
+                        android:layout_marginTop="@dimen/padding_10dp"
+                        tools:text="It is a good iograms, pictures. Thoffdecorations." />
 
-                <TextView
-                    style="@style/TextViewBase.Label"
-                    android:text="@string/address" />
+                    <View
+                        style="@style/GrayDivider"
+                        android:layout_marginTop="@dimen/margin_10dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/address_tv"
-                    style="@style/TextViewBase.Content"
-                    android:layout_marginTop="@dimen/padding_10dp"
-                    tools:text="It is a good iograms, pictures. Thoffdecorations." />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:orientation="vertical">
 
-                <View
-                    style="@style/GrayDivider"
-                    android:layout_marginTop="@dimen/margin_10dp" />
-            </LinearLayout>
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/salary" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_25dp"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/salary_tv"
+                        style="@style/TextViewBase.Content"
+                        android:layout_marginTop="@dimen/padding_10dp"
+                        tools:text="It is a good iograms, pictures. Thoffdecorations." />
 
-                <TextView
-                    android:id="@+id/mark_as_sold_bt"
-                    style="@style/TextViewBase.Button.GreenBorder"
-                    android:layout_marginEnd="@dimen/margin_5dp"
-                    android:layout_weight="1"
-                    android:text="@string/mark_as_sold"
-                    android:textColor="@color/green"
-                    android:textStyle="bold" />
+                    <View
+                        style="@style/GrayDivider"
+                        android:layout_marginTop="@dimen/margin_10dp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/chat_bt"
-                    style="@style/TextViewBase.Button.Green"
-                    android:layout_marginStart="@dimen/margin_5dp"
-                    android:layout_weight="1"
-                    android:text="@string/chat"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewBase.Label"
+                        android:text="@string/address" />
+
+                    <TextView
+                        android:id="@+id/address_tv"
+                        style="@style/TextViewBase.Content"
+                        android:layout_marginTop="@dimen/padding_10dp"
+                        tools:text="It is a good iograms, pictures. Thoffdecorations." />
+
+                    <View
+                        style="@style/GrayDivider"
+                        android:layout_marginTop="@dimen/margin_10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_25dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mark_as_sold_bt"
+                        style="@style/TextViewBase.Button.GreenBorder"
+                        android:layout_marginEnd="@dimen/margin_5dp"
+                        android:layout_weight="1"
+                        android:text="@string/mark_as_sold"
+                        android:textColor="@color/green"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/chat_bt"
+                        style="@style/TextViewBase.Button.Green"
+                        android:layout_marginStart="@dimen/margin_5dp"
+                        android:layout_weight="1"
+                        android:text="@string/chat"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

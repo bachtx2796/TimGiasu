@@ -53,12 +53,4 @@ public class GoogleServiceBuilder {
 
 		return sService;
 	}
-
-	public static GoogleService getService(String endPoint) {
-		if (sService == null) {
-			sService = getRetrofit(endPoint).create(GoogleService.class);
-		}
-
-		return sService;
-	}
 }

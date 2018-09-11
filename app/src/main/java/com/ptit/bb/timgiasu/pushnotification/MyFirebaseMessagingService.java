@@ -1,15 +1,15 @@
 package com.ptit.bb.timgiasu.pushnotification; /**
  * Copyright 2016 Google Inc. All Rights Reserved.
- *
- *
+ * <p>
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *
+ * <p>
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
- *
+ * <p>
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,10 +17,17 @@ package com.ptit.bb.timgiasu.pushnotification; /**
  * limitations under the License.
  */
 
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.ptit.bb.timgiasu.Utils.AppUtils;
+import com.ptit.bb.timgiasu.Utils.NotificationUtils;
+import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
+
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -61,6 +68,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void handleDataMessage(RemoteMessage remoteMessage) {
+//        if (AppUtils.isForeGround(getApplicationContext())) {
+//            //Do nothing
+//        } else {
+        Map<String, String> data = remoteMessage.getData();
+        NotificationDataDTO notificationDTO = new NotificationDataDTO(data.get("idUserSent"), data.get("content"));
+//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+//            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+//                    intent, 0);
+        NotificationUtils.showNotification(getApplicationContext(), notificationDTO.getIdUserSent(), notificationDTO.getContent(),null);
 
     }
 

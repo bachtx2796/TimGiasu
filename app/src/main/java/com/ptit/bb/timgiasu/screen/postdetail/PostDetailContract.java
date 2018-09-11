@@ -4,6 +4,9 @@ import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
+import com.ptit.bb.timgiasu.data.dto.PushNotificationDTO;
+
+import retrofit2.Callback;
 
 /**
  * The PostDetail Contract
@@ -11,6 +14,7 @@ import com.ptit.bb.timgiasu.data.dto.PostDTO;
 interface PostDetailContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void sendRequest(PushNotificationDTO pushNotificationDTO, Callback<Object> callback);
     }
 
     interface View extends PresentView<Presenter> {
@@ -19,6 +23,8 @@ interface PostDetailContract {
 
     interface Presenter extends IPresenter<View, Interactor> {
         void editPost();
+
+        void sentRequest();
     }
 }
 

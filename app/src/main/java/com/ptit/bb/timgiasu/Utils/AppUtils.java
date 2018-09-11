@@ -1,5 +1,10 @@
 package com.ptit.bb.timgiasu.Utils;
 
+import android.app.ActivityManager;
+import android.content.Context;
+
+import java.util.List;
+
 public class AppUtils {
 
     public static String[] citiesVN() {
@@ -77,4 +82,19 @@ public class AppUtils {
     }
 
     public static final String DANG_TUYEN = "Đăng tuyển";
+
+    public static boolean isForeGround(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

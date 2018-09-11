@@ -86,4 +86,17 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
     public void editPost() {
         mPresenter.editPost();
     }
+
+    @OnClick({R.id.mark_as_sold_bt})
+    public void doAction() {
+        String type = mActionBt.getText().toString();
+        switch (type) {
+            case "Nhận":
+                mActionBt.setEnabled(false);
+                mActionBt.setText("Đã gửi yêu cầu");
+                mPresenter.sentRequest();
+                break;
+        }
+
+    }
 }

@@ -35,7 +35,7 @@ public class MainPresenter extends Presenter<MainContract.View, MainContract.Int
     public void start() {
         // Start getting data here
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d(TAG, "Refreshed token: " + refreshedToken);
+        Log.e(TAG, "Refreshed token: " + refreshedToken);
         UserDTO userDTO = PrefWrapper.getUser(getViewContext());
         if (userDTO != null){
             FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.DEVICE_TOKEN).setValue(refreshedToken);
