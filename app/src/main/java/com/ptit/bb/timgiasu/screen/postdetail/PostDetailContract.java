@@ -19,6 +19,8 @@ interface PostDetailContract {
 
     interface View extends PresentView<Presenter> {
         void bindView(PostDTO mPost);
+
+        void sendRequestSuccess();
     }
 
     interface Presenter extends IPresenter<View, Interactor> {

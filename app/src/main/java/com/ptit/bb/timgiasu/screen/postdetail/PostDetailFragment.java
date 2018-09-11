@@ -1,5 +1,6 @@
 package com.ptit.bb.timgiasu.screen.postdetail;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
@@ -77,6 +78,14 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
         }
     }
 
+    @Override
+    public void sendRequestSuccess() {
+        mActionBt.setEnabled(false);
+        mActionBt.setBackground(ContextCompat.getDrawable(getViewContext(), R.drawable.button_red_border_bg));
+        mActionBt.setTextColor(ContextCompat.getColor(getViewContext(), R.color.red));
+        mActionBt.setText("Đã gửi yêu cầu");
+    }
+
     @OnClick(R.id.back_iv)
     public void back() {
         mPresenter.back();
@@ -92,8 +101,6 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
         String type = mActionBt.getText().toString();
         switch (type) {
             case "Nhận":
-                mActionBt.setEnabled(false);
-                mActionBt.setText("Đã gửi yêu cầu");
                 mPresenter.sentRequest();
                 break;
         }

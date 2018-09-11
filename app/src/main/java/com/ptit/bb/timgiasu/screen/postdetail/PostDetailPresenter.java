@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
+import com.gemvietnam.utils.DialogUtils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -63,6 +64,7 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
 
     @Override
     public void sentRequest() {
+        DialogUtils.showProgressDialog(getViewContext());
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.DEVICE_TOKEN).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -72,7 +74,9 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
 
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
+                        DialogUtils.dismissProgressDialog();
                         if (response.isSuccessful()) {
+                            mView.sendRequestSuccess();
                             Toast.makeText(getViewContext(), "Gửi yêu cầu nhận lớp thành công !", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getViewContext(), "Có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
