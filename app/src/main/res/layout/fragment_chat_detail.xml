@@ -12,13 +12,13 @@
         android:background="@color/green">
 
         <ImageView
-            android:id="@+id/backIv"
+            android:id="@+id/back_iv"
             style="@style/ImageViewBase.ToolBar"
             android:paddingRight="@dimen/padding_16dp"
             app:srcCompat="@drawable/ic_white_back" />
 
         <TextView
-            android:id="@+id/userNameTv"
+            android:id="@+id/username_tv"
             style="@style/TextViewBase.ToolbarTitle"
             android:layout_centerInParent="true"
             android:textColor="@color/white" />
@@ -136,16 +136,16 @@
             android:padding="@dimen/padding_5dp">
 
             <EditText
-                android:id="@+id/messageEt"
+                android:id="@+id/message_et"
                 style="@style/EdittextBase"
                 android:imeOptions="actionSend"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/emotionsIv" />
+                android:layout_toStartOf="@+id/emotions_iv" />
 
             <ImageView
-                android:id="@+id/emotionsIv"
+                android:id="@+id/emotions_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -155,7 +155,7 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/sendMessageIv"
+            android:id="@+id/send_message_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

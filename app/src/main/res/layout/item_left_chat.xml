@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:fresco="http://schemas.android.com/apk/res-auto"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="@color/white"
-  android:orientation="vertical">
-
-  <LinearLayout
-    android:id="@+id/dateLeftLL"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-      android:visibility="gone"
-    android:gravity="center">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <View
-      android:layout_width="0dp"
-      android:layout_height="@dimen/size_1dp"
-      android:layout_weight="1"
-      android:background="@color/gray" />
+    <LinearLayout
+        android:id="@+id/dateLeftLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone">
 
-    <TextView
-      android:id="@+id/dateLeftTv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_margin="@dimen/margin_5dp"
-      android:textSize="@dimen/ts_14sp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_1dp"
+            android:layout_weight="1"
+            android:background="@color/gray" />
 
-    <View
-      android:layout_width="0dp"
-      android:layout_height="@dimen/size_1dp"
-      android:layout_weight="1"
-      android:background="@color/gray" />
-  </LinearLayout>
+        <TextView
+            android:id="@+id/dateLeftTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_5dp"
+            android:textSize="@dimen/ts_14sp" />
 
-  <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/padding_10dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_1dp"
+            android:layout_weight="1"
+            android:background="@color/gray" />
+    </LinearLayout>
 
-    <com.facebook.drawee.view.SimpleDraweeView
-      android:id="@+id/userLeftAvatarIv"
-      android:layout_width="@dimen/size_40dp"
-      android:layout_height="@dimen/size_40dp"
-      android:layout_gravity="bottom"
-      fresco:placeholderImage="@drawable/user_default"
-      fresco:roundAsCircle="true" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_10dp">
 
-    <TextView
-      android:id="@+id/messageLeftTv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:background="@drawable/left_chat"
-      android:ellipsize="end"
-      android:text=""
-      android:textColor="@color/text_gray"
-      android:textSize="@dimen/ts_15sp" />
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_left_avatar_iv"
+            android:layout_width="@dimen/size_40dp"
+            android:layout_height="@dimen/size_40dp"
+            android:layout_gravity="bottom"
+            fresco:placeholderImage="@drawable/user_default"
+            fresco:roundAsCircle="true" />
 
-    <TextView
-      android:id="@+id/messageLeftTimeTv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="bottom"
-      android:layout_marginBottom="@dimen/margin_5dp"
-      android:layout_marginLeft="@dimen/margin_5dp"
-      android:minWidth="@dimen/size_100dp"
-      android:textColor="@color/text_gray"
-      android:textSize="@dimen/ts_10sp" />
-  </LinearLayout>
+        <TextView
+            android:id="@+id/message_left_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_chat"
+            android:ellipsize="end"
+            android:text=""
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/ts_15sp" />
+
+        <TextView
+            android:id="@+id/message_left_time_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/margin_5dp"
+            android:layout_marginLeft="@dimen/margin_5dp"
+            android:minWidth="@dimen/size_100dp"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/ts_10sp" />
+    </LinearLayout>
 </LinearLayout>

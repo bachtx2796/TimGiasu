@@ -27,6 +27,8 @@ interface PostDetailContract {
         void editPost();
 
         void sentRequest();
+
+        void createGrChat();
     }
 }
 

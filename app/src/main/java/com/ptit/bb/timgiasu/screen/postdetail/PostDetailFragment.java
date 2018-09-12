@@ -106,4 +106,9 @@ public class PostDetailFragment extends ViewFragment<PostDetailContract.Presente
         }
 
     }
+
+    @OnClick(R.id.chat_bt)
+    public void createGrChat(){
+        mPresenter.createGrChat();
+    }
 }
