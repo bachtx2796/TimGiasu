@@ -36,8 +36,8 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_10dp">
 
-            <ImageView
-                android:id="@+id/itemIv"
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/item_iv"
                 android:layout_width="@dimen/size_80dp"
                 android:layout_height="@dimen/size_60dp"
                 android:scaleType="fitXY" />
@@ -50,20 +50,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/itemTitleTv"
+                    android:id="@+id/item_title_tv"
                     style="@style/TextViewBase.Content"
                     android:maxLines="1" />
 
                 <TextView
-                    android:id="@+id/itemLastMessageTv"
+                    android:id="@+id/item_last_message_tv"
                     style="@style/TextViewBase.SecondContent"
-                    android:layout_marginTop="@dimen/margin_7dp"
+                    android:layout_marginTop="@dimen/margin_3dp"
                     android:ellipsize="end"
+                    android:textSize="@dimen/ts_14sp"
                     android:maxLines="1"
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/itemLastMessageTimeTv"
+                    android:id="@+id/item_last_message_time_tv"
                     style="@style/TextViewBase.SecondContent"
                     android:maxLines="1"
                     android:textSize="@dimen/ts_10sp" />

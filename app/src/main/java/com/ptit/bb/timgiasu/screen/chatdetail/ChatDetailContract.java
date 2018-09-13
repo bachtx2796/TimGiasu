@@ -19,6 +19,8 @@ interface ChatDetailContract {
         void bindUsername(String name);
 
         void bindListMsg(ChatAdapter mAdapter);
+
+        void updateListMsg(int size);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {

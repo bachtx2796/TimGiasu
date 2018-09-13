@@ -73,11 +73,14 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         if (viewType == TYPE_CURENT_USER) {
             itemView = View.inflate(mContext, R.layout.item_right_chat, null);
+            itemView.setLayoutParams(params);
             return new RightChatViewHolder(itemView);
         } else if (viewType == TYPE_ORTHER_USER) {
             itemView = View.inflate(mContext, R.layout.item_left_chat, null);
+            itemView.setLayoutParams(params);
             return new LeftChatViewHolder(itemView);
         }
         return null;
@@ -90,11 +93,11 @@ public class ChatAdapter extends RecyclerView.Adapter {
             LeftChatViewHolder leftChatViewHolder = (LeftChatViewHolder) holder;
             leftChatViewHolder.mAvatarIv.setImageURI(uriOrther);
             leftChatViewHolder.mMessageTv.setText(messageDTO.getContent());
-            leftChatViewHolder.mTimeTv.setText(DateTimeUtil.longToString(messageDTO.getTime()));
+            leftChatViewHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
         } else if (holder instanceof RightChatViewHolder) {
             RightChatViewHolder rightChatViewHolder = (RightChatViewHolder) holder;
             rightChatViewHolder.mMessageTv.setText(messageDTO.getContent());
-            rightChatViewHolder.mTimeTv.setText(DateTimeUtil.longToString(messageDTO.getTime()));
+            rightChatViewHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
         }
     }
 

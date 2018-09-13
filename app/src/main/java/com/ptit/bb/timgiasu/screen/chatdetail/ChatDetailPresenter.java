@@ -72,6 +72,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 mMessages.add(dataSnapshot.getValue(MessageDTO.class));
                 mAdapter.notifyDataSetChanged();
+                mView.updateListMsg(mMessages.size());
             }
 
             @Override
@@ -117,11 +118,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserDTO userDTO = dataSnapshot.getValue(UserDTO.class);
                 mView.bindUsername(userDTO.getName());
-                if (userDTO.getUris() != null) {
-                    getListMsg(userDTO.getUris().get(0));
-                } else {
-                    getListMsg("");
-                }
+                getListMsg(userDTO.getAvatar());
             }
 
             @Override

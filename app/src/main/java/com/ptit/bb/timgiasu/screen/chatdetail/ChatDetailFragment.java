@@ -1,6 +1,8 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -12,7 +14,6 @@ import com.ptit.bb.timgiasu.data.dto.PostDTO;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.http.Body;
 
 /**
  * The ChatDetail Fragment
@@ -37,6 +38,21 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @Override
+    public void initLayout() {
+        super.initLayout();
+        mMessageEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMsg();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
     public void bindPost(PostDTO mPost) {
 
     }
@@ -52,6 +68,11 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
         mChatRv.setAdapter(mAdapter);
     }
 
+    @Override
+    public void updateListMsg(int size) {
+        mChatRv.scrollToPosition(size - 1);
+    }
+
     @OnClick(R.id.back_iv)
     public void back() {
         mPresenter.back();
@@ -61,6 +82,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     public void sendMsg(){
         if (!StringUtils.isEmpty(mMessageEt.getText().toString())){
             mPresenter.sendMsg(mMessageEt.getText().toString());
+            mMessageEt.setText("");
         }
     }
 }

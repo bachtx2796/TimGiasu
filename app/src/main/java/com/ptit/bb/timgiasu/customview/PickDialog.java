@@ -67,11 +67,13 @@ public class PickDialog extends Dialog {
         List<String> tmp;
         tmp = Arrays.asList(mData);
         mDataLv.setAdapter(arrayAdapter);
-        for (String selected : selecteds) {
-            int index = tmp.indexOf(selected);
-            mDataLv.setItemChecked(index, true);
+        if (selecteds != null){
+            for (String selected : selecteds) {
+                int index = tmp.indexOf(selected);
+                mDataLv.setItemChecked(index, true);
+            }
+            arrayAdapter.notifyDataSetChanged();
         }
-        arrayAdapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.select_bt)

@@ -17,4 +17,10 @@ public class DateTimeUtil {
         String dateString = DateFormat.format("dd-MM-yyyy", new Date(miliTime)).toString();
         return dateString;
     }
+
+    public static String longToTimeString(Long miliTime) {
+        String dateString = DateFormat.format("HH:mm", new Date(miliTime)).toString();
+        return dateString;
+    }
+
 }
