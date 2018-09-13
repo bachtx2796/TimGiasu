@@ -64,7 +64,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
         if (mPost.getUris() != null) {
             mItemImageIv.setImageURI(mPost.getUris().get(0));
         }
-        mTitleTv.setText("Lớp: " + mPost.getClasses().toString() + "\nThời gian: " + mPost.getTime());
+        mTitleTv.setText("Lớp: " + mPost.getClasses().toString() + " / " + mPost.getSubjects() + "\nThời gian: " + mPost.getTime());
         mPriceTv.setText(mPost.getSalary());
     }
 
@@ -95,5 +95,11 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
             mPresenter.sendMsg(mMessageEt.getText().toString());
             mMessageEt.setText("");
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mPresenter.removeListener();
     }
 }

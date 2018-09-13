@@ -1,5 +1,7 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.util.Log;
+
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 import com.google.firebase.database.ChildEventListener;
@@ -7,6 +9,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
@@ -25,13 +28,45 @@ import java.util.List;
 public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, ChatDetailContract.Interactor>
         implements ChatDetailContract.Presenter {
 
-    private String mId;
     private GroupChatDTO grChat;
     private PostDTO mPost;
     private UserDTO mUser; // current user
     private DatabaseReference mRef;
     private List<MessageDTO> mMessages;
     private ChatAdapter mAdapter;
+
+    private ChildEventListener mChildEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            MessageDTO msg = dataSnapshot.getValue(MessageDTO.class);
+            if (!msg.getIdSender().equals(mUser.getId()) && !msg.isRead()) {
+                dataSnapshot.getRef().child(DBConstan.READ).setValue(true);
+            }
+            mMessages.add(msg);
+            mAdapter.notifyDataSetChanged();
+            mView.updateListMsg(mMessages.size());
+        }
+
+        @Override
+        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+        }
+    };
 
     public ChatDetailPresenter(ContainerView containerView) {
         super(containerView);
@@ -67,44 +102,12 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
         mMessages = new ArrayList<>();
         mAdapter = new ChatAdapter(getViewContext(), mMessages, avatarOrther);
         mView.bindListMsg(mAdapter);
-        mRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                mMessages.add(dataSnapshot.getValue(MessageDTO.class));
-                mAdapter.notifyDataSetChanged();
-                mView.updateListMsg(mMessages.size());
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        mRef.addChildEventListener(mChildEventListener);
     }
 
     @Override
     public ChatDetailContract.Interactor onCreateInteractor() {
         return new ChatDetailInteractor(this);
-    }
-
-    public ChatDetailPresenter setId(String id) {
-        this.mId = id;
-        return this;
     }
 
     public ChatDetailPresenter setGrChat(GroupChatDTO groupChatDTO) {
@@ -149,4 +152,11 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
         MessageDTO messageDTO = new MessageDTO(msg, mUser.getId(), Calendar.getInstance().getTimeInMillis());
         mRef.push().setValue(messageDTO);
     }
+
+    @Override
+    public void removeListener() {
+        mRef.removeEventListener(mChildEventListener);
+    }
+
+
 }

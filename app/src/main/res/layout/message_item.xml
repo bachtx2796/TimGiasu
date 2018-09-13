@@ -15,13 +15,13 @@
         swipe:rightEdgeSwipeOffset="0dp">
 
         <RelativeLayout
-            android:id="@+id/buyer_summary_delete_rl"
+            android:id="@+id/_delete_rl"
             android:layout_width="@dimen/size_100dp"
             android:layout_height="match_parent"
             android:background="@color/remove_color">
 
             <TextView
-                android:id="@+id/remove_owner_iv"
+                android:id="@+id/remove_iv"
                 style="@style/TextViewBase"
                 android:layout_centerInParent="true"
                 android:text="@string/remove"
@@ -83,7 +83,7 @@
                     fresco:roundAsCircle="true" />
 
                 <TextView
-                    android:id="@+id/unreadMessageBt"
+                    android:id="@+id/unread_message_bt"
                     android:layout_width="@dimen/size_20dp"
                     android:layout_height="@dimen/size_20dp"
                     android:layout_alignParentBottom="true"

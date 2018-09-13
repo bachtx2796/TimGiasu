@@ -2,11 +2,14 @@ package com.ptit.bb.timgiasu.screen.chat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +64,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
         TextView mLastMsgTv;
         @BindView(R.id.item_last_message_time_tv)
         TextView mTimeTv;
+        @BindView(R.id._delete_rl)
+        RelativeLayout mDeleteBt;
+        @BindView(R.id.unread_message_bt)
+        TextView mUnreadBt;
 
         public GroupChatHolder(View itemView) {
             super(itemView);
@@ -95,7 +102,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
                 if (postDTO.getUris() != null) {
                     groupChatHolder.mItemIv.setImageURI(postDTO.getUris().get(0));
                 }
-                groupChatHolder.mTitleTv.setText("Lớp: " + postDTO.getClasses().toString());
+                groupChatHolder.mTitleTv.setText("Lớp: " + postDTO.getClasses().toString() + " / " + postDTO.getSubjects().toString());
             }
 
             @Override
@@ -111,6 +118,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     MessageDTO messageDTO = dataSnapshot1.getValue(MessageDTO.class);
+                    setFormMsg(messageDTO.isRead(), groupChatHolder.mLastMsgTv, groupChatHolder.mTimeTv, groupChatHolder.mUnreadBt);
                     groupChatHolder.mLastMsgTv.setText(messageDTO.getContent());
                     groupChatHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
                 }
@@ -122,7 +130,31 @@ public class ChatAdapter extends RecyclerView.Adapter {
             }
         });
 
+        String idOrther;
+        if (!groupChatDTO.getIdOwner().equals(PrefWrapper.getUser(mContext).getId())) {
+            idOrther = groupChatDTO.getIdOwner();
+        } else {
+            idOrther = groupChatDTO.getIdClient();
+        }
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(idOrther).child(DBConstan.AVATAR).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String uri = dataSnapshot.getValue(String.class);
+                groupChatHolder.mAvatarIv.setImageURI(uri);
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        groupChatHolder.mDeleteBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnItemChatClickListener.onDeleteClick(position);
+            }
+        });
     }
 
     @Override
@@ -130,7 +162,21 @@ public class ChatAdapter extends RecyclerView.Adapter {
         return mGroupChats.size();
     }
 
+    private void setFormMsg(boolean read, TextView content, TextView time, TextView unread) {
+        if (read) {
+            content.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+            time.setTextColor(ContextCompat.getColor(mContext,R.color.text_gray));
+            unread.setVisibility(View.GONE);
+        } else {
+            content.setTextColor(ContextCompat.getColor(mContext,R.color.text_black));
+            time.setTextColor(ContextCompat.getColor(mContext,R.color.text_black));
+            unread.setVisibility(View.VISIBLE);
+        }
+    }
+
     public interface OnItemChatClickListener {
         void onItemChatClick(int position);
+
+        void onDeleteClick(int position);
     }
 }

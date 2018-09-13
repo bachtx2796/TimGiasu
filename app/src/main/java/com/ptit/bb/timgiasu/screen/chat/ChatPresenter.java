@@ -47,42 +47,27 @@ public class ChatPresenter extends Presenter<ChatContract.View, ChatContract.Int
             public void onItemChatClick(int position) {
                 new ChatDetailPresenter(mContainerView).setGrChat(mGroupChats.get(position)).pushView();
             }
+
+            @Override
+            public void onDeleteClick(int position) {
+                deleteGrChat(mGroupChats.get(position));
+                mGroupChats.remove(position);
+                mChatAdapter.notifyDataSetChanged();
+            }
         });
         mView.bindView(mChatAdapter);
         getData();
     }
 
+    private void deleteGrChat(GroupChatDTO groupChatDTO) {
+        FirebaseDatabase.getInstance().getReference(DBConstan.GR_CHAT).child(groupChatDTO.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(groupChatDTO.getIdOwner()).child(DBConstan.GR_CHAT).child(groupChatDTO.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(groupChatDTO.getIdClient()).child(DBConstan.GR_CHAT).child(groupChatDTO.getId()).removeValue();
+    }
+
     private void getData() {
         UserDTO userDTO = PrefWrapper.getUser(getViewContext());
         DialogUtils.showProgressDialog(getViewContext());
-//        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.GR_CHAT).addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                mGroupChats.add(dataSnapshot.getValue(GroupChatDTO.class));
-//                mChatAdapter.notifyDataSetChanged();
-//                DialogUtils.dismissProgressDialog();
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                DialogUtils.dismissProgressDialog();
-//            }
-//        });
 
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.GR_CHAT).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

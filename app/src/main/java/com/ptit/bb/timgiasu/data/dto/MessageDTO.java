@@ -5,6 +5,7 @@ public class MessageDTO {
     private String content;
     private String idSender;
     private long time;
+    private boolean read;
 
     public MessageDTO() {
     }
@@ -13,6 +14,7 @@ public class MessageDTO {
         this.content = content;
         this.idSender = idSender;
         this.time = time;
+        read = false;
     }
 
     public String getContent() {
@@ -25,5 +27,13 @@ public class MessageDTO {
 
     public long getTime() {
         return time;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
     }
 }

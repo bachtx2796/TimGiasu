@@ -25,6 +25,8 @@ interface ChatDetailContract {
 
     interface Presenter extends IPresenter<View, Interactor> {
         void sendMsg(String s);
+
+        void removeListener();
     }
 }
 
