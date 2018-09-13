@@ -6,6 +6,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.RecyclerUtils;
 import com.gemvietnam.utils.StringUtils;
@@ -26,6 +27,12 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     EditText mMessageEt;
     @BindView(R.id.chat_detail_rv)
     RecyclerView mChatRv;
+    @BindView(R.id.item_image_iv)
+    SimpleDraweeView mItemImageIv;
+    @BindView(R.id.item_title_tv)
+    TextView mTitleTv;
+    @BindView(R.id.item_price_tv)
+    TextView mPriceTv;
 
 
     public static ChatDetailFragment getInstance() {
@@ -54,7 +61,11 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
 
     @Override
     public void bindPost(PostDTO mPost) {
-
+        if (mPost.getUris() != null) {
+            mItemImageIv.setImageURI(mPost.getUris().get(0));
+        }
+        mTitleTv.setText("Lớp: " + mPost.getClasses().toString() + "\nThời gian: " + mPost.getTime());
+        mPriceTv.setText(mPost.getSalary());
     }
 
     @Override
@@ -64,7 +75,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
 
     @Override
     public void bindListMsg(ChatAdapter mAdapter) {
-        RecyclerUtils.setupVerticalRecyclerView(getViewContext(),mChatRv);
+        RecyclerUtils.setupVerticalRecyclerView(getViewContext(), mChatRv);
         mChatRv.setAdapter(mAdapter);
     }
 
@@ -79,8 +90,8 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @OnClick(R.id.send_message_iv)
-    public void sendMsg(){
-        if (!StringUtils.isEmpty(mMessageEt.getText().toString())){
+    public void sendMsg() {
+        if (!StringUtils.isEmpty(mMessageEt.getText().toString())) {
             mPresenter.sendMsg(mMessageEt.getText().toString());
             mMessageEt.setText("");
         }

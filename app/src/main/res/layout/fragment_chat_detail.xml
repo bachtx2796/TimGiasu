@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <RelativeLayout
@@ -15,7 +15,7 @@
             android:id="@+id/back_iv"
             style="@style/ImageViewBase.ToolBar"
             android:paddingRight="@dimen/padding_16dp"
-            app:srcCompat="@drawable/ic_white_back" />
+            fresco:srcCompat="@drawable/ic_white_back" />
 
         <TextView
             android:id="@+id/username_tv"
@@ -25,7 +25,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/messageHeaderLl"
+        android:id="@+id/message_heade_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar"
@@ -33,11 +33,12 @@
         android:orientation="horizontal"
         android:padding="@dimen/padding_10dp">
 
-        <ImageView
-            android:id="@+id/itemImageIv"
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/item_image_iv"
             android:layout_width="@dimen/size_80dp"
             android:layout_height="@dimen/size_60dp"
-            android:src="@drawable/no_image_andscape" />
+            fresco:backgroundImage="@drawable/no_image_andscape"
+            fresco:placeholderImage="@drawable/no_image_andscape" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -52,7 +53,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/itemTitleTv"
+                    android:id="@+id/item_title_tv"
                     style="@style/TextViewBase.Content"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -61,21 +62,9 @@
                     android:text="Headphone" />
 
                 <TextView
-                    android:id="@+id/itemPriceTv"
+                    android:id="@+id/item_price_tv"
                     style="@style/TextViewBase.Label"
                     android:text="300,000" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/itemOfferPriceLl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/TextViewBase.Label"
-                    android:text="@string/submitted_offer"
-                    android:textAllCaps="false" />
             </LinearLayout>
 
             <LinearLayout
@@ -85,7 +74,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/acceptTv"
+                    android:id="@+id/accept_tv"
                     style="@style/TextViewBase.Button.Green"
                     android:layout_marginBottom="@dimen/margin_5dp"
                     android:layout_marginStart="@dimen/margin_5dp"
@@ -123,7 +112,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_photo_camera" />
+            fresco:srcCompat="@drawable/ic_photo_camera" />
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -150,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_smile_face"
+                fresco:srcCompat="@drawable/ic_smile_face"
                 android:visibility="gone" />
         </RelativeLayout>
 
@@ -159,6 +148,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_send_message_button" />
+            fresco:srcCompat="@drawable/ic_send_message_button" />
     </LinearLayout>
 </LinearLayout>
