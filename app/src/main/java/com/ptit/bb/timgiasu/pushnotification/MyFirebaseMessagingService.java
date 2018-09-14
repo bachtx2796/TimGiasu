@@ -23,15 +23,20 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 import com.ptit.bb.timgiasu.Utils.AppUtils;
+import com.ptit.bb.timgiasu.Utils.GlobalStuff;
 import com.ptit.bb.timgiasu.Utils.NotificationUtils;
 import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
+import com.ptit.bb.timgiasu.screen.main.MainActivity;
+import com.ptit.bb.timgiasu.screen.splash.SplashActivity;
 
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
+    public static final String REQUEST = "request";
 
     /**
      * Called when message is received.
@@ -72,14 +77,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            //Do nothing
 //        } else {
         Map<String, String> data = remoteMessage.getData();
-        NotificationDataDTO notificationDTO = new NotificationDataDTO(data.get("idUserSent"), data.get("content"));
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-//                    | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        NotificationDataDTO notificationDTO = new NotificationDataDTO(data.get("idPost"), data.get("idUserSent"), data.get("content"));
+        Gson gson = new Gson();
+        String json = gson.toJson(notificationDTO);
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        intent.putExtra(REQUEST, json);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
 
-//            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-//                    intent, 0);
-        NotificationUtils.showNotification(getApplicationContext(), notificationDTO.getIdUserSent(), notificationDTO.getContent(),null);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), GlobalStuff.getFreshInt(),
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationUtils.showNotification(getApplicationContext(), notificationDTO.getIdUserSent(), notificationDTO.getContent(), pendingIntent);
 
     }
 

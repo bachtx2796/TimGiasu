@@ -7,6 +7,7 @@ import android.os.Handler;
 import com.gemvietnam.utils.ActivityUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
 import com.ptit.bb.timgiasu.screen.login.LoginActivity;
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
@@ -18,12 +19,17 @@ import com.ptit.bb.timgiasu.screen.main.MainActivity;
 public class SplashPresenter extends Presenter<SplashContract.View, SplashContract.Interactor>
         implements SplashContract.Presenter {
 
-    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private String mGrChatJson = "";
 
     private static final int SPLASH_DISPLAY_LENGTH = 1000;
 
     public SplashPresenter(ContainerView containerView) {
         super(containerView);
+    }
+
+    public SplashPresenter setLinkGrChatGromNoti(String grChatJson) {
+        this.mGrChatJson = grChatJson;
+        return this;
     }
 
     @Override
@@ -34,16 +40,18 @@ public class SplashPresenter extends Presenter<SplashContract.View, SplashContra
     @Override
     public void start() {
         // Start getting data here
-        if (PrefWrapper.getUser(getViewContext()) != null){
-            ActivityUtils.startActivity(getViewContext(), MainActivity.class);
+        if (PrefWrapper.getUser(getViewContext()) != null) {
+            Intent mainIntent = new Intent(getViewContext(), MainActivity.class);
+            mainIntent.putExtra(MyFirebaseMessagingService.REQUEST,mGrChatJson);
+            getViewContext().startActivity(mainIntent);
             getViewContext().finish();
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(getViewContext(), LoginActivity.class);
-                    getViewContext().startActivity(mainIntent);
+                    Intent loginIntent = new Intent(getViewContext(), LoginActivity.class);
+                    getViewContext().startActivity(loginIntent);
                     getViewContext().finish();
                 }
             }, SPLASH_DISPLAY_LENGTH);
