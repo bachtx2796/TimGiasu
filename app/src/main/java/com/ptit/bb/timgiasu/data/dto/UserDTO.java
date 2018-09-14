@@ -22,7 +22,7 @@ public class UserDTO {
     private long salary;
     private List<String> uris;
     private HashMap<String,Integer> ratings;
-    private String deviceToken;
+    private String devicetoken;
 
     public UserDTO() {
     }
@@ -194,10 +194,10 @@ public class UserDTO {
     }
 
     public String getDeviceToken() {
-        return deviceToken;
+        return devicetoken;
     }
 
     public void setDeviceToken(String deviceToken) {
-        this.deviceToken = deviceToken;
+        this.devicetoken = deviceToken;
     }
 }

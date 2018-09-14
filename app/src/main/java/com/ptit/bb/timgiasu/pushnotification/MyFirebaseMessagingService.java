@@ -37,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     public static final String REQUEST = "request";
+    public static final String MSG = "message";
 
     /**
      * Called when message is received.
@@ -77,7 +78,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            //Do nothing
 //        } else {
         Map<String, String> data = remoteMessage.getData();
-        NotificationDataDTO notificationDTO = new NotificationDataDTO(data.get("idPost"), data.get("idUserSent"), data.get("content"));
+        NotificationDataDTO notificationDTO = new NotificationDataDTO(data.get("type"), data.get("idPost"), data.get("idUserSent"), data.get("content"));
+        if (notificationDTO.getType().equals(MyFirebaseMessagingService.REQUEST)) { // noti kieu co ng request
+            showNotification(notificationDTO);
+        } else if (notificationDTO.getType().equals(MyFirebaseMessagingService.MSG) && !AppUtils.isForeGround(getApplicationContext())) { // noti kieu msg va app dang ko hien
+            showNotification(notificationDTO);
+        }
+    }
+
+    private void showNotification(NotificationDataDTO notificationDTO) {
         Gson gson = new Gson();
         String json = gson.toJson(notificationDTO);
         Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
@@ -88,7 +97,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), GlobalStuff.getFreshInt(),
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationUtils.showNotification(getApplicationContext(), notificationDTO.getIdUserSent(), notificationDTO.getContent(), pendingIntent);
-
     }
 
 

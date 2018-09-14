@@ -1,9 +1,12 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,13 +17,20 @@ import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.MessageDTO;
+import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
+import com.ptit.bb.timgiasu.data.dto.PushNotificationDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * The ChatDetail Presenter
@@ -34,6 +44,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     private DatabaseReference mRef;
     private List<MessageDTO> mMessages;
     private ChatAdapter mAdapter;
+    private UserDTO mOrther;
 
     private ChildEventListener mChildEventListener = new ChildEventListener() {
         @Override
@@ -119,9 +130,9 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                UserDTO userDTO = dataSnapshot.getValue(UserDTO.class);
-                mView.bindUsername(userDTO.getName());
-                getListMsg(userDTO.getAvatar());
+                mOrther = dataSnapshot.getValue(UserDTO.class);
+                mView.bindUsername(mOrther.getName());
+                getListMsg(mOrther.getAvatar());
             }
 
             @Override
@@ -148,9 +159,30 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     }
 
     @Override
-    public void sendMsg(String msg) {
-        MessageDTO messageDTO = new MessageDTO(msg, mUser.getId(), Calendar.getInstance().getTimeInMillis());
-        mRef.push().setValue(messageDTO);
+    public void sendMsg(final String msg) {
+        final MessageDTO messageDTO = new MessageDTO(msg, mUser.getId(), Calendar.getInstance().getTimeInMillis());
+        mRef.push().setValue(messageDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                pushNotification(msg);
+            }
+        });
+    }
+
+    private void pushNotification(String msg) {
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(),
+                new NotificationDataDTO(MyFirebaseMessagingService.MSG, mPost.getId(), mUser.getId(), mUser.getName() + ": " + msg));
+        mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

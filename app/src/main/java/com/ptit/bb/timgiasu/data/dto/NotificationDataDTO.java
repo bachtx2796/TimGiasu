@@ -1,7 +1,10 @@
 package com.ptit.bb.timgiasu.data.dto;
 
+import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
+
 public class NotificationDataDTO {
 
+    private String type;
     private String idPost;
     private String idUserSent;
     private String content;
@@ -9,7 +12,8 @@ public class NotificationDataDTO {
     public NotificationDataDTO() {
     }
 
-    public NotificationDataDTO(String idPost, String idUserSent, String content) {
+    public NotificationDataDTO(String type, String idPost, String idUserSent, String content) {
+        this.type = type;
         this.idPost = idPost;
         this.idUserSent = idUserSent;
         this.content = content;
@@ -37,5 +41,9 @@ public class NotificationDataDTO {
 
     public void setIdPost(String idPost) {
         this.idPost = idPost;
+    }
+
+    public String getType() {
+        return type;
     }
 }
