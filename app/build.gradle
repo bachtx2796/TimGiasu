@@ -51,6 +51,7 @@ dependencies {
     implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1@aar'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    implementation 'com.dinuscxj:circleprogressbar:1.1.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

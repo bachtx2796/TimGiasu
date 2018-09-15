@@ -1,5 +1,7 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.content.Intent;
+
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
@@ -31,6 +33,8 @@ interface ChatDetailContract {
         void sendMsg(String s);
 
         void removeListener();
+
+        void uploadImageWithFb(Intent data);
     }
 }
 

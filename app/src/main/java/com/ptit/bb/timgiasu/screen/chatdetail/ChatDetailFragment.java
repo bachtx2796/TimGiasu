@@ -1,5 +1,10 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -8,6 +13,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gemvietnam.base.viper.ViewFragment;
+import com.gemvietnam.utils.DialogUtils;
+import com.gemvietnam.utils.PermissionUtils;
 import com.gemvietnam.utils.RecyclerUtils;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
@@ -34,6 +41,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     @BindView(R.id.item_price_tv)
     TextView mPriceTv;
 
+    private static final int REQUEST_PICK_PICTURE = 100;
 
     public static ChatDetailFragment getInstance() {
         return new ChatDetailFragment();
@@ -95,6 +103,49 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
             mPresenter.sendMsg(mMessageEt.getText().toString());
             mMessageEt.setText("");
         }
+    }
+
+    @OnClick(R.id.send_file_iv)
+    public void selectImg() {
+        if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE)) {
+            chooseImageFromSDCard();
+        }
+    }
+
+    private void chooseImageFromSDCard() {
+        Intent pickIntent = new Intent();
+        pickIntent.setType("image/*");
+        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(pickIntent, REQUEST_PICK_PICTURE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == REQUEST_PICK_PICTURE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                chooseImageFromSDCard();
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null || resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
+        switch (requestCode) {
+            case REQUEST_PICK_PICTURE:
+                handlePickImage(data);
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    private void handlePickImage(Intent data) {
+        mPresenter.uploadImageWithFb(data);
     }
 
     @Override

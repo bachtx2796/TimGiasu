@@ -1,11 +1,17 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
+import com.gemvietnam.utils.DialogUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -14,6 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.MessageDTO;
@@ -27,6 +37,7 @@ import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +56,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     private List<MessageDTO> mMessages;
     private ChatAdapter mAdapter;
     private UserDTO mOrther;
+    FirebaseStorage storage;
 
     private ChildEventListener mChildEventListener = new ChildEventListener() {
         @Override
@@ -91,6 +103,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     @Override
     public void start() {
         // Start getting data here
+        storage = FirebaseStorage.getInstance();
         mRef = FirebaseDatabase.getInstance().getReference(DBConstan.GR_CHAT).child(grChat.getId());
         getData();
     }
@@ -188,6 +201,39 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     @Override
     public void removeListener() {
         mRef.removeEventListener(mChildEventListener);
+    }
+
+    @Override
+    public void uploadImageWithFb(Intent data) {
+        Uri filePath = data.getData();
+        if (filePath != null) {
+            DialogUtils.showProgressDialog(getViewContext());
+
+            StorageReference ref = storage.getReference().child("images/" + UUID.randomUUID().toString());
+            ref.putFile(filePath)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            DialogUtils.dismissProgressDialog();
+                            Uri uri = taskSnapshot.getDownloadUrl();
+                            sendMsg(uri.toString());
+//                            iv.setImageURI(uri);
+//                            if (iv.getId() == R.id.image1) {
+//                                mListUri.set(0, uri.toString());
+//                            } else if (iv.getId() == R.id.image2) {
+//                                mListUri.set(1, uri.toString());
+//                            }
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            DialogUtils.dismissProgressDialog();
+                            Toast.makeText(getViewContext(), "Upload lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
     }
 
 
