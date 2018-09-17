@@ -33,6 +33,8 @@ import com.ptit.bb.timgiasu.data.dto.PushNotificationDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
+import com.ptit.bb.timgiasu.screen.postdetail.PostDetailPresenter;
+import com.ptit.bb.timgiasu.screen.tutorprofile.TutorProfilePresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -125,6 +127,19 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     private void getListMsg(String avatarOrther) {
         mMessages = new ArrayList<>();
         mAdapter = new ChatAdapter(getViewContext(), mMessages, avatarOrther);
+        mAdapter.setmOnActionChatListener(new ChatAdapter.OnActionChatListener() {
+            @Override
+            public void onAction(int position, String action) {
+                if (action.equals(ChatAdapter.OnActionChatListener.VIEW_PROFILE)) {
+                    if (mOrther.isTutor()) {
+                        new TutorProfilePresenter(mContainerView).setTutor(mOrther).pushView();
+                    } else {
+                        Toast.makeText(getViewContext(), "Người dùng chưa đăng kí thông tin gia sư !", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
         mView.bindListMsg(mAdapter);
         mRef.addChildEventListener(mChildEventListener);
     }
@@ -234,6 +249,11 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
                         }
                     });
         }
+    }
+
+    @Override
+    public void viewPost() {
+        new PostDetailPresenter(mContainerView).setPost(mPost).pushView();
     }
 
 

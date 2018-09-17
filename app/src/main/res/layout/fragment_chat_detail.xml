@@ -83,6 +83,17 @@
                     android:padding="@dimen/padding_5dp"
                     android:text="Accept"
                     android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/decline_tv"
+                    style="@style/TextViewBase.Button.Green"
+                    android:layout_marginBottom="@dimen/margin_5dp"
+                    android:layout_marginStart="@dimen/margin_5dp"
+                    android:layout_marginTop="@dimen/margin_5dp"
+                    android:layout_weight="1"
+                    android:padding="@dimen/padding_5dp"
+                    android:text="Decline"
+                    android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.gemvietnam.utils.RecyclerUtils;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,6 +42,10 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     TextView mTitleTv;
     @BindView(R.id.item_price_tv)
     TextView mPriceTv;
+    @BindView(R.id.accept_tv)
+    TextView mAceptBt;
+    @BindView(R.id.decline_tv)
+    TextView mDeclineBt;
 
     private static final int REQUEST_PICK_PICTURE = 100;
 
@@ -74,6 +80,13 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
         }
         mTitleTv.setText("Lớp: " + mPost.getClasses().toString() + " / " + mPost.getSubjects() + "\nThời gian: " + mPost.getTime());
         mPriceTv.setText(mPost.getSalary());
+        if (mPost.getIdUser().equals(PrefWrapper.getUser(getViewContext()).getId())){
+            mAceptBt.setVisibility(View.VISIBLE);
+            mDeclineBt.setVisibility(View.VISIBLE);
+        } else {
+            mAceptBt.setVisibility(View.VISIBLE);
+            mDeclineBt.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -110,6 +123,11 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
         if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_PICK_PICTURE)) {
             chooseImageFromSDCard();
         }
+    }
+
+    @OnClick(R.id.message_heade_ll)
+    public void viewPost(){
+        mPresenter.viewPost();
     }
 
     private void chooseImageFromSDCard() {

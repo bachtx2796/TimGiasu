@@ -19,7 +19,7 @@
                 android:id="@+id/back_iv"
                 style="@style/ImageViewBase.ToolBar"
                 android:paddingRight="@dimen/padding_16dp"
-                android:src="@drawable/ic_white_back" />
+                fresco:srcCompat="@drawable/ic_white_back" />
 
             <TextView
                 android:id="@+id/userNameTv"

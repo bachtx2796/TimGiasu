@@ -35,6 +35,8 @@ interface ChatDetailContract {
         void removeListener();
 
         void uploadImageWithFb(Intent data);
+
+        void viewPost();
     }
 }
 

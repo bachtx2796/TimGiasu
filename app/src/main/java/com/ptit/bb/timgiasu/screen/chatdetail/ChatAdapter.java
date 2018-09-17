@@ -14,7 +14,9 @@ import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
 import com.ptit.bb.timgiasu.data.dto.MessageDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.viewimage.ShowImageDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,11 +27,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<MessageDTO> messages;
     private String uriOrther;
+    private OnActionChatListener mOnActionChatListener;
 
     private static final int TYPE_CURENT_USER = 101;
     private static final int TYPE_ORTHER_USER = 102;
     private static final int TYPE_IMAGE_CURENT_USER = 103;
     private static final int TYPE_IMAGE_ORTHER_USER = 104;
+
+    public void setmOnActionChatListener(OnActionChatListener mOnActionChatListener) {
+        this.mOnActionChatListener = mOnActionChatListener;
+    }
 
     public ChatAdapter(Context mContext, List<MessageDTO> messages, String uriOrther) {
         this.mContext = mContext;
@@ -89,7 +96,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
         public RightChatImageViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
@@ -134,13 +141,19 @@ public class ChatAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MessageDTO messageDTO = messages.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        final MessageDTO messageDTO = messages.get(position);
         if (holder instanceof LeftChatViewHolder) {
             LeftChatViewHolder leftChatViewHolder = (LeftChatViewHolder) holder;
             leftChatViewHolder.mAvatarIv.setImageURI(uriOrther);
             leftChatViewHolder.mMessageTv.setText(messageDTO.getContent());
             leftChatViewHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
+            leftChatViewHolder.mAvatarIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnActionChatListener.onAction(position,OnActionChatListener.VIEW_PROFILE);
+                }
+            });
         } else if (holder instanceof RightChatViewHolder) {
             RightChatViewHolder rightChatViewHolder = (RightChatViewHolder) holder;
             rightChatViewHolder.mMessageTv.setText(messageDTO.getContent());
@@ -150,15 +163,44 @@ public class ChatAdapter extends RecyclerView.Adapter {
             leftChatImageViewHolder.mAvatarIv.setImageURI(uriOrther);
             leftChatImageViewHolder.mImageIv.setImageURI(messageDTO.getContent());
             leftChatImageViewHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
+            leftChatImageViewHolder.mImageIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    List<String> tmp = new ArrayList<>();
+                    tmp.add(messageDTO.getContent());
+                    new ShowImageDialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen, tmp, 0).show();
+                }
+            });
+            leftChatImageViewHolder.mAvatarIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnActionChatListener.onAction(position,OnActionChatListener.VIEW_PROFILE);
+                }
+            });
         } else if (holder instanceof RightChatImageViewHolder) {
             RightChatImageViewHolder rightChatImageViewHolder = (RightChatImageViewHolder) holder;
             rightChatImageViewHolder.mImageIv.setImageURI(messageDTO.getContent());
             rightChatImageViewHolder.mTimeTv.setText(DateTimeUtil.longToTimeString(messageDTO.getTime()));
+            rightChatImageViewHolder.mImageIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    List<String> tmp = new ArrayList<>();
+                    tmp.add(messageDTO.getContent());
+                    new ShowImageDialog(mContext, android.R.style.Theme_Black_NoTitleBar_Fullscreen, tmp, 0).show();
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
         return messages.size();
+    }
+
+    public interface OnActionChatListener{
+
+        String VIEW_PROFILE = "viewprofile";
+
+        void onAction(int position,String action);
     }
 }
