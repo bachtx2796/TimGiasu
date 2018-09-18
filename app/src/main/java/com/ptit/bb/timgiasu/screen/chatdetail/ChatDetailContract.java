@@ -37,6 +37,12 @@ interface ChatDetailContract {
         void uploadImageWithFb(Intent data);
 
         void viewPost();
+
+        void callOwner();
+
+        void pushNotiDecline();
+
+        void pushNotiAcepted();
     }
 }
 

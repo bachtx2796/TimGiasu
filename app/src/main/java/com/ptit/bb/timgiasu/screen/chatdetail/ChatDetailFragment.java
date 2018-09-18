@@ -48,6 +48,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     TextView mDeclineBt;
 
     private static final int REQUEST_PICK_PICTURE = 100;
+    private static final int CALL_PHONE = 101;
 
     public static ChatDetailFragment getInstance() {
         return new ChatDetailFragment();
@@ -84,6 +85,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
             mAceptBt.setVisibility(View.VISIBLE);
             mDeclineBt.setVisibility(View.VISIBLE);
         } else {
+            mAceptBt.setText("Liên hệ");
             mAceptBt.setVisibility(View.VISIBLE);
             mDeclineBt.setVisibility(View.GONE);
         }
@@ -146,6 +148,10 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
                 chooseImageFromSDCard();
         }
 
+        if (requestCode == CALL_PHONE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                mPresenter.callOwner();
+        }
     }
 
     @Override
@@ -171,4 +177,24 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
         super.onDestroyView();
         mPresenter.removeListener();
     }
+
+    @OnClick(R.id.accept_tv)
+    public void action(){
+        switch (mAceptBt.getText().toString()){
+            case "Liên hệ":
+                if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE)) {
+                    mPresenter.callOwner();
+                }
+                break;
+            case "Chấp nhận":
+                mPresenter.pushNotiAcepted();
+                break;
+        }
+    }
+
+    @OnClick(R.id.decline_tv)
+    public void decline(){
+        mPresenter.pushNotiDecline();
+    }
+
 }

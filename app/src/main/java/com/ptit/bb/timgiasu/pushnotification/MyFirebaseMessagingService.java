@@ -38,6 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
     public static final String REQUEST = "request";
     public static final String MSG = "message";
+    public static final String NOTI = "noti";
 
     /**
      * Called when message is received.

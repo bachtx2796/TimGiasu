@@ -23,6 +23,7 @@ public class UserDTO {
     private List<String> uris;
     private HashMap<String,Integer> ratings;
     private String devicetoken;
+    private List<String> receviepost;
 
     public UserDTO() {
     }
@@ -42,6 +43,8 @@ public class UserDTO {
         salary = 0;
         uris = new ArrayList<>();
         ratings = new HashMap<>();
+        receviepost = new ArrayList<>();
+
     }
 
     public String getId() {
@@ -170,6 +173,14 @@ public class UserDTO {
 
     public void setRatings(HashMap<String, Integer> ratings) {
         this.ratings = ratings;
+    }
+
+    public List<String> getReceviepost() {
+        return receviepost;
+    }
+
+    public void setReceviepost(List<String> receviepost) {
+        this.receviepost = receviepost;
     }
 
     @Override

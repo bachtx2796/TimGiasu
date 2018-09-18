@@ -18,12 +18,15 @@ import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.data.dto.PushNotificationDTO;
+import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.pushnotification.MyFirebaseMessagingService;
 import com.ptit.bb.timgiasu.screen.chatdetail.ChatDetailPresenter;
 import com.ptit.bb.timgiasu.screen.editpost.EditPostPresenter;
 
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +39,7 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
         implements PostDetailContract.Presenter {
 
     private PostDTO mPost;
+    private UserDTO mUser;
 
     public PostDetailPresenter(ContainerView containerView) {
         super(containerView);
@@ -49,6 +53,7 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
     @Override
     public void start() {
         // Start getting data here
+        mUser = PrefWrapper.getUser(getViewContext());
         mView.bindView(mPost);
     }
 
@@ -77,7 +82,7 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String token = dataSnapshot.getValue(String.class);
-                PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), PrefWrapper.getUser(getViewContext()).getId(), "Nhận nè"));
+                PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), mUser.getId(), "Nhận nè"));
                 mInteractor.sendRequest(pushNotificationDTO, new Callback<Object>() {
 
                     @Override

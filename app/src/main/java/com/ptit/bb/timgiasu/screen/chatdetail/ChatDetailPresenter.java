@@ -1,5 +1,6 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -254,6 +255,57 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     @Override
     public void viewPost() {
         new PostDetailPresenter(mContainerView).setPost(mPost).pushView();
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void callOwner() {
+        String uri = "tel:" + mUser.getPhoneNo();
+        Intent intent = new Intent(Intent.ACTION_CALL);
+        intent.setData(Uri.parse(uri));
+        getViewContext().startActivity(intent);
+    }
+
+    @Override
+    public void pushNotiDecline() {
+        DialogUtils.showProgressDialog(getViewContext());
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " từ chối yêu cầu của bạn !"));
+        mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                DialogUtils.dismissProgressDialog();
+                Toast.makeText(getViewContext(), "Đã từ chối yêu cầu !", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                DialogUtils.dismissProgressDialog();
+            }
+        });
+    }
+
+    @Override
+    public void pushNotiAcepted() {
+        DialogUtils.showProgressDialog(getViewContext());
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " chấp nhận yêu cầu của bạn !"));
+        mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                DialogUtils.dismissProgressDialog();
+                Toast.makeText(getViewContext(), "Đã chấp nhận yêu cầu !", Toast.LENGTH_SHORT).show();
+                List<String> receviepost = mOrther.getReceviepost();
+                if (receviepost == null) receviepost = new ArrayList<>();
+                receviepost.add(mPost.getId());
+                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mOrther.getId()).child(DBConstan.RECEVIE_POST).setValue(receviepost);
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                DialogUtils.dismissProgressDialog();
+            }
+        });
     }
 
 
