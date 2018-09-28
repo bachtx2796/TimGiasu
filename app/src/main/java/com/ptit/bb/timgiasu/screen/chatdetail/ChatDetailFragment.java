@@ -14,13 +14,13 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gemvietnam.base.viper.ViewFragment;
-import com.gemvietnam.utils.DialogUtils;
 import com.gemvietnam.utils.PermissionUtils;
 import com.gemvietnam.utils.RecyclerUtils;
 import com.gemvietnam.utils.StringUtils;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.profile.ProfilePresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -75,15 +75,20 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @Override
-    public void bindPost(PostDTO mPost) {
+    public void bindPost(PostDTO mPost, String action) {
         if (mPost.getUris() != null) {
             mItemImageIv.setImageURI(mPost.getUris().get(0));
         }
         mTitleTv.setText("Lớp: " + mPost.getClasses().toString() + " / " + mPost.getSubjects() + "\nThời gian: " + mPost.getTime());
         mPriceTv.setText(mPost.getSalary());
-        if (mPost.getIdUser().equals(PrefWrapper.getUser(getViewContext()).getId())){
-            mAceptBt.setVisibility(View.VISIBLE);
-            mDeclineBt.setVisibility(View.VISIBLE);
+        if (mPost.getIdUser().equals(PrefWrapper.getUser(getViewContext()).getId())) {
+            if (action.equals("pending")){
+                mAceptBt.setVisibility(View.VISIBLE);
+                mDeclineBt.setVisibility(View.VISIBLE);
+            } else {
+                mAceptBt.setVisibility(View.GONE);
+                mDeclineBt.setVisibility(View.GONE);
+            }
         } else {
             mAceptBt.setText("Liên hệ");
             mAceptBt.setVisibility(View.VISIBLE);
@@ -128,7 +133,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @OnClick(R.id.message_heade_ll)
-    public void viewPost(){
+    public void viewPost() {
         mPresenter.viewPost();
     }
 
@@ -179,8 +184,8 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @OnClick(R.id.accept_tv)
-    public void action(){
-        switch (mAceptBt.getText().toString()){
+    public void action() {
+        switch (mAceptBt.getText().toString()) {
             case "Liên hệ":
                 if (!PermissionUtils.needRequestPermissions(getViewContext(), this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PHONE)) {
                     mPresenter.callOwner();
@@ -193,7 +198,7 @@ public class ChatDetailFragment extends ViewFragment<ChatDetailContract.Presente
     }
 
     @OnClick(R.id.decline_tv)
-    public void decline(){
+    public void decline() {
         mPresenter.pushNotiDecline();
     }
 

@@ -20,7 +20,7 @@ interface ChatDetailContract {
     }
 
     interface View extends PresentView<Presenter> {
-        void bindPost(PostDTO mPost);
+        void bindPost(PostDTO mPost, String action);
 
         void bindUsername(String name);
 

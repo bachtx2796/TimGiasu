@@ -177,7 +177,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mPost = dataSnapshot.getValue(PostDTO.class);
-                mView.bindPost(mPost);
+                mView.bindPost(mPost,grChat.getAction());
             }
 
             @Override
@@ -276,6 +276,8 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
             public void onResponse(Call<Object> call, Response<Object> response) {
                 DialogUtils.dismissProgressDialog();
                 Toast.makeText(getViewContext(), "Đã từ chối yêu cầu !", Toast.LENGTH_SHORT).show();
+                removeChatByPost();
+                back();
             }
 
             @Override
@@ -283,6 +285,12 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
                 DialogUtils.dismissProgressDialog();
             }
         });
+    }
+
+    private void removeChatByPost() {
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mUser.getId()).child(DBConstan.GR_CHAT).child(grChat.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mOrther.getId()).child(DBConstan.GR_CHAT).child(grChat.getId()).removeValue();
+        FirebaseDatabase.getInstance().getReference(DBConstan.GR_CHAT).child(grChat.getId()).removeValue();
     }
 
     @Override

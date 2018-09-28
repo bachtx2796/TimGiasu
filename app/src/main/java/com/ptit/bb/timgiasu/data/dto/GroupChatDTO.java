@@ -7,6 +7,7 @@ public class GroupChatDTO {
     private String idClient;
     private String idPost;
     private String lastMsg;
+    private String action;
 
     public GroupChatDTO() {
     }
@@ -17,6 +18,15 @@ public class GroupChatDTO {
         this.idClient = idClient;
         this.idPost = idPost;
         this.lastMsg = lastMsg;
+        action = "chat";
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public String getId() {

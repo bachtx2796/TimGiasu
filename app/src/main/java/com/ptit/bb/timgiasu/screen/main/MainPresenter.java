@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
+import com.ptit.bb.timgiasu.data.dto.GroupChat;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
@@ -51,11 +52,17 @@ public class MainPresenter extends Presenter<MainContract.View, MainContract.Int
         }
         if (!StringUtils.isEmpty(grChatJson)) {
             NotificationDataDTO notificationDataDTO = new Gson().fromJson(grChatJson, NotificationDataDTO.class);
-            mGroupChatDTO = new GroupChatDTO(notificationDataDTO.getIdPost() + PrefWrapper.getUser(getViewContext()).getId() + notificationDataDTO.getIdUserSent(),
+            String keyGr = notificationDataDTO.getIdPost() + PrefWrapper.getUser(getViewContext()).getId() + notificationDataDTO.getIdUserSent();
+            mGroupChatDTO = new GroupChatDTO(keyGr,
                     PrefWrapper.getUser(getViewContext()).getId(),
                     notificationDataDTO.getIdUserSent(),
                     notificationDataDTO.getIdPost(),
                     "");
+            mGroupChatDTO.setAction("pending");
+
+            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.GR_CHAT).child(keyGr).setValue(mGroupChatDTO);
+            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(notificationDataDTO.getIdUserSent()).child(DBConstan.GR_CHAT).child(keyGr).setValue(mGroupChatDTO);
+
             new ChatDetailPresenter(mContainerView).setGrChat(mGroupChatDTO).pushView();
         }
     }

@@ -113,21 +113,36 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
 
     @Override
     public void createGrChat() {
-        final String key = mPost.getId() + mPost.getIdUser() + PrefWrapper.getUser(getViewContext()).getId(); // tao key gr
-        final GroupChatDTO groupChatDTO = new GroupChatDTO(key, mPost.getIdUser(), PrefWrapper.getUser(getViewContext()).getId(), mPost.getId(), "");
-
-        // tao gr chat cho ng ban' va mua
         DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).setValue(groupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+        final String key = mPost.getId() + mPost.getIdUser() + PrefWrapper.getUser(getViewContext()).getId(); // tao key gr
+        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(PrefWrapper.getUser(getViewContext()).getId()).child(DBConstan.GR_CHAT).child(key).setValue(groupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        DialogUtils.dismissProgressDialog();
-                        new ChatDetailPresenter(mContainerView).setGrChat(groupChatDTO).pushView();
-                    }
-                });
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                GroupChatDTO groupChatDTO = dataSnapshot.getValue(GroupChatDTO.class);
+                if (groupChatDTO == null) {
+                    groupChatDTO = new GroupChatDTO(key, mPost.getIdUser(), PrefWrapper.getUser(getViewContext()).getId(), mPost.getId(), "");
+                    final GroupChatDTO finalGroupChatDTO = groupChatDTO;
+                    FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).setValue(groupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(PrefWrapper.getUser(getViewContext()).getId()).child(DBConstan.GR_CHAT).child(key).setValue(finalGroupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    DialogUtils.dismissProgressDialog();
+                                    new ChatDetailPresenter(mContainerView).setGrChat(finalGroupChatDTO).pushView();
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    DialogUtils.dismissProgressDialog();
+                    new ChatDetailPresenter(mContainerView).setGrChat(groupChatDTO).pushView();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 

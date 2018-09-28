@@ -84,6 +84,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             showNotification(notificationDTO);
         } else if (notificationDTO.getType().equals(MyFirebaseMessagingService.MSG) && !AppUtils.isForeGround(getApplicationContext())) { // noti kieu msg va app dang ko hien
             showNotification(notificationDTO);
+        } else if (notificationDTO.getType().equals(MyFirebaseMessagingService.NOTI)) {
+            showNotification(notificationDTO);
         }
     }
 
