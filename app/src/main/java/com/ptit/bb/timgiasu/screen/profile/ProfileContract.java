@@ -26,6 +26,8 @@ interface ProfileContract {
         void changePassword();
 
         void saveTutor(List<String> mClasses, List<String> mSubjects, String time, String salary, List<String> mListUri);
+
+        void displayHistory();
     }
 }
 

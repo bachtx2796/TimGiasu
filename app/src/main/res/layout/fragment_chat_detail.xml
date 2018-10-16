@@ -81,7 +81,7 @@
                     android:layout_marginTop="@dimen/margin_5dp"
                     android:layout_weight="1"
                     android:padding="@dimen/padding_5dp"
-                    android:text="Accept"
+                    android:text="@string/accept"
                     android:visibility="visible" />
 
                 <TextView

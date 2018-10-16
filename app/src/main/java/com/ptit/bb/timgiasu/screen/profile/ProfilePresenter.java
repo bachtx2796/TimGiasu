@@ -18,6 +18,7 @@ import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.changepassword.ChangePasswordPresenter;
+import com.ptit.bb.timgiasu.screen.history.HistoryPresenter;
 import com.ptit.bb.timgiasu.screen.login.LoginActivity;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "User email address updated.");
-                                if (mUser.isTutor() && setCity){
+                                if (mUser.isTutor() && setCity) {
                                     FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(DBConstan.USERS).child(mUser.getId()).removeValue();
                                     FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.USERS).child(mUser.getId()).setValue(mUser);
                                 }
@@ -90,7 +91,7 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
 
                     });
         } else {
-            if (mUser.isTutor() && setCity){
+            if (mUser.isTutor() && setCity) {
                 FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(DBConstan.USERS).child(mUser.getId()).removeValue();
                 FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(mUser.getId()).child(DBConstan.USERS).setValue(mUser);
             }
@@ -136,5 +137,10 @@ public class ProfilePresenter extends Presenter<ProfileContract.View, ProfileCon
                 Toast.makeText(getViewContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void displayHistory() {
+        new HistoryPresenter(mContainerView).pushView();
     }
 }

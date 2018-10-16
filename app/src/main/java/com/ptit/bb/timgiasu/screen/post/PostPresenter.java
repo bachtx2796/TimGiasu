@@ -16,6 +16,7 @@ import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.map.MyMapPresenter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,13 +47,19 @@ public class PostPresenter extends Presenter<PostContract.View, PostContract.Int
 
     @Override
     public void newPost(String address, List<String> mClasses, List<String> mSubjects, String time, String salary, List<String> mListUri) {
-        UserDTO userDTO = PrefWrapper.getUser(getViewContext());
+        final UserDTO userDTO = PrefWrapper.getUser(getViewContext());
         String idPost = FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(userDTO.getCity()).child(DBConstan.POSTS).push().getKey(); // gen id post
-        PostDTO postDTO = new PostDTO(idPost, userDTO.getId(), mListUri, address, mClasses, mSubjects, salary, AppUtils.DANG_TUYEN, Calendar.getInstance().getTimeInMillis(), time);
+        final PostDTO postDTO = new PostDTO(idPost, userDTO.getId(), mListUri, address, mClasses, mSubjects, salary, AppUtils.DANG_TUYEN, Calendar.getInstance().getTimeInMillis(), time);
         DialogUtils.showProgressDialog(getViewContext());
         FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(userDTO.getCity()).child(DBConstan.POSTS).child(idPost).setValue(postDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+                List<PostDTO> posts = userDTO.getPosts();
+                if (posts == null) posts = new ArrayList<>();
+                posts.add(postDTO);
+                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.MY_POST).setValue(posts);
+                userDTO.setPosts(posts);
+                PrefWrapper.saveUser(getViewContext(),userDTO);
                 DialogUtils.dismissProgressDialog();
                 Toast.makeText(getViewContext(), "Đăng tuyển thành công", Toast.LENGTH_SHORT).show();
                 back();

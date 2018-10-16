@@ -13,5 +13,6 @@ public class DBConstan {
     public static final String READ = "read";
     public static final String FB_KEY = "AAAACJseUdg:APA91bGWERJwVyCgvWcIsUunPx5fDAz1TGsJU5GdavQkYUXrVC43nknenFlU5EPdGIqLb2T97WVYiREA5BuuaJD3Z8AkmUzkW-cORqe01UIX_3H3BnvGN--CIBRrnttvETft8fJ7NHEBSfBzMHWJPnGny9nYGZAC7A";
     public static final String POST_REQUEST = "postrequest";
-    public static String RECEVIE_POST = "receviepost";
+    public static final String RECEVIE_POST = "receviepost";
+    public static final String MY_POST = "posts";
 }

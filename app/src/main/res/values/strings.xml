@@ -55,4 +55,6 @@
     <string name="edit">Sửa</string>
     <string name="chat">Chat</string>
     <string name="mark_as_sold">Nhận</string>
+    <string name="history">Lịch sử</string>
+    <string name="accept">Chấp nhận</string>
 </resources>

@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
@@ -177,7 +179,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mPost = dataSnapshot.getValue(PostDTO.class);
-                mView.bindPost(mPost,grChat.getAction());
+                mView.bindPost(mPost, grChat.getAction());
             }
 
             @Override
@@ -199,7 +201,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     }
 
     private void pushNotification(String msg) {
-        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(),
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDevicetoken(),
                 new NotificationDataDTO(MyFirebaseMessagingService.MSG, mPost.getId(), mUser.getId(), mUser.getName() + ": " + msg));
         mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
             @Override
@@ -269,7 +271,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     @Override
     public void pushNotiDecline() {
         DialogUtils.showProgressDialog(getViewContext());
-        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " từ chối yêu cầu của bạn !"));
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDevicetoken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " từ chối yêu cầu của bạn !"));
         mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
 
             @Override
@@ -296,17 +298,31 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     @Override
     public void pushNotiAcepted() {
         DialogUtils.showProgressDialog(getViewContext());
-        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDeviceToken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " chấp nhận yêu cầu của bạn !"));
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(mOrther.getDevicetoken(), new NotificationDataDTO(MyFirebaseMessagingService.NOTI, mPost.getId(), mUser.getId(), mUser.getName() + " chấp nhận yêu cầu của bạn !"));
         mInteractor.pushNotification(pushNotificationDTO, new Callback<Object>() {
 
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                DialogUtils.dismissProgressDialog();
-                Toast.makeText(getViewContext(), "Đã chấp nhận yêu cầu !", Toast.LENGTH_SHORT).show();
-                List<String> receviepost = mOrther.getReceviepost();
-                if (receviepost == null) receviepost = new ArrayList<>();
-                receviepost.add(mPost.getId());
-                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mOrther.getId()).child(DBConstan.RECEVIE_POST).setValue(receviepost);
+                FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mOrther.getId()).child(DBConstan.RECEVIE_POST).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        DialogUtils.dismissProgressDialog();
+                        Toast.makeText(getViewContext(), "Đã chấp nhận yêu cầu !", Toast.LENGTH_SHORT).show();
+                        String postsJson = new Gson().toJson(dataSnapshot.getValue());
+                        List<PostDTO> receviepost = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
+                        }.getType());
+                        if (receviepost == null) receviepost = new ArrayList<>();
+                        receviepost.add(mPost);
+                        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mOrther.getId()).child(DBConstan.RECEVIE_POST).setValue(receviepost);
+                        back();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override

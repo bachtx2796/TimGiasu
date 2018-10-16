@@ -35,6 +35,7 @@ import com.ptit.bb.timgiasu.data.ImgurServiceBuilder;
 import com.ptit.bb.timgiasu.data.dto.ImgurBaseData;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.history.HistoryPresenter;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -476,4 +477,8 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
         mPresenter.saveTutor(mClasses, mSubjects, time, salary, mListUri);
     }
 
+    @OnClick(R.id.profile_history_tv)
+    public void viewHistory() {
+        mPresenter.displayHistory();
+    }
 }

@@ -21,9 +21,10 @@ public class UserDTO {
     private String time;
     private long salary;
     private List<String> uris;
-    private HashMap<String,Integer> ratings;
+    private HashMap<String, Integer> ratings;
     private String devicetoken;
-    private List<String> receviepost;
+    private List<PostDTO> receviepost;
+    private List<PostDTO> posts;
 
     public UserDTO() {
     }
@@ -44,7 +45,15 @@ public class UserDTO {
         uris = new ArrayList<>();
         ratings = new HashMap<>();
         receviepost = new ArrayList<>();
+        posts = new ArrayList<>();
+    }
 
+    public List<PostDTO> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<PostDTO> posts) {
+        this.posts = posts;
     }
 
     public String getId() {
@@ -175,12 +184,20 @@ public class UserDTO {
         this.ratings = ratings;
     }
 
-    public List<String> getReceviepost() {
+    public List<PostDTO> getReceviepost() {
         return receviepost;
     }
 
-    public void setReceviepost(List<String> receviepost) {
+    public void setReceviepost(List<PostDTO> receviepost) {
         this.receviepost = receviepost;
+    }
+
+    public String getDevicetoken() {
+        return devicetoken;
+    }
+
+    public void setDevicetoken(String devicetoken) {
+        this.devicetoken = devicetoken;
     }
 
     @Override
@@ -202,13 +219,5 @@ public class UserDTO {
                 ", salary=" + salary +
                 ", uris=" + uris +
                 '}';
-    }
-
-    public String getDeviceToken() {
-        return devicetoken;
-    }
-
-    public void setDeviceToken(String deviceToken) {
-        this.devicetoken = deviceToken;
     }
 }
