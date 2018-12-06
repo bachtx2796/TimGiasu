@@ -49,7 +49,7 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
         mPostAdapter = new HomeAdapter(getViewContext(), mPosts);
         mReceviePost = new ArrayList<>();
         mReceviePostAdapter = new HomeAdapter(getViewContext(), mReceviePost);
-        mView.bindPost(mPostAdapter,mReceviePostAdapter);
+        mView.bindPost(mPostAdapter, mReceviePostAdapter);
         userDTO = PrefWrapper.getUser(getViewContext());
         getHistory();
     }
@@ -64,16 +64,23 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
                 List<PostDTO> tmp = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
                 }.getType());
                 mPosts.clear();
-                mPosts.addAll(tmp);
+                if (tmp != null){
+                    mPosts.addAll(tmp);
+                }
                 Log.e("@@@@", mPosts.toString());
                 ref.child(DBConstan.RECEVIE_POST).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DialogUtils.dismissProgressDialog();
                         String posts = new Gson().toJson(dataSnapshot.getValue());
-                        List<PostDTO> tmp = new Gson().fromJson(postsJson,new TypeToken<List<PostDTO>>(){}.getType());
-
+                        List<PostDTO> tmp = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
+                        }.getType());
+                        mReceviePost.clear();
+                        if (tmp != null){
+                            mReceviePost.addAll(tmp);
+                        }
                         mPostAdapter.notifyDataSetChanged();
+                        mReceviePostAdapter.notifyDataSetChanged();
                     }
 
                     @Override
