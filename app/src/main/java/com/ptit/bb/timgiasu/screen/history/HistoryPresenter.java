@@ -72,7 +72,6 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DialogUtils.dismissProgressDialog();
-                        String posts = new Gson().toJson(dataSnapshot.getValue());
                         List<PostDTO> tmp = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
                         }.getType());
                         mReceviePost.clear();
