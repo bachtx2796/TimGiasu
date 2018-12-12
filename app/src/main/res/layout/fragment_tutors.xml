@@ -7,4 +7,25 @@
         android:id="@+id/tutor_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/filter_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/margin_15dp"
+        android:background="@drawable/green_shadow_bg">
+
+        <ImageView
+            android:layout_width="@dimen/size_12dp"
+            android:layout_height="@dimen/size_12dp"
+            android:src="@drawable/ic_filter" />
+
+        <TextView
+            style="@style/TextViewBase.Label"
+            android:layout_marginStart="@dimen/margin_5dp"
+            android:text="@string/filter"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </FrameLayout>
