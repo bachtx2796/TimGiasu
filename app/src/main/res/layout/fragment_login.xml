@@ -1,124 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="@drawable/home_bg"
+  android:orientation="vertical">
+
+  <RelativeLayout
+    android:id="@+id/logoRl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/home_bg"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/toolbar"
+    android:layout_marginTop="@dimen/margin_25dp">
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/green">
+    <ImageView
+      android:id="@+id/logoIv"
+      android:src="@drawable/logo"
+      android:layout_width="@dimen/size_150dp"
+      android:layout_height="wrap_content"
+      android:layout_centerInParent="true" />
+  </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/backIv"
-            style="@style/ImageViewBase.ToolBar"
-            android:src="@drawable/ic_white_back" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/logoRl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_marginTop="@dimen/margin_25dp">
-
-        <ImageView
-            android:id="@+id/logoIv"
-            android:layout_width="@dimen/size_150dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_below="@+id/logoRl"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_20dp">
 
     <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
+        style="@style/TextViewBase.Label"
+        android:text="@string/email_address_login"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/ts_14sp" />
+
+      <EditText
+        android:id="@+id/userNameEt"
+        style="@style/TextViewBase.Content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/logoRl"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_20dp">
+        android:backgroundTint="@android:color/transparent"
+        android:hint="@string/email_address_login"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLines="1"
+        android:nextFocusForward="@id/passwordEt"
+        android:paddingLeft="0dp"
+        android:textColorHint="@color/text_gray" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/TextViewBase.Label"
-                android:text="@string/email_address_login"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/ts_14sp" />
-
-            <EditText
-                android:id="@+id/userNameEt"
-                style="@style/TextViewBase.Content"
-                android:layout_width="match_parent"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="@string/email_address_login"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:maxLines="1"
-                android:nextFocusForward="@id/passwordEt"
-                android:paddingLeft="0dp"
-                android:textColorHint="@color/text_gray" />
-
-            <View style="@style/GrayDivider" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/passwordLl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10dp"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/TextViewBase.Label"
-                android:text="@string/password"
-                android:textColor="@color/text_black"
-                android:textSize="@dimen/ts_14sp" />
-
-            <EditText
-                android:id="@+id/passwordEt"
-                style="@style/TextViewBase.Content"
-                android:layout_width="match_parent"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:paddingStart="0dp"
-                android:textColorHint="@color/text_gray" />
-
-            <View style="@style/GrayDivider" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/forgotPasswordTv"
-            style="@style/TextViewBase.Label"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:gravity="end"
-            android:text="@string/forgot_password"
-            android:textAllCaps="false"
-            android:textSize="@dimen/ts_12sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/loginTv"
-            style="@style/TextViewBase.Button.Green"
-            android:layout_above="@+id/signUpTv"
-            android:layout_marginTop="@dimen/margin_30dp"
-            android:text="@string/login" />
-
-        <TextView
-            android:id="@+id/signUpTv"
-            style="@style/TextViewBase.Button.GreenBorder"
-            android:layout_marginTop="@dimen/margin_15dp"
-            android:text="@string/sign_up"
-            android:textColor="@color/green" />
+      <View style="@style/GrayDivider" />
 
     </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/passwordLl"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/margin_10dp"
+      android:orientation="vertical">
+
+      <TextView
+        style="@style/TextViewBase.Label"
+        android:text="@string/password"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/ts_14sp" />
+
+      <EditText
+        android:id="@+id/passwordEt"
+        style="@style/TextViewBase.Content"
+        android:layout_width="match_parent"
+        android:backgroundTint="@android:color/transparent"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:paddingStart="0dp"
+        android:textColorHint="@color/text_gray" />
+
+      <View style="@style/GrayDivider" />
+    </LinearLayout>
+
+    <TextView
+      android:id="@+id/forgotPasswordTv"
+      style="@style/TextViewBase.Label"
+      android:layout_width="match_parent"
+      android:layout_marginTop="@dimen/margin_15dp"
+      android:gravity="end"
+      android:text="@string/forgot_password"
+      android:textAllCaps="false"
+      android:textSize="@dimen/ts_12sp"
+      android:textStyle="bold" />
+
+    <TextView
+      android:id="@+id/loginTv"
+      style="@style/TextViewBase.Button.Green"
+      android:layout_above="@+id/signUpTv"
+      android:layout_marginTop="@dimen/margin_30dp"
+      android:text="@string/login" />
+
+    <TextView
+      android:id="@+id/signUpTv"
+      style="@style/TextViewBase.Button.GreenBorder"
+      android:layout_marginTop="@dimen/margin_15dp"
+      android:text="@string/sign_up"
+      android:textColor="@color/green" />
+
+  </LinearLayout>
 </RelativeLayout>

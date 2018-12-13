@@ -2,16 +2,13 @@ package com.ptit.bb.timgiasu.screen.chat;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,14 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.R;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.Utils.DateTimeUtil;
-import com.ptit.bb.timgiasu.data.dto.GroupChat;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.MessageDTO;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;

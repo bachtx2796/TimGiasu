@@ -1,19 +1,14 @@
 package com.ptit.bb.timgiasu.screen.main;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 import com.gemvietnam.utils.StringUtils;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
-import com.ptit.bb.timgiasu.data.dto.GroupChat;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.NotificationDataDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;

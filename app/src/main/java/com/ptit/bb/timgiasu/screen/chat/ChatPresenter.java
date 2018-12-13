@@ -1,14 +1,11 @@
 package com.ptit.bb.timgiasu.screen.chat;
 
 import com.gemvietnam.utils.DialogUtils;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
-import com.ptit.bb.timgiasu.data.dto.GroupChat;
 import com.ptit.bb.timgiasu.data.dto.GroupChatDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
