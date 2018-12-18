@@ -61,7 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         HomeHolder homeHolder = (HomeHolder) holder;
         PostDTO post = mPosts.get(position);
         homeHolder.mCoverIv.setImageURI(post.getUris().get(0));
-        homeHolder.mTitleTv.setText(post.getClasses().toString());
+        homeHolder.mTitleTv.setText("Lớp: " + post.getClasses().toString());
         homeHolder.mSalaryTv.setText(post.getSalary());
         homeHolder.mStatusIv.setText(post.getStatus());
         if (post.getStatus().equals("Đăng tuyển")){
