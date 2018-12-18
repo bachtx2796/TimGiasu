@@ -5,6 +5,7 @@ import android.content.Intent;
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
+import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.data.dto.PushNotificationDTO;
 
@@ -17,6 +18,10 @@ interface ChatDetailContract {
 
     interface Interactor extends IInteractor<Presenter> {
         void pushNotification(PushNotificationDTO pushNotificationDTO, Callback<Object> callback);
+
+        void getInfo(String idUser, ValueEventListener valueEventListener);
+
+        void getInfoPost(String city, String idPost, ValueEventListener valueEventListener);
     }
 
     interface View extends PresentView<Presenter> {

@@ -3,6 +3,7 @@ package com.ptit.bb.timgiasu.screen.home;
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * The Home Contract
@@ -10,6 +11,7 @@ import com.gemvietnam.base.viper.interfaces.PresentView;
 interface HomeContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void getPosts(String city, ValueEventListener valueEventListener);
     }
 
     interface View extends PresentView<Presenter> {

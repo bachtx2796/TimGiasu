@@ -3,7 +3,6 @@ package com.ptit.bb.timgiasu.screen.login;
 
 import android.support.annotation.NonNull;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -12,11 +11,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.ptit.bb.timgiasu.Utils.DBConstan;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.forgotpassword.ForgotPasswordPresenter;
@@ -84,7 +79,7 @@ public class LoginPresenter extends Presenter<LoginContract.View, LoginContract.
     }
 
     private void saveUser(String id) {
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+        mInteractor.saveUser(id, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserDTO userDTO = dataSnapshot.getValue(UserDTO.class);

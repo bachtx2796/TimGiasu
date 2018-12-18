@@ -57,7 +57,7 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
 
     @Override
     public void suggestPlace(String key) {
-        GoogleServiceBuilder.getService().getLocationSuggestion(key, "vi", GoogleService.KEY).enqueue(new Callback<PredictionPlaces>() {
+        mInteractor.suggestPlace(key, new Callback<PredictionPlaces>(){
             @Override
             public void onResponse(Call<PredictionPlaces> call, Response<PredictionPlaces> response) {
                 if (response.isSuccessful()) {
@@ -87,7 +87,7 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
     @Override
     public void showPlace(String selectedSearchItem) {
         mView.showProgress();
-        GoogleServiceBuilder.getService().getLocationSearch(selectedSearchItem, GoogleService.KEY).enqueue(new Callback<GoogleMapSearchDTO>() {
+        mInteractor.showPlace(selectedSearchItem,new Callback<GoogleMapSearchDTO>() {
             @Override
             public void onResponse(Call<GoogleMapSearchDTO> call, Response<GoogleMapSearchDTO> response) {
                 mView.hideProgress();

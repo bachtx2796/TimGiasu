@@ -17,6 +17,7 @@ import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.home.HomeAdapter;
+import com.ptit.bb.timgiasu.screen.postdetail.PostDetailPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,8 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
     private UserDTO userDTO;
     private List<PostDTO> mPosts;
     private List<PostDTO> mReceviePost;
-    private HomeAdapter mPostAdapter;
-    private HomeAdapter mReceviePostAdapter;
+    private MyHistoryAdapter mPostAdapter;
+    private MyHistoryAdapter mReceviePostAdapter;
 
     public HistoryPresenter(ContainerView containerView) {
         super(containerView);
@@ -46,12 +47,30 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
     public void start() {
         // Start getting data here
         mPosts = new ArrayList<>();
-        mPostAdapter = new HomeAdapter(getViewContext(), mPosts);
+        mPostAdapter = new MyHistoryAdapter(getViewContext(), mPosts);
+        mPostAdapter.setmOnItemPostClickListener(new HomeAdapter.OnItemPostClickListener() {
+            @Override
+            public void onItemClick(int postion) {
+                showPostDeatail(mPosts.get(postion));
+            }
+        });
+
         mReceviePost = new ArrayList<>();
-        mReceviePostAdapter = new HomeAdapter(getViewContext(), mReceviePost);
+        mReceviePostAdapter = new MyHistoryAdapter(getViewContext(), mReceviePost);
+        mPostAdapter.setmOnItemPostClickListener(new HomeAdapter.OnItemPostClickListener() {
+            @Override
+            public void onItemClick(int postion) {
+                showPostDeatail(mReceviePost.get(postion));
+            }
+        });
+
         mView.bindPost(mPostAdapter, mReceviePostAdapter);
         userDTO = PrefWrapper.getUser(getViewContext());
         getHistory();
+    }
+
+    private void showPostDeatail(PostDTO post) {
+        new PostDetailPresenter(mContainerView).setPost(post).pushView();
     }
 
     private void getHistory() {
@@ -60,11 +79,12 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
         ref.child(DBConstan.MY_POST).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final String postsJson = new Gson().toJson(dataSnapshot.getValue());
+                String postsJson = new Gson().toJson(dataSnapshot.getValue());
+                postsJson = postsJson.replaceAll("null,", "");
                 List<PostDTO> tmp = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
                 }.getType());
                 mPosts.clear();
-                if (tmp != null){
+                if (tmp != null) {
                     mPosts.addAll(tmp);
                 }
                 Log.e("@@@@", mPosts.toString());
@@ -72,10 +92,11 @@ public class HistoryPresenter extends Presenter<HistoryContract.View, HistoryCon
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         DialogUtils.dismissProgressDialog();
-                        List<PostDTO> tmp = new Gson().fromJson(postsJson, new TypeToken<List<PostDTO>>() {
+                        String rpostsJson = new Gson().toJson(dataSnapshot.getValue());
+                        List<PostDTO> tmp = new Gson().fromJson(rpostsJson, new TypeToken<List<PostDTO>>() {
                         }.getType());
                         mReceviePost.clear();
-                        if (tmp != null){
+                        if (tmp != null) {
                             mReceviePost.addAll(tmp);
                         }
                         mPostAdapter.notifyDataSetChanged();

@@ -14,7 +14,7 @@ interface HistoryContract {
     }
 
     interface View extends PresentView<Presenter> {
-        void bindPost(HomeAdapter adapter, HomeAdapter mReceviePostAdapter);
+        void bindPost(MyHistoryAdapter adapter, MyHistoryAdapter mReceviePostAdapter);
     }
 
     interface Presenter extends IPresenter<View, Interactor> {

@@ -3,6 +3,7 @@ package com.ptit.bb.timgiasu.screen.editpost;
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 interface EditPostContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void savePost(String city, String id, PostDTO mPost, OnCompleteListener<Void> onCompleteListener);
     }
 
     interface View extends PresentView<Presenter> {

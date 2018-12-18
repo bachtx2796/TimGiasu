@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.gemvietnam.base.viper.ViewFragment;
 import com.gemvietnam.utils.RecyclerUtils;
 import com.ptit.bb.timgiasu.R;
+import com.ptit.bb.timgiasu.Utils.HorizontalSpaceItemDecoration;
 import com.ptit.bb.timgiasu.Utils.SpacesItemDecoration;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
@@ -29,11 +30,6 @@ public class HistoryFragment extends ViewFragment<HistoryContract.Presenter> imp
     @BindView(R.id.my_class_rv)
     RecyclerView mMyClassRv;
 
-    private List<PostDTO> mPosts;
-
-
-    private List<PostDTO> mMyClasses;
-    private HomeAdapter mMyClassAdapter;
 
     public static HistoryFragment getInstance() {
         return new HistoryFragment();
@@ -50,10 +46,10 @@ public class HistoryFragment extends ViewFragment<HistoryContract.Presenter> imp
     }
 
     @Override
-    public void bindPost(HomeAdapter adapter, HomeAdapter mReceviePostAdapter) {
+    public void bindPost(MyHistoryAdapter adapter, MyHistoryAdapter mReceviePostAdapter) {
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.margin_5dp);
-        mPostRv.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-        RecyclerUtils.setupGridRecyclerView(getViewContext(), mPostRv, 2);
+        mPostRv.addItemDecoration(new HorizontalSpaceItemDecoration(spacingInPixels));
+        RecyclerUtils.setupHorizontalRecyclerView(getViewContext(), mPostRv);
         mPostRv.setAdapter(adapter);
         if (!PrefWrapper.getUser(getViewContext()).isTutor()) {
             mTitleMyClassTv.setVisibility(View.GONE);
@@ -61,8 +57,8 @@ public class HistoryFragment extends ViewFragment<HistoryContract.Presenter> imp
         } else {
             mTitleMyClassTv.setVisibility(View.VISIBLE);
             mMyClassRv.setVisibility(View.VISIBLE);
-            mMyClassRv.addItemDecoration(new SpacesItemDecoration(spacingInPixels));
-            RecyclerUtils.setupGridRecyclerView(getViewContext(), mMyClassRv, 2);
+            mMyClassRv.addItemDecoration(new HorizontalSpaceItemDecoration(spacingInPixels));
+            RecyclerUtils.setupHorizontalRecyclerView(getViewContext(), mMyClassRv);
             mMyClassRv.setAdapter(mReceviePostAdapter);
         }
     }

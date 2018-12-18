@@ -66,7 +66,7 @@ public class ChatPresenter extends Presenter<ChatContract.View, ChatContract.Int
         UserDTO userDTO = PrefWrapper.getUser(getViewContext());
         DialogUtils.showProgressDialog(getViewContext());
 
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(userDTO.getId()).child(DBConstan.GR_CHAT).addListenerForSingleValueEvent(new ValueEventListener() {
+        mInteractor.getListGroup(userDTO.getId(), new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {

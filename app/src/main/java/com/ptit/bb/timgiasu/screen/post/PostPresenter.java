@@ -51,7 +51,7 @@ public class PostPresenter extends Presenter<PostContract.View, PostContract.Int
         String idPost = FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(userDTO.getCity()).child(DBConstan.POSTS).push().getKey(); // gen id post
         final PostDTO postDTO = new PostDTO(idPost, userDTO.getId(), mListUri, address, mClasses, mSubjects, salary, AppUtils.DANG_TUYEN, Calendar.getInstance().getTimeInMillis(), time);
         DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(userDTO.getCity()).child(DBConstan.POSTS).child(idPost).setValue(postDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mInteractor.newPost(userDTO.getCity(),idPost,postDTO,new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 List<PostDTO> posts = userDTO.getPosts();

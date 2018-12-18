@@ -46,8 +46,8 @@ public class MainNavigator {
 
         if (mMap.containsKey(fragmentId)) {
             transaction.show(mMap.get(fragmentId).getFragment());
-//            if (fragmentId == TAB_FAVORITES_ID) {
-//                (mMap[fragmentId]?.fragment).refresh();
+//            if (fragmentId == TAB_TUTOR_ID) {
+//                (mMap.get(fragmentId).getFragment()).refresh();
 //            }
 //
 //            if (fragmentId == TAB_HOME_ID) {
@@ -55,11 +55,11 @@ public class MainNavigator {
 //            }
 //
 //            if (fragmentId == TAB_MESSAGES_ID) {
-//                (mMap[fragmentId]?.fragment).refresh();
+//                (mMap.get(fragmentId).getFragment()).refresh();
 //            }
 //
 //            if (fragmentId == TAB_PROFILE_ID){
-//                (mMap[fragmentId]?.fragment).refresh();
+//                (mMap.get(fragmentId).getFragment()).refresh();
 //            }
 
         } else {
@@ -71,7 +71,7 @@ public class MainNavigator {
 
     private Fragment createFragment(int fragmentId) {
 
-        Presenter presenter = null;
+        Presenter presenter;
         switch (fragmentId) {
             case TAB_HOME_ID:
                 presenter = new HomePresenter(mMainActivity);
@@ -83,6 +83,9 @@ public class MainNavigator {
                 presenter = new ChatPresenter(mMainActivity);
                 break;
             case TAB_PROFILE_ID:
+                presenter = new ProfilePresenter(mMainActivity);
+                break;
+            default:
                 presenter = new ProfilePresenter(mMainActivity);
                 break;
         }

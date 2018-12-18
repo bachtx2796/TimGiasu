@@ -46,11 +46,9 @@ public class ChangePasswordPresenter extends Presenter<ChangePasswordContract.Vi
     @Override
     public void savePass(String pass, final String newPass) {
         final FirebaseUser user = mAuth.getCurrentUser();
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(user.getEmail(), pass);
-        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+        mInteractor.savePass(pass, new OnCompleteListener() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
+            public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
                     user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

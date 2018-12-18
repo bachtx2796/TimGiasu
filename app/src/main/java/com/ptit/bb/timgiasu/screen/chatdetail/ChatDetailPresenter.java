@@ -158,7 +158,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
     }
 
     private void getInfoOrther(String idUser) {
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(idUser).addListenerForSingleValueEvent(new ValueEventListener() {
+        mInteractor.getInfo(idUser, new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mOrther = dataSnapshot.getValue(UserDTO.class);
@@ -175,7 +175,7 @@ public class ChatDetailPresenter extends Presenter<ChatDetailContract.View, Chat
 
     private void getPost() {
         // get info post
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(mUser.getCity()).child(DBConstan.POSTS).child(grChat.getIdPost()).addListenerForSingleValueEvent(new ValueEventListener() {
+        mInteractor.getInfoPost(mUser.getCity(), grChat.getIdPost(), new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mPost = dataSnapshot.getValue(PostDTO.class);

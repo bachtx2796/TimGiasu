@@ -7,6 +7,10 @@ import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 import com.ptit.bb.timgiasu.data.dto.Coord;
+import com.ptit.bb.timgiasu.data.dto.GoogleMapSearchDTO;
+import com.ptit.bb.timgiasu.data.dto.PredictionPlaces;
+
+import retrofit2.Callback;
 
 /**
  * The Map Contract
@@ -14,6 +18,9 @@ import com.ptit.bb.timgiasu.data.dto.Coord;
 interface MyMapContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void suggestPlace(String key, Callback<PredictionPlaces> callback);
+
+        void showPlace(String selectedSearchItem, Callback<GoogleMapSearchDTO> callback);
     }
 
     interface View extends PresentView<Presenter> {

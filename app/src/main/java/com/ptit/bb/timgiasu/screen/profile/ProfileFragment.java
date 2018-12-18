@@ -260,16 +260,18 @@ public class ProfileFragment extends ViewFragment<ProfileContract.Presenter> imp
     }
 
     private void chooseAvatarFromSDCard() {
-        Intent pickIntent = new Intent();
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
         pickIntent.setType("image/*");
-        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        pickIntent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(pickIntent, REQUEST_PICK_PICTURE);
     }
 
     private void chooseImageFromSDCard(int pos) {
-        Intent pickIntent = new Intent();
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
         pickIntent.setType("image/*");
-        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+//        pickIntent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(pickIntent, REQUEST_PICK_PICTURE + pos);
     }
 

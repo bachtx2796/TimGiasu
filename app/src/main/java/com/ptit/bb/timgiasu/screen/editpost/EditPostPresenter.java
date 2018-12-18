@@ -75,7 +75,8 @@ public class EditPostPresenter extends Presenter<EditPostContract.View, EditPost
 
         UserDTO userDTO = PrefWrapper.getUser(getViewContext());
         DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(userDTO.getCity()).child(DBConstan.POSTS).child(mPost.getId()).setValue(mPost).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+        mInteractor.savePost(userDTO.getCity(), mPost.getId(), mPost, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 DialogUtils.dismissProgressDialog();
