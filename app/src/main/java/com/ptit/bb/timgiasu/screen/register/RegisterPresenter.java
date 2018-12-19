@@ -33,8 +33,6 @@ import java.util.concurrent.TimeUnit;
 public class RegisterPresenter extends Presenter<RegisterContract.View, RegisterContract.Interactor>
         implements RegisterContract.Presenter {
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
     public RegisterPresenter(ContainerView containerView) {
         super(containerView);
     }
@@ -76,7 +74,7 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
                         .setOnVerifyPhoneNumberListener(new VerifyPhoneNoPresenter.OnVerifyPhoneNumberListener() {
                             @Override
                             public void onVerifyPhoneNumberSuccessful() {
-                                mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                mInteractor.signup(email, pass, new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {

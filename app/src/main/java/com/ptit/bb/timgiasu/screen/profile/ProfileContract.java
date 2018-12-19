@@ -3,6 +3,8 @@ package com.ptit.bb.timgiasu.screen.profile;
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 
 import java.util.List;
@@ -13,6 +15,11 @@ import java.util.List;
 interface ProfileContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void updateEmail(String email, OnCompleteListener<Void> onCompleteListener);
+
+        void saveInfo(String id, UserDTO mUser, OnCompleteListener<Void> onCompleteListener);
+
+        Task<Void> saveTutor(UserDTO user, OnCompleteListener<Void> onCompleteListener);
     }
 
     interface View extends PresentView<Presenter> {

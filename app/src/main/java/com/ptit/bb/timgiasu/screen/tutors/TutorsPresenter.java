@@ -54,7 +54,7 @@ public class TutorsPresenter extends Presenter<TutorsContract.View, TutorsContra
     @Override
     public void getData() {
         DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(PrefWrapper.getUser(getViewContext()).getCity()).child(DBConstan.USERS).addListenerForSingleValueEvent(new ValueEventListener() {
+        mInteractor.getTutors(PrefWrapper.getUser(getViewContext()).getCity(), new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mTutors.clear();

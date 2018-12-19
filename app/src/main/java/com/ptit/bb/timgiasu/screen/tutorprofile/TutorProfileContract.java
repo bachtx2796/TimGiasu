@@ -5,12 +5,15 @@ import com.gemvietnam.base.viper.interfaces.IPresenter;
 import com.gemvietnam.base.viper.interfaces.PresentView;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 
+import java.util.HashMap;
+
 /**
  * The TutorProfile Contract
  */
 interface TutorProfileContract {
 
     interface Interactor extends IInteractor<Presenter> {
+        void saveRating(String id, String city, HashMap<String, Integer> rating);
     }
 
     interface View extends PresentView<Presenter> {
