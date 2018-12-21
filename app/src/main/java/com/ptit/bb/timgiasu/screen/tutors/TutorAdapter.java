@@ -1,5 +1,6 @@
 package com.ptit.bb.timgiasu.screen.tutors;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +11,11 @@ import android.widget.Toast;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.ptit.bb.timgiasu.R;
+import com.ptit.bb.timgiasu.Utils.AppUtils;
+import com.ptit.bb.timgiasu.data.dto.Coord;
 import com.ptit.bb.timgiasu.data.dto.TutorDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
+import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +29,7 @@ public class TutorAdapter extends RecyclerView.Adapter {
     private Context mContext;
     private List<UserDTO> mTutors;
     private OnItemTutorClickListenr mOnItemTutorClickListenr;
+    private Coord mCoord;
 
     public void setmOnItemTutorClickListenr(OnItemTutorClickListenr mOnItemTutorClickListenr) {
         this.mOnItemTutorClickListenr = mOnItemTutorClickListenr;
@@ -33,6 +38,7 @@ public class TutorAdapter extends RecyclerView.Adapter {
     public TutorAdapter(Context mContext, List<UserDTO> mTutors) {
         this.mContext = mContext;
         this.mTutors = mTutors;
+        mCoord = PrefWrapper.getUser(mContext).getCoord();
     }
 
     public class TutorHolder extends RecyclerView.ViewHolder {
@@ -68,6 +74,7 @@ public class TutorAdapter extends RecyclerView.Adapter {
         return new TutorHolder(v);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         TutorHolder tutorHolder = (TutorHolder) holder;
@@ -84,13 +91,13 @@ public class TutorAdapter extends RecyclerView.Adapter {
         tutorHolder.mRatingBar.setRating(getRating(user.getRatings()));
         tutorHolder.mMajoyTv.setText("Chuyên môn: " + user.getSubjects().toString());
         tutorHolder.mClassTv.setText("Lớp: " + user.getClasses().toString());
-
+        tutorHolder.mDistanceTv.setText(AppUtils.distance(mCoord.getLat(), mCoord.getLng(), user.getCoord().getLat(), user.getCoord().getLng()) + " km");
     }
 
     private float getRating(HashMap<String, Integer> ratings) {
         HashMap<String, Integer> tmp = ratings;
         int sum = 0;
-        if (tmp != null && tmp.size() > 0){
+        if (tmp != null && tmp.size() > 0) {
             for (Map.Entry<String, Integer> entry : tmp.entrySet()) {
                 sum += entry.getValue();
             }

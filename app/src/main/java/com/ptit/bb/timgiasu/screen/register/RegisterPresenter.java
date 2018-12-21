@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
+import com.ptit.bb.timgiasu.data.dto.Coord;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
 import com.ptit.bb.timgiasu.screen.map.MyMapPresenter;
@@ -32,6 +33,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class RegisterPresenter extends Presenter<RegisterContract.View, RegisterContract.Interactor>
         implements RegisterContract.Presenter {
+
+    private Coord mCoord;
 
     public RegisterPresenter(ContainerView containerView) {
         super(containerView);
@@ -112,9 +115,11 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
         MyMapPresenter presenter = new MyMapPresenter(mContainerView);
         presenter.setmOnLocationSelectedListener(new MyMapPresenter.OnLocationSelectedListener() {
             @Override
-            public void onItemSelected(String location) {
+            public void onItemSelected(String location, Coord coord) {
                 mView.setLocation(location);
+                mCoord = coord;
             }
+
         });
         presenter.pushView();
     }
@@ -122,7 +127,7 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
 
     private void saveInfoUser(String id, String fullname, String email, String phoneNo, String gender, String dob, String city, String address) {
         UserDTO userDTO = new UserDTO(id, fullname, email, city, phoneNo, gender, dob, address);
+        userDTO.setCoord(mCoord);
         FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(id).setValue(userDTO);
-
     }
 }

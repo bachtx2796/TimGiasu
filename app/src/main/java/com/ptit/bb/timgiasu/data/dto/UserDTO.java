@@ -25,6 +25,7 @@ public class UserDTO {
     private String devicetoken;
     private List<PostDTO> receviepost;
     private List<PostDTO> posts;
+    private Coord coord;
 
     public UserDTO() {
     }
@@ -46,6 +47,15 @@ public class UserDTO {
         ratings = new HashMap<>();
         receviepost = new ArrayList<>();
         posts = new ArrayList<>();
+        coord = new Coord();
+    }
+
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public void setCoord(Coord coord) {
+        this.coord = coord;
     }
 
     public List<PostDTO> getPosts() {
@@ -218,6 +228,11 @@ public class UserDTO {
                 ", time='" + time + '\'' +
                 ", salary=" + salary +
                 ", uris=" + uris +
+                ", ratings=" + ratings +
+                ", devicetoken='" + devicetoken + '\'' +
+                ", receviepost=" + receviepost +
+                ", posts=" + posts +
+                ", coord=" + coord +
                 '}';
     }
 }

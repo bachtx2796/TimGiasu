@@ -44,6 +44,7 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
     private MapFragment mMapFragment;
 
     private String selectedSearchItem = "";
+    private Coord mCoord;
 
 
     public static MyMapFragment getInstance() {
@@ -123,10 +124,11 @@ public class MyMapFragment extends ViewFragment<MyMapContract.Presenter> impleme
     @Override
     public void showMarker(Coord location) {
         mMapManager.addMarker(new LatLng(location.getLat(), location.getLng()), "vị trí của tôi");
+        mCoord = location;
     }
 
     @OnClick(R.id.select_bt)
     public void selectLocation() {
-        mPresenter.selectLocation(selectedSearchItem);
+        mPresenter.selectLocation(selectedSearchItem, mCoord);
     }
 }

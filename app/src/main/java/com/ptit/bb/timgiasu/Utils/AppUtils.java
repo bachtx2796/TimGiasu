@@ -2,6 +2,7 @@ package com.ptit.bb.timgiasu.Utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.location.Location;
 
 import java.util.List;
 
@@ -96,5 +97,20 @@ public class AppUtils {
             }
         }
         return false;
+    }
+
+    public static double distance(double lat1, double lon1, double lat2,
+                                  double lon2) {
+
+        Location loc1 = new Location("");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lon1);
+
+        Location loc2 = new Location("");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lon2);
+
+        double distance = loc1.distanceTo(loc2) / 1000;
+        return (double) Math.round(distance * 10) / 10;
     }
 }

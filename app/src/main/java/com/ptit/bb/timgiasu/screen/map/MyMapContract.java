@@ -1,7 +1,6 @@
 package com.ptit.bb.timgiasu.screen.map;
 
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import com.gemvietnam.base.viper.interfaces.IInteractor;
 import com.gemvietnam.base.viper.interfaces.IPresenter;
@@ -36,7 +35,7 @@ interface MyMapContract {
 
         void showPlace(String selectedSearchItem);
 
-        void selectLocation(String selectedSearchItem);
+        void selectLocation(String selectedSearchItem, Coord mCoord);
     }
 }
 

@@ -1,12 +1,10 @@
 package com.ptit.bb.timgiasu.screen.map;
 
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 
 import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
-import com.ptit.bb.timgiasu.data.GoogleService;
-import com.ptit.bb.timgiasu.data.GoogleServiceBuilder;
+import com.ptit.bb.timgiasu.data.dto.Coord;
 import com.ptit.bb.timgiasu.data.dto.GoogleMapSearchDTO;
 import com.ptit.bb.timgiasu.data.dto.LocationSearchResult;
 import com.ptit.bb.timgiasu.data.dto.PredictionPlaces;
@@ -105,12 +103,12 @@ public class MyMapPresenter extends Presenter<MyMapContract.View, MyMapContract.
     }
 
     @Override
-    public void selectLocation(String selectedSearchItem) {
-        mOnLocationSelectedListener.onItemSelected(selectedSearchItem);
+    public void selectLocation(String selectedSearchItem, Coord mCoord) {
+        mOnLocationSelectedListener.onItemSelected(selectedSearchItem, mCoord);
         back();
     }
 
     public interface OnLocationSelectedListener {
-        void onItemSelected(String location);
+        void onItemSelected(String location, Coord coord);
     }
 }

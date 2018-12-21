@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.FirebaseDatabase;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
+import com.ptit.bb.timgiasu.data.dto.Coord;
 import com.ptit.bb.timgiasu.data.dto.PostDTO;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
@@ -56,7 +57,7 @@ public class EditPostPresenter extends Presenter<EditPostContract.View, EditPost
         MyMapPresenter presenter = new MyMapPresenter(mContainerView);
         presenter.setmOnLocationSelectedListener(new MyMapPresenter.OnLocationSelectedListener() {
             @Override
-            public void onItemSelected(String location) {
+            public void onItemSelected(String location, Coord coord) {
                 mView.setLocation(location);
             }
         });

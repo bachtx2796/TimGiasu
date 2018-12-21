@@ -5,25 +5,40 @@ import com.google.gson.annotations.SerializedName;
 
 public class Coord {
 
-  @SerializedName("lat")
-  private Double mLat;
-  @SerializedName("lng")
-  private Double mLng;
+   // @SerializedName("lat")
+    private double lat;
+  //  @SerializedName("lng")
+    private double lng;
 
-  public Double getLat() {
-    return mLat;
-  }
+    public Coord() {
+    }
 
-  public void setLat(Double lat) {
-    mLat = lat;
-  }
+    public Coord(double lat, double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
 
-  public Double getLng() {
-    return mLng;
-  }
+    public double getLat() {
+        return lat;
+    }
 
-  public void setLng(Double lng) {
-    mLng = lng;
-  }
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
 
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    @Override
+    public String toString() {
+        return "Coord{" +
+                "lat=" + lat +
+                ", lng=" + lng +
+                '}';
+    }
 }
