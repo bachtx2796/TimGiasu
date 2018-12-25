@@ -92,6 +92,13 @@ public class TutorAdapter extends RecyclerView.Adapter {
         tutorHolder.mMajoyTv.setText("Chuyên môn: " + user.getSubjects().toString());
         tutorHolder.mClassTv.setText("Lớp: " + user.getClasses().toString());
         tutorHolder.mDistanceTv.setText(AppUtils.distance(mCoord.getLat(), mCoord.getLng(), user.getCoord().getLat(), user.getCoord().getLng()) + " km");
+
+        tutorHolder.mSaveBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnItemTutorClickListenr.onSaveClick(position);
+            }
+        });
     }
 
     private float getRating(HashMap<String, Integer> ratings) {
@@ -113,5 +120,7 @@ public class TutorAdapter extends RecyclerView.Adapter {
 
     public interface OnItemTutorClickListenr {
         void onTutorClick(int position);
+
+        void onSaveClick(int position);
     }
 }

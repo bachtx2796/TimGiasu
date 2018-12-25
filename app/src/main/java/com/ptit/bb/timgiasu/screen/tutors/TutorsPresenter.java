@@ -14,6 +14,7 @@ import com.gemvietnam.base.viper.Presenter;
 import com.gemvietnam.base.viper.interfaces.ContainerView;
 import com.ptit.bb.timgiasu.data.dto.UserDTO;
 import com.ptit.bb.timgiasu.prewrapper.PrefWrapper;
+import com.ptit.bb.timgiasu.screen.address.AddressPresenter;
 import com.ptit.bb.timgiasu.screen.filter.FilterPresenter;
 import com.ptit.bb.timgiasu.screen.tutorprofile.TutorProfilePresenter;
 
@@ -65,6 +66,11 @@ public class TutorsPresenter extends Presenter<TutorsContract.View, TutorsContra
                     @Override
                     public void onTutorClick(int position) {
                         new TutorProfilePresenter(mContainerView).setTutor(mTutors.get(position)).pushView();
+                    }
+
+                    @Override
+                    public void onSaveClick(int position) {
+                        new AddressPresenter(mContainerView).setCoord(mTutors.get(position).getCoord(), mTutors.get(position).getAddress()).pushView();
                     }
                 });
                 mTutorAdapter.notifyDataSetChanged();

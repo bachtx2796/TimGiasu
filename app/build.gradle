@@ -58,6 +58,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:11.8.0'
     implementation 'com.dinuscxj:circleprogressbar:1.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    implementation 'com.google.maps:google-maps-services:0.2.11'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
+    compile 'com.github.michaelye.easydialog:easydialog:1.4'
 }
 
 apply plugin: 'com.google.gms.google-services'
