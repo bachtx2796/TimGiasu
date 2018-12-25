@@ -21,66 +21,65 @@ import java.util.List;
  * The Home Presenter
  */
 public class HomePresenter extends Presenter<HomeContract.View, HomeContract.Interactor>
-        implements HomeContract.Presenter {
+    implements HomeContract.Presenter {
 
-    private List<PostDTO> mPosts;
-    private HomeAdapter mHomeAdapter;
-    private UserDTO mUser;
+  private List<PostDTO> mPosts;
+  private HomeAdapter mHomeAdapter;
+  private UserDTO mUser;
 
-    public HomePresenter(ContainerView containerView) {
-        super(containerView);
-    }
+  public HomePresenter(ContainerView containerView) {
+    super(containerView);
+  }
 
-    @Override
-    public HomeContract.View onCreateView() {
-        return HomeFragment.getInstance();
-    }
+  @Override
+  public HomeContract.View onCreateView() {
+    return HomeFragment.getInstance();
+  }
 
-    @Override
-    public void start() {
-        // Start getting data here
-        mUser = PrefWrapper.getUser(getViewContext());
+  @Override
+  public void start() {
+    // Start getting data here
+    mUser = PrefWrapper.getUser(getViewContext());
+    mPosts = new ArrayList<>();
+    getData();
+  }
 
-        mPosts = new ArrayList<>();
-        getData();
-    }
-
-    private void getData() {
-        DialogUtils.showProgressDialog(getViewContext());
-        mInteractor.getPosts(mUser.getCity(), new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DialogUtils.dismissProgressDialog();
-                mPosts.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    mPosts.add(postSnapshot.getValue(PostDTO.class));
-                }
-                mHomeAdapter = new HomeAdapter(getViewContext(), mPosts);
-                mHomeAdapter.setmOnItemPostClickListener(new HomeAdapter.OnItemPostClickListener() {
-                    @Override
-                    public void onItemClick(int postion) {
-                        new PostDetailPresenter(mContainerView).setPost(mPosts.get(postion)).pushView();
-                    }
-                });
-                mView.bindView(mHomeAdapter);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+  private void getData() {
+    DialogUtils.showProgressDialog(getViewContext());
+    mInteractor.getPosts(mUser.getCity(), new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        DialogUtils.dismissProgressDialog();
+        mPosts.clear();
+        for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+          mPosts.add(postSnapshot.getValue(PostDTO.class));
+        }
+        mHomeAdapter = new HomeAdapter(getViewContext(), mPosts);
+        mHomeAdapter.setmOnItemPostClickListener(new HomeAdapter.OnItemPostClickListener() {
+          @Override
+          public void onItemClick(int postion) {
+            new PostDetailPresenter(mContainerView).setPost(mPosts.get(postion)).pushView();
+          }
         });
+        mView.bindView(mHomeAdapter);
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+
+      }
+    });
 
 
-    }
+  }
 
-    @Override
-    public HomeContract.Interactor onCreateInteractor() {
-        return new HomeInteractor(this);
-    }
+  @Override
+  public HomeContract.Interactor onCreateInteractor() {
+    return new HomeInteractor(this);
+  }
 
-    @Override
-    public void refreshData() {
-        getData();
-    }
+  @Override
+  public void refreshData() {
+    getData();
+  }
 }

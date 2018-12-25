@@ -36,115 +36,128 @@ import retrofit2.Response;
  * The PostDetail Presenter
  */
 public class PostDetailPresenter extends Presenter<PostDetailContract.View, PostDetailContract.Interactor>
-        implements PostDetailContract.Presenter {
+    implements PostDetailContract.Presenter {
 
-    private PostDTO mPost;
-    private UserDTO mUser;
+  private PostDTO mPost;
+  private UserDTO mUser;
 
-    public PostDetailPresenter(ContainerView containerView) {
-        super(containerView);
-    }
+  public PostDetailPresenter(ContainerView containerView) {
+    super(containerView);
+  }
 
-    @Override
-    public PostDetailContract.View onCreateView() {
-        return PostDetailFragment.getInstance();
-    }
+  @Override
+  public PostDetailContract.View onCreateView() {
+    return PostDetailFragment.getInstance();
+  }
 
-    @Override
-    public void start() {
-        // Start getting data here
-        mUser = PrefWrapper.getUser(getViewContext());
-        mView.bindView(mPost);
-    }
+  @Override
+  public void start() {
+    // Start getting data here
+    mUser = PrefWrapper.getUser(getViewContext());
+    mView.bindView(mPost);
+  }
 
-    @Override
-    public PostDetailContract.Interactor onCreateInteractor() {
-        return new PostDetailInteractor(this);
-    }
+  @Override
+  public PostDetailContract.Interactor onCreateInteractor() {
+    return new PostDetailInteractor(this);
+  }
 
-    public PostDetailPresenter setPost(PostDTO postDTO) {
-        mPost = postDTO;
-        return this;
-    }
+  public PostDetailPresenter setPost(PostDTO postDTO) {
+    mPost = postDTO;
+    return this;
+  }
 
-    @Override
-    public void editPost() {
-        new EditPostPresenter(mContainerView)
-                .setPost(mPost)
-                .pushView();
-    }
+  @Override
+  public void editPost() {
+    new EditPostPresenter(mContainerView)
+        .setPost(mPost)
+        .pushView();
+  }
 
 
-    @Override
-    public void sentRequest() {
-        DialogUtils.showProgressDialog(getViewContext());
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.DEVICE_TOKEN).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String token = dataSnapshot.getValue(String.class);
-                PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), mUser.getId(), "Tôi muốn nhận lớp"));
-                mInteractor.sendRequest(pushNotificationDTO, new Callback<Object>() {
+  @Override
+  public void sentRequest() {
+    DialogUtils.showProgressDialog(getViewContext());
+    FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.DEVICE_TOKEN).addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        String token = dataSnapshot.getValue(String.class);
+        PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), mUser.getId(), "Tôi muốn nhận lớp"));
+        mInteractor.sendRequest(pushNotificationDTO, new Callback<Object>() {
 
-                    @Override
-                    public void onResponse(Call<Object> call, Response<Object> response) {
-                        DialogUtils.dismissProgressDialog();
-                        if (response.isSuccessful()) {
-                            mView.sendRequestSuccess();
-                            Toast.makeText(getViewContext(), "Gửi yêu cầu nhận lớp thành công !", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getViewContext(), "Có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Object> call, Throwable t) {
-                        Toast.makeText(getViewContext(), "Có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
-                    }
-                });
+          @Override
+          public void onResponse(Call<Object> call, Response<Object> response) {
+            DialogUtils.dismissProgressDialog();
+            if (response.isSuccessful()) {
+              mView.sendRequestSuccess();
+              Toast.makeText(getViewContext(), "Gửi yêu cầu nhận lớp thành công !", Toast.LENGTH_SHORT).show();
+            } else {
+              Toast.makeText(getViewContext(), "Có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
             }
+          }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+          @Override
+          public void onFailure(Call<Object> call, Throwable t) {
+            Toast.makeText(getViewContext(), "Có lỗi xảy ra !", Toast.LENGTH_SHORT).show();
+          }
         });
+      }
 
-    }
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
 
-    @Override
-    public void createGrChat() {
-        DialogUtils.showProgressDialog(getViewContext());
-        final String key = mPost.getId() + mPost.getIdUser() + PrefWrapper.getUser(getViewContext()).getId(); // tao key gr
-        FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+      }
+    });
+
+  }
+
+  @Override
+  public void createGrChat() {
+    DialogUtils.showProgressDialog(getViewContext());
+    final String key = mPost.getId() + mPost.getIdUser() + PrefWrapper.getUser(getViewContext()).getId(); // tao key gr
+    FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+      @Override
+      public void onDataChange(DataSnapshot dataSnapshot) {
+        GroupChatDTO groupChatDTO = dataSnapshot.getValue(GroupChatDTO.class);
+        if (groupChatDTO == null) {
+          groupChatDTO = new GroupChatDTO(key, mPost.getIdUser(), PrefWrapper.getUser(getViewContext()).getId(), mPost.getId(), "");
+          final GroupChatDTO finalGroupChatDTO = groupChatDTO;
+          FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).setValue(groupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                GroupChatDTO groupChatDTO = dataSnapshot.getValue(GroupChatDTO.class);
-                if (groupChatDTO == null) {
-                    groupChatDTO = new GroupChatDTO(key, mPost.getIdUser(), PrefWrapper.getUser(getViewContext()).getId(), mPost.getId(), "");
-                    final GroupChatDTO finalGroupChatDTO = groupChatDTO;
-                    FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(mPost.getIdUser()).child(DBConstan.GR_CHAT).child(key).setValue(groupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(PrefWrapper.getUser(getViewContext()).getId()).child(DBConstan.GR_CHAT).child(key).setValue(finalGroupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    DialogUtils.dismissProgressDialog();
-                                    new ChatDetailPresenter(mContainerView).setGrChat(finalGroupChatDTO).pushView();
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    DialogUtils.dismissProgressDialog();
-                    new ChatDetailPresenter(mContainerView).setGrChat(groupChatDTO).pushView();
+            public void onComplete(@NonNull Task<Void> task) {
+              FirebaseDatabase.getInstance().getReference(DBConstan.USERS).child(PrefWrapper.getUser(getViewContext()).getId()).child(DBConstan.GR_CHAT).child(key).setValue(finalGroupChatDTO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                  DialogUtils.dismissProgressDialog();
+                  new ChatDetailPresenter(mContainerView).setGrChat(finalGroupChatDTO).pushView();
                 }
+              });
             }
+          });
+        } else {
+          DialogUtils.dismissProgressDialog();
+          new ChatDetailPresenter(mContainerView).setGrChat(groupChatDTO).pushView();
+        }
+      }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+      }
+    });
 
-    }
+  }
+
+  @Override
+  public void closePost() {
+    mView.showProgress();
+    int position = mUser.getPosts().indexOf(mPost);
+    mInteractor.closePost(mUser.getId(), position, mUser.getCity(), mPost.getId(), "Đóng", new OnCompleteListener() {
+      @Override
+      public void onComplete(@NonNull Task task) {
+        mView.hideProgress();
+        back();
+      }
+    });
+  }
 }

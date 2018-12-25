@@ -49,7 +49,7 @@
     <string name="tutor_profile_des">Ảnh chứng thực</string>
     <string name="contact">Liên hệ</string>
     <string name="rating">Đánh giá</string>
-    <string name="salary">Mức lương</string>
+    <string name="salary">Mức lương (VND/h)</string>
     <string name="post">Đăng tuyển</string>
     <string name="post_des">Vui lòng chụp ảnh cmt/shk để xác thực thông tin</string>
     <string name="edit">Sửa</string>

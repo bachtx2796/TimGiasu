@@ -66,7 +66,7 @@ public class RegisterPresenter extends Presenter<RegisterContract.View, Register
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
-                Toast.makeText(getViewContext(), "Số điện thoại không tồn tại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getViewContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
             @Override

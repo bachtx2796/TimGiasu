@@ -1,6 +1,7 @@
 package com.ptit.bb.timgiasu.screen.chatdetail;
 
 import com.gemvietnam.base.viper.Interactor;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.ptit.bb.timgiasu.Utils.DBConstan;
@@ -32,5 +33,24 @@ class ChatDetailInteractor extends Interactor<ChatDetailContract.Presenter>
     @Override
     public void getInfoPost(String city, String idPost, ValueEventListener valueEventListener) {
         FirebaseDatabase.getInstance().getReference(DBConstan.CITIES).child(city).child(DBConstan.POSTS).child(idPost).addListenerForSingleValueEvent(valueEventListener);
+    }
+
+    @Override
+    public void closePost(String userID, int position, String city, String postID, String status) {
+        FirebaseDatabase.getInstance().getReference()
+            .child(DBConstan.CITIES)
+            .child(city)
+            .child(DBConstan.POSTS)
+            .child(postID)
+            .child(DBConstan.STATUS)
+            .setValue(status);
+
+        FirebaseDatabase.getInstance().getReference()
+            .child(DBConstan.USERS)
+            .child(userID)
+            .child(DBConstan.MY_POST)
+            .child(position + "")
+            .child(DBConstan.STATUS)
+            .setValue(status);
     }
 }
