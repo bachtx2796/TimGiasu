@@ -82,7 +82,7 @@ public class PostDetailPresenter extends Presenter<PostDetailContract.View, Post
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String token = dataSnapshot.getValue(String.class);
-                PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), mUser.getId(), "Nhận nè"));
+                PushNotificationDTO pushNotificationDTO = new PushNotificationDTO(token, new NotificationDataDTO(MyFirebaseMessagingService.REQUEST, mPost.getId(), mUser.getId(), "Tôi muốn nhận lớp"));
                 mInteractor.sendRequest(pushNotificationDTO, new Callback<Object>() {
 
                     @Override

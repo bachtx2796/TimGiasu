@@ -92,7 +92,7 @@
                     android:layout_marginTop="@dimen/margin_5dp"
                     android:layout_weight="1"
                     android:padding="@dimen/padding_5dp"
-                    android:text="Decline"
+                    android:text="Từ chối"
                     android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
